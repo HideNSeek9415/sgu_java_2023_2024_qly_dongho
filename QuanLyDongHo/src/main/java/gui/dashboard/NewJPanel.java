@@ -10,6 +10,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractButton;
 import org.kordamp.ikonli.materialdesign2.*;
 import org.kordamp.ikonli.swing.FontIcon;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -22,9 +25,11 @@ public class NewJPanel extends javax.swing.JPanel {
      * Creates new form NewJPanel
      */
     public NewJPanel() {
+		setSize(new Dimension(1150, 800));
         initComponents();
         addIcon();
         defineBtnEvent();
+        setToolsEnabled(true, true, true, true, true, true, true);
     }
 
     /**
@@ -37,8 +42,10 @@ public class NewJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
+        panel.setBorder(null);
         pnContent = new javax.swing.JPanel();
         headPanel = new javax.swing.JPanel();
+        headPanel.setBorder(null);
         pnTools = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -52,7 +59,7 @@ public class NewJPanel extends javax.swing.JPanel {
         btnSearch = new javax.swing.JButton();
         btnReload = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(240, 247, 250));
+        setBackground(new Color(240, 247, 250));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 25, 25, 25));
         setForeground(new java.awt.Color(240, 247, 250));
         setMinimumSize(new java.awt.Dimension(1150, 143));
@@ -63,7 +70,7 @@ public class NewJPanel extends javax.swing.JPanel {
         panel.setOpaque(false);
         panel.setLayout(new java.awt.BorderLayout(0, 25));
 
-        pnContent.setBackground(new java.awt.Color(255, 255, 255));
+        pnContent.setBackground(new Color(240, 247, 250));
         pnContent.setPreferredSize(new java.awt.Dimension(0, 0));
         pnContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         panel.add(pnContent, java.awt.BorderLayout.CENTER);
@@ -71,12 +78,12 @@ public class NewJPanel extends javax.swing.JPanel {
         headPanel.setPreferredSize(new java.awt.Dimension(1100, 90));
         headPanel.setLayout(new java.awt.GridLayout(1, 2));
 
-        pnTools.setBackground(new java.awt.Color(255, 255, 255));
-        pnTools.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        pnTools.setBackground(new Color(240, 247, 250));
+        pnTools.setBorder(null);
         pnTools.setLayout(new java.awt.GridLayout(1, 7, 5, 0));
 
         btnAdd.setBackground(new java.awt.Color(255, 255, 255));
-        btnAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAdd.setFont(new Font("Tahoma", Font.BOLD, 14)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(0, 0, 0));
         btnAdd.setText("Thêm");
         btnAdd.setBorder(null);
@@ -148,7 +155,7 @@ public class NewJPanel extends javax.swing.JPanel {
         pnTools.add(btnDetail);
 
         btnFilter.setBackground(new java.awt.Color(255, 255, 255));
-        btnFilter.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnFilter.setFont(new Font("Tahoma", Font.BOLD, 14)); // NOI18N
         btnFilter.setForeground(new java.awt.Color(0, 0, 0));
         btnFilter.setText("Bộ lọc");
         btnFilter.setBorder(null);
@@ -161,13 +168,18 @@ public class NewJPanel extends javax.swing.JPanel {
 
         headPanel.add(pnTools);
 
-        pnSearch.setBackground(new java.awt.Color(255, 255, 255));
+        pnSearch.setBackground(new Color(240, 247, 250));
         pnSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(22, 1, 1, 1));
+        
+        comboBox = new JComboBox();
+        comboBox.setBackground(new Color(255, 255, 255));
+        comboBox.setPreferredSize(new Dimension(100, 30));
+        pnSearch.add(comboBox);
 
         txtSearch.setBackground(new java.awt.Color(255, 255, 255));
         txtSearch.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
         txtSearch.setForeground(new java.awt.Color(0, 0, 0));
-        txtSearch.setPreferredSize(new java.awt.Dimension(265, 30));
+        txtSearch.setPreferredSize(new Dimension(200, 30));
         pnSearch.add(txtSearch);
 
         btnSearch.setBorder(null);
@@ -178,9 +190,9 @@ public class NewJPanel extends javax.swing.JPanel {
 
         btnReload.setBackground(new java.awt.Color(64, 128, 128));
         btnReload.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnReload.setForeground(new java.awt.Color(255, 255, 255));
+        btnReload.setForeground(new Color(255, 255, 255));
         btnReload.setText("Làm mới");
-        btnReload.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnReload.setPreferredSize(new Dimension(150, 30));
         pnSearch.add(btnReload);
 
         headPanel.add(pnSearch);
@@ -207,8 +219,10 @@ public class NewJPanel extends javax.swing.JPanel {
         Color fore = btn.getForeground();
         if (!btn.isEnabled()) {
                 ((FontIcon) btn.getIcon()).setIconColor(Color.decode("#999999"));
+                btn.setForeground(Color.decode("#999999"));
                 return;
         }
+        btn.removeActionListener(null);
         btn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -296,5 +310,6 @@ public class NewJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pnSearch;
     private javax.swing.JPanel pnTools;
     private javax.swing.JTextField txtSearch;
+    private JComboBox comboBox;
     // End of variables declaration//GEN-END:variables
 }

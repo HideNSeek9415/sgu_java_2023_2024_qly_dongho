@@ -59,7 +59,7 @@ public class FunctionBtn {
 		case PRODUCTS:
 			icon = FontIcon.of(FontAwesomeSolid.SHOPPING_BAG);
 			toggleButton.setText("Sản phẩm");
-			panel = new NewJPanel(true, true, true, true, true, true, true) {};
+			panel = new ProductManagerGUI();
 			break;
 		case PRODUCT_PROPERTIES:
 			icon = FontIcon.of(FontAwesomeSolid.SHAPES);
@@ -75,12 +75,12 @@ public class FunctionBtn {
 			icon = FontIcon.of(FontAwesomeSolid.INBOX);
 			toggleButton.setText("Phiếu xuất");
 			panel.setBackground(Color.decode("#939201"));
-			panel = new NewJPanel(true, true, true, true, true, true, true) {};
+			panel = new PhieuNhapGUI();
 			break;
 		case RECIEPTS:
 			icon = FontIcon.of(FontAwesomeSolid.ENVELOPE_OPEN_TEXT);
 			toggleButton.setText("Phiếu nhập");
-			panel.setBackground(Color.decode("#fda442"));
+			panel = new PhieuXuatGUI();
 			break;
 		case CUSTOMERS:
 			icon = FontIcon.of(FontAwesomeSolid.USERS);
@@ -89,10 +89,12 @@ public class FunctionBtn {
 		case SUPPLIES:
 			icon = FontIcon.of(FontAwesomeSolid.TRUCK);
 			toggleButton.setText("Nhà cung cấp");
+			panel = new SuppliersGUI();
 			break;
 		case EMPLOYEES:
 			icon = FontIcon.of(FontAwesomeSolid.ADDRESS_CARD);
 			toggleButton.setText("Nhân viên");
+			panel = new EmployeesGUI();
 			break;
 		case ACOOUNTS:
 			icon = FontIcon.of(FontAwesomeSolid.KEY);
@@ -101,6 +103,7 @@ public class FunctionBtn {
 		case STATISTICAL:
 			icon = FontIcon.of(FontAwesomeSolid.CHART_LINE);
 			toggleButton.setText("Thống kê");
+			panel = new StatisticalGUI();
 			break;
 		case PERMISSION:
 			icon = FontIcon.of(FontAwesomeSolid.LIST_ALT);

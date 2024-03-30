@@ -64,6 +64,7 @@ public class ShowMsg extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 300);
 		setUndecorated(true);
+		setLocationRelativeTo(null);
 		this.contentPane = new JPanel();
 		this.contentPane.setBackground(new Color(255, 255, 255));
 		this.contentPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -128,7 +129,7 @@ public class ShowMsg extends JFrame {
 			int x = relaComp.getX() + (relaComp.getWidth() - this.getWidth())/2;
 			int y = relaComp.getY() + (relaComp.getHeight() - this.getHeight())/2;
 			this.setLocation(x, y);
-		}
+		} 
 	}
 	
 	public static void showInvalidMsg(String msg, Component relaComp) {
