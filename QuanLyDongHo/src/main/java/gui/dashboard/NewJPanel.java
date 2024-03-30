@@ -13,6 +13,7 @@ import org.kordamp.ikonli.swing.FontIcon;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JComboBox;
+import java.awt.Cursor;
 
 /**
  *
@@ -57,6 +58,7 @@ public class NewJPanel extends javax.swing.JPanel {
         pnSearch = new javax.swing.JPanel();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
+        btnSearch.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnReload = new javax.swing.JButton();
 
         setBackground(new Color(240, 247, 250));
@@ -173,7 +175,7 @@ public class NewJPanel extends javax.swing.JPanel {
         
         comboBox = new JComboBox();
         comboBox.setBackground(new Color(255, 255, 255));
-        comboBox.setPreferredSize(new Dimension(100, 30));
+        comboBox.setPreferredSize(new Dimension(120, 30));
         pnSearch.add(comboBox);
 
         txtSearch.setBackground(new java.awt.Color(255, 255, 255));
@@ -192,7 +194,7 @@ public class NewJPanel extends javax.swing.JPanel {
         btnReload.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnReload.setForeground(new Color(255, 255, 255));
         btnReload.setText("Làm mới");
-        btnReload.setPreferredSize(new Dimension(150, 30));
+        btnReload.setPreferredSize(new Dimension(120, 30));
         pnSearch.add(btnReload);
 
         headPanel.add(pnSearch);

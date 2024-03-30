@@ -37,6 +37,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
+import javax.swing.border.BevelBorder;
 
 public class StatisticalGUI extends JPanel {
 
@@ -70,7 +71,7 @@ public class StatisticalGUI extends JPanel {
 		
 		pnContent = new JPanel();
 		pnContent.setBackground(new Color(240, 247, 250));
-		tabbedPane.addTab("New tab", null, pnContent, null);
+		tabbedPane.addTab("Doanh thu", null, pnContent, null);
 		pnContent.setLayout(new BorderLayout(12, 12));
 		
 		pnChart = new JPanel();

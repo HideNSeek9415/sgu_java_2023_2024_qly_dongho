@@ -6,17 +6,26 @@ package gui.dashboard;
 
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import java.awt.Font;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.border.EmptyBorder;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
 
 /**
  *
  * @author User
  */
-public class them_nv extends javax.swing.JFrame {
+public class ThemNVGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form them_nv
      */
-    public them_nv() {
+    public ThemNVGUI() {
+    	getContentPane().setBackground(new Color(240, 247, 250));
         initComponents();
     }
 
@@ -34,54 +43,85 @@ public class them_nv extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jPanel4.setOpaque(false);
         jButton1 = new javax.swing.JButton();
+        jButton1.setFont(new Font("Tahoma", Font.BOLD, 10));
+        jButton1.setBorderPainted(false);
         jButton2 = new javax.swing.JButton();
+        jButton2.setFont(new Font("Tahoma", Font.BOLD, 10));
+        jButton2.setBorderPainted(false);
         jPanel5 = new javax.swing.JPanel();
+        jPanel5.setPreferredSize(new Dimension(400, 400));
+        jPanel5.setBorder(new EmptyBorder(0, 15, 15, 15));
+        jPanel5.setOpaque(false);
         jPanel2 = new javax.swing.JPanel();
+        jPanel2.setOpaque(false);
         jLabel2 = new javax.swing.JLabel();
+        jLabel2.setFont(new Font("SansSerif", Font.BOLD, 12));
         textFieldStaffName = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        jPanel3.setOpaque(false);
         jLabel4 = new javax.swing.JLabel();
+        jLabel4.setFont(new Font("SansSerif", Font.BOLD, 12));
         textFieldStaffEmail = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
+        jPanel6.setOpaque(false);
         jLabel5 = new javax.swing.JLabel();
+        jLabel5.setFont(new Font("SansSerif", Font.BOLD, 12));
         textFieldStaffPhone = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
+        jPanel7.setOpaque(false);
         jPanel9 = new javax.swing.JPanel();
+        jPanel9.setOpaque(false);
         jLabel3 = new javax.swing.JLabel();
+        jLabel3.setFont(new Font("SansSerif", Font.BOLD, 12));
         jPanel10 = new javax.swing.JPanel();
+        jPanel10.setOpaque(false);
         radioButtonStaffMale = new javax.swing.JRadioButton();
         radioButtonStaffFemale = new javax.swing.JRadioButton();
         jPanel8 = new javax.swing.JPanel();
+        jPanel8.setOpaque(false);
         jLabel6 = new javax.swing.JLabel();
+        jLabel6.setFont(new Font("SansSerif", Font.BOLD, 12));
         jPanel11 = new javax.swing.JPanel();
+        jPanel11.setOpaque(false);
         dateChooserStaffDOB = new com.toedter.calendar.JDateChooser();
+        dateChooserStaffDOB.getCalendarButton().setBackground(new Color(240, 247, 250));
+        dateChooserStaffDOB.setBackground(new Color(240, 247, 250));
+        dateChooserStaffDOB.setOpaque(false);
+        dateChooserStaffDOB.setDateFormatString("dd/MM/yyyy");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thêm nhân viên");
 
         jPanel1.setBackground(new java.awt.Color(22, 122, 198));
-        jPanel1.setPreferredSize(new java.awt.Dimension(703, 80));
+        jPanel1.setPreferredSize(new Dimension(70, 60));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setFont(new Font("Segoe UI", Font.BOLD, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("THÊM NHÂN VIÊN");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(3)
+        			.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+        			.addGap(3))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(4)
+        			.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        jPanel1.setLayout(jPanel1Layout);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(jPanel1, BorderLayout.NORTH);
 
-        jPanel4.setPreferredSize(new java.awt.Dimension(288, 50));
+        jPanel4.setPreferredSize(new Dimension(300, 50));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jButton1.setBackground(new java.awt.Color(56, 159, 214));
@@ -107,13 +147,13 @@ public class them_nv extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.ipadx = 9;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.insets = new java.awt.Insets(0, 9, 0, 9);
-        jPanel4.add(jButton2, gridBagConstraints);
+        gridBagConstraints_1 = new java.awt.GridBagConstraints();
+        gridBagConstraints_1.ipadx = 9;
+        gridBagConstraints_1.ipady = 10;
+        gridBagConstraints_1.insets = new java.awt.Insets(0, 9, 0, 9);
+        jPanel4.add(jButton2, gridBagConstraints_1);
 
-        getContentPane().add(jPanel4, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(jPanel4, BorderLayout.SOUTH);
 
         jPanel5.setLayout(new java.awt.GridLayout(5, 1));
 
@@ -190,7 +230,7 @@ public class them_nv extends javax.swing.JFrame {
 
         jPanel5.add(jPanel8);
 
-        getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel5, BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -221,7 +261,7 @@ public class them_nv extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
+    	this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -241,20 +281,20 @@ public class them_nv extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(them_nv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(them_nv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(them_nv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(them_nv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new them_nv().setVisible(true);
+                new ThemNVGUI().setVisible(true);
             }
         });
     }
@@ -286,5 +326,6 @@ public class them_nv extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldStaffEmail;
     private javax.swing.JTextField textFieldStaffName;
     private javax.swing.JTextField textFieldStaffPhone;
+    private GridBagConstraints gridBagConstraints_1;
     // End of variables declaration//GEN-END:variables
 }

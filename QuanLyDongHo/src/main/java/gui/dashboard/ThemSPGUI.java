@@ -5,17 +5,26 @@
 package gui.dashboard;
 
 import javax.swing.JOptionPane;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import java.awt.Font;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 /**
  *
  * @author User
  */
-public class them_sp extends javax.swing.JFrame {
+public class ThemSPGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form them_sp
      */
-    public them_sp() {
+    public ThemSPGUI() {
+    	getContentPane().setBackground(new Color(240, 247, 250));
         initComponents();
     }
 
@@ -31,42 +40,65 @@ public class them_sp extends javax.swing.JFrame {
 
         jPanel11 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel1.setPreferredSize(new Dimension(850, 75));
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel2.setOpaque(false);
         jPanel17 = new javax.swing.JPanel();
+        jPanel17.setOpaque(false);
         buttonShowIllustrationImg = new javax.swing.JButton();
         jPanel18 = new javax.swing.JPanel();
+        jPanel18.setOpaque(false);
+        jPanel18.setBorder(new EmptyBorder(0, 0, 0, 10));
         jPanel5 = new javax.swing.JPanel();
+        jPanel5.setOpaque(false);
         jPanel12 = new javax.swing.JPanel();
+        jPanel12.setOpaque(false);
         jLabel1 = new javax.swing.JLabel();
         textFieldProductname = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        jPanel3.setOpaque(false);
         jLabel2 = new javax.swing.JLabel();
         comboBoxOrigin = new javax.swing.JComboBox<>();
+        comboBoxOrigin.setBackground(new Color(255, 255, 255));
         jPanel4 = new javax.swing.JPanel();
+        jPanel4.setOpaque(false);
         jLabel3 = new javax.swing.JLabel();
         comboBoxWaterProof = new javax.swing.JComboBox<>();
+        comboBoxWaterProof.setBackground(new Color(255, 255, 255));
         jPanel7 = new javax.swing.JPanel();
+        jPanel7.setOpaque(false);
         jLabel4 = new javax.swing.JLabel();
         textFieldBatteryCap = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
+        jPanel8.setOpaque(false);
         jLabel5 = new javax.swing.JLabel();
         textFieldColor = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
+        jPanel9.setOpaque(false);
         jLabel6 = new javax.swing.JLabel();
         comboBoxCategory = new javax.swing.JComboBox<>();
+        comboBoxCategory.setBackground(new Color(255, 255, 255));
         jPanel10 = new javax.swing.JPanel();
+        jPanel10.setOpaque(false);
         jLabel7 = new javax.swing.JLabel();
         textFieldWeight = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
+        jPanel13.setOpaque(false);
         jLabel8 = new javax.swing.JLabel();
         textFieldWarranty = new javax.swing.JTextField();
         jPanel14 = new javax.swing.JPanel();
+        jPanel14.setOpaque(false);
         jLabel9 = new javax.swing.JLabel();
         comboBoxScreenType = new javax.swing.JComboBox<>();
+        comboBoxScreenType.setBackground(new Color(255, 255, 255));
         jPanel6 = new javax.swing.JPanel();
+        jPanel6.setOpaque(false);
         jButton2 = new javax.swing.JButton();
+        jButton2.setPreferredSize(new Dimension(120, 25));
+        jButton2.setBorderPainted(false);
         jButton3 = new javax.swing.JButton();
+        jButton3.setBorderPainted(false);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -83,29 +115,33 @@ public class them_sp extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(22, 122, 198));
 
-        jLabel10.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel10.setFont(new Font("Arial", Font.BOLD, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Thêm sản phẩm mới");
+        jLabel10.setText("THÊM SẢN PHẨM MỚI");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(3)
+        			.addComponent(jLabel10, GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
+        			.addGap(3))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(jLabel10, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+        			.addContainerGap())
         );
+        jPanel1.setLayout(jPanel1Layout);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(jPanel1, BorderLayout.NORTH);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPanel17.setPreferredSize(new java.awt.Dimension(275, 332));
+        jPanel17.setPreferredSize(new Dimension(275, 120));
 
         buttonShowIllustrationImg.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         buttonShowIllustrationImg.setText("Hình minh họa");
@@ -116,41 +152,42 @@ public class them_sp extends javax.swing.JFrame {
         });
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(buttonShowIllustrationImg, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+        	jPanel17Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel17Layout.createSequentialGroup()
+        			.addGap(70)
+        			.addComponent(buttonShowIllustrationImg, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(buttonShowIllustrationImg)
-                .addContainerGap(367, Short.MAX_VALUE))
+        	jPanel17Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel17Layout.createSequentialGroup()
+        			.addGap(39)
+        			.addComponent(buttonShowIllustrationImg)
+        			.addContainerGap(206, Short.MAX_VALUE))
         );
+        jPanel17.setLayout(jPanel17Layout);
 
-        jPanel2.add(jPanel17, java.awt.BorderLayout.LINE_START);
+        jPanel2.add(jPanel17, BorderLayout.WEST);
 
         jPanel18.setLayout(new java.awt.BorderLayout());
 
-        jPanel5.setPreferredSize(new java.awt.Dimension(494, 350));
-        jPanel5.setLayout(new java.awt.GridLayout(3, 3));
+        jPanel5.setPreferredSize(new Dimension(494, 220));
+        GridLayout gl_jPanel5 = new GridLayout(3, 3);
+        gl_jPanel5.setHgap(10);
+        jPanel5.setLayout(gl_jPanel5);
 
         jPanel12.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel1.setText("Tên sản phẩm");
         jPanel12.add(jLabel1);
         jPanel12.add(textFieldProductname);
 
         jPanel5.add(jPanel12);
+        jPanel3.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel3.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel2.setText("Xuất xứ");
         jPanel3.add(jLabel2);
 
@@ -159,10 +196,9 @@ public class them_sp extends javax.swing.JFrame {
         jPanel3.add(comboBoxOrigin);
 
         jPanel5.add(jPanel3);
+        jPanel4.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel4.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel3.setText("Chống nước");
         jPanel4.add(jLabel3);
 
@@ -171,28 +207,25 @@ public class them_sp extends javax.swing.JFrame {
         jPanel4.add(comboBoxWaterProof);
 
         jPanel5.add(jPanel4);
+        jPanel7.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel4.setText("Dung lượng pin");
         jPanel7.add(jLabel4);
         jPanel7.add(textFieldBatteryCap);
 
         jPanel5.add(jPanel7);
+        jPanel8.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel8.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel5.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel5.setText("Màu sắc");
         jPanel8.add(jLabel5);
         jPanel8.add(textFieldColor);
 
         jPanel5.add(jPanel8);
+        jPanel9.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel9.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel6.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel6.setText("Phân loại");
         jPanel9.add(jLabel6);
 
@@ -201,28 +234,25 @@ public class them_sp extends javax.swing.JFrame {
         jPanel9.add(comboBoxCategory);
 
         jPanel5.add(jPanel9);
+        jPanel10.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel10.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel7.setText("Trọng lượng");
         jPanel10.add(jLabel7);
         jPanel10.add(textFieldWeight);
 
         jPanel5.add(jPanel10);
+        jPanel13.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel13.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel8.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel8.setText("Bảo hành");
         jPanel13.add(jLabel8);
         jPanel13.add(textFieldWarranty);
 
         jPanel5.add(jPanel13);
+        jPanel14.setLayout(new GridLayout(0, 1, 0, 0));
 
-        jPanel14.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel9.setText("Dạng màn hình");
         jPanel14.add(jLabel9);
 
@@ -236,7 +266,7 @@ public class them_sp extends javax.swing.JFrame {
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
         jButton2.setBackground(new java.awt.Color(56, 159, 214));
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton2.setFont(new Font("Arial", Font.BOLD, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Tạo cấu hình");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -251,10 +281,10 @@ public class them_sp extends javax.swing.JFrame {
         jPanel6.add(jButton2, gridBagConstraints);
 
         jButton3.setBackground(new java.awt.Color(219, 88, 96));
-        jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton3.setFont(new Font("Arial", Font.BOLD, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Hủy bỏ");
-        jButton3.setPreferredSize(new java.awt.Dimension(97, 23));
+        jButton3.setPreferredSize(new Dimension(120, 25));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -289,7 +319,7 @@ public class them_sp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        System.exit(0);
+    	this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void buttonShowIllustrationImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowIllustrationImgActionPerformed
@@ -313,20 +343,20 @@ public class them_sp extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(them_sp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemSPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(them_sp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemSPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(them_sp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemSPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(them_sp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemSPGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new them_sp().setVisible(true);
+                new ThemSPGUI().setVisible(true);
             }
         });
     }

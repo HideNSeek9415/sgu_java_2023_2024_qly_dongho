@@ -1,5 +1,7 @@
 package gui.dashboard;
 import java.awt.BorderLayout;
+
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +38,15 @@ public class EmployeesGUI extends NewJPanel {
 		table.getColumnModel().getColumn(2).setPreferredWidth(30);
 		table.getColumnModel().getColumn(3).setPreferredWidth(40);
 		scrollPane.setViewportView(table);
+
+	}
+	
+	@Override
+	protected void setAddEvent() {
+		JFrame fr = new ThemNVGUI();
+		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		fr.setLocationRelativeTo(null);
+		fr.setVisible(true);
 
 	}
 
