@@ -1,8 +1,18 @@
-package com.mycompany.qldh;
+package gui.dashboard;
+import java.awt.Dimension;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Font;
+import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
 
 public class ThemNhaCungCap extends javax.swing.JPanel {
 
     public ThemNhaCungCap() {
+    	setPreferredSize(new Dimension(761, 318));
         initComponents();
     }
 
@@ -11,8 +21,13 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
     private void initComponents() {
 
         titlePanel = new javax.swing.JPanel();
+        titlePanel.setPreferredSize(new Dimension(10, 70));
         txtNCC = new javax.swing.JLabel();
+        txtNCC.setOpaque(true);
+        txtNCC.setBackground(new Color(22, 122, 198));
+        txtNCC.setHorizontalAlignment(SwingConstants.CENTER);
         mainPanel = new javax.swing.JPanel();
+        mainPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
         pnlTen = new javax.swing.JPanel();
         nhapTenNCC = new javax.swing.JTextField();
         txtTenNCC = new javax.swing.JLabel();
@@ -26,6 +41,7 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
         txtSDT = new javax.swing.JLabel();
         nhapSDT = new javax.swing.JTextField();
         btnNCC = new javax.swing.JPanel();
+        btnNCC.setBorder(new EmptyBorder(10, 0, 5, 0));
         pnlThem = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         pnlHuy = new javax.swing.JPanel();
@@ -36,28 +52,13 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
         titlePanel.setBackground(new java.awt.Color(51, 0, 51));
         titlePanel.setForeground(new java.awt.Color(255, 255, 255));
 
-        txtNCC.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtNCC.setFont(new Font("Segoe UI", Font.BOLD, 24)); // NOI18N
         txtNCC.setForeground(new java.awt.Color(255, 255, 255));
         txtNCC.setText("THÊM NHÀ CUNG CẤP");
 
-        javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
-        titlePanel.setLayout(titlePanelLayout);
-        titlePanelLayout.setHorizontalGroup(
-            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titlePanelLayout.createSequentialGroup()
-                .addGap(304, 304, 304)
-                .addComponent(txtNCC)
-                .addContainerGap(328, Short.MAX_VALUE))
-        );
-        titlePanelLayout.setVerticalGroup(
-            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titlePanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(txtNCC)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-
         add(titlePanel, java.awt.BorderLayout.PAGE_START);
+        titlePanel.setLayout(new GridLayout(0, 1, 0, 0));
+        titlePanel.add(txtNCC);
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setLayout(new java.awt.GridLayout(2, 2, 20, 0));
@@ -70,31 +71,13 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
             }
         });
 
-        txtTenNCC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTenNCC.setFont(new Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         txtTenNCC.setText("Tên Nhà Cung Cấp");
 
-        javax.swing.GroupLayout pnlTenLayout = new javax.swing.GroupLayout(pnlTen);
-        pnlTen.setLayout(pnlTenLayout);
-        pnlTenLayout.setHorizontalGroup(
-            pnlTenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTenLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(pnlTenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTenNCC)
-                    .addComponent(nhapTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
-        pnlTenLayout.setVerticalGroup(
-            pnlTenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTenLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(txtTenNCC)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nhapTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
-
         mainPanel.add(pnlTen);
+        pnlTen.setLayout(new GridLayout(2, 1, 0, 0));
+        pnlTen.add(txtTenNCC);
+        pnlTen.add(nhapTenNCC);
 
         pnlDiaChi.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -104,36 +87,18 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
             }
         });
 
-        txtDiaChi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtDiaChi.setFont(new Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         txtDiaChi.setText("Địa Chỉ");
 
-        javax.swing.GroupLayout pnlDiaChiLayout = new javax.swing.GroupLayout(pnlDiaChi);
-        pnlDiaChi.setLayout(pnlDiaChiLayout);
-        pnlDiaChiLayout.setHorizontalGroup(
-            pnlDiaChiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDiaChiLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(pnlDiaChiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDiaChi)
-                    .addComponent(nhapDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(56, Short.MAX_VALUE))
-        );
-        pnlDiaChiLayout.setVerticalGroup(
-            pnlDiaChiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDiaChiLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(txtDiaChi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nhapDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
         mainPanel.add(pnlDiaChi);
+        pnlDiaChi.setLayout(new GridLayout(2, 1, 0, 0));
+        pnlDiaChi.add(txtDiaChi);
+        pnlDiaChi.add(nhapDiaChi);
 
         pnlEmail.setBackground(new java.awt.Color(255, 255, 255));
         pnlEmail.setForeground(new java.awt.Color(255, 255, 255));
 
-        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEmail.setFont(new Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         txtEmail.setText("Email");
 
         nhapEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -142,32 +107,14 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout pnlEmailLayout = new javax.swing.GroupLayout(pnlEmail);
-        pnlEmail.setLayout(pnlEmailLayout);
-        pnlEmailLayout.setHorizontalGroup(
-            pnlEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEmailLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(pnlEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEmail)
-                    .addComponent(nhapEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
-        );
-        pnlEmailLayout.setVerticalGroup(
-            pnlEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEmailLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(txtEmail)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nhapEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
         mainPanel.add(pnlEmail);
+        pnlEmail.setLayout(new GridLayout(2, 1, 0, 0));
+        pnlEmail.add(txtEmail);
+        pnlEmail.add(nhapEmail);
 
         pnlSDT.setBackground(new java.awt.Color(255, 255, 255));
 
-        txtSDT.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSDT.setFont(new Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         txtSDT.setText("Số Điện Thoại");
 
         nhapSDT.addActionListener(new java.awt.event.ActionListener() {
@@ -176,28 +123,10 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout pnlSDTLayout = new javax.swing.GroupLayout(pnlSDT);
-        pnlSDT.setLayout(pnlSDTLayout);
-        pnlSDTLayout.setHorizontalGroup(
-            pnlSDTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSDTLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(pnlSDTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSDT)
-                    .addComponent(nhapSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
-        );
-        pnlSDTLayout.setVerticalGroup(
-            pnlSDTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSDTLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(txtSDT)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nhapSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
         mainPanel.add(pnlSDT);
+        pnlSDT.setLayout(new GridLayout(2, 1, 0, 0));
+        pnlSDT.add(txtSDT);
+        pnlSDT.add(nhapSDT);
 
         add(mainPanel, java.awt.BorderLayout.CENTER);
 
@@ -206,7 +135,7 @@ public class ThemNhaCungCap extends javax.swing.JPanel {
         pnlThem.setPreferredSize(new java.awt.Dimension(230, 45));
         pnlThem.setLayout(new java.awt.BorderLayout());
 
-        btnThem.setBackground(new java.awt.Color(51, 204, 0));
+        btnThem.setBackground(new Color(0, 128, 0));
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("THÊM ĐƠN VỊ");

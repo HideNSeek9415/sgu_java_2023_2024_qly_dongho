@@ -1,6 +1,7 @@
 package gui.dashboard;
 
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.AbstractButton;
@@ -305,7 +306,17 @@ public class PhieuNhapGUI extends JPanel {
 		makeHoverEff(btnxuat);
 		makeHoverEff(btnthem);
 		makeHoverEff(btnlammoi);
+		addStuff();
 
+	}
+
+	private void addStuff() {
+		btnthem.addActionListener(e -> {
+			JFrame fr = new ThemPhieuNhap();
+			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fr.setLocationRelativeTo(null);
+			fr.setVisible(true);
+		});		
 	}
 
 	private void addIcon() {
