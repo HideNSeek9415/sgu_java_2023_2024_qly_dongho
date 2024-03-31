@@ -73,5 +73,13 @@ public class ProductManagerGUI extends NewJPanel {
 		table.getTableHeader().setFont(table.getFont());
 		
 	}
+	
+	@Override
+	protected void setAddEvent() {
+		JFrame fr = new ThemSPGUI();
+		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		fr.setLocationRelativeTo(null);
+		fr.setVisible(true);
+	}
 
 }

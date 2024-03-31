@@ -1,6 +1,7 @@
 package gui.dashboard;
 
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.AbstractButton;
@@ -174,7 +175,7 @@ public class PhieuNhapGUI extends JPanel {
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		panel_2.setBackground(new Color(255, 255, 255));
-		panel_2.setPreferredSize(new Dimension(200, 10));
+		panel_2.setPreferredSize(new Dimension(250, 10));
 		panel.add(panel_2, BorderLayout.WEST);
 		panel_2.setLayout(new GridLayout(8, 0, 0, 0));
 		
@@ -217,6 +218,8 @@ public class PhieuNhapGUI extends JPanel {
 		panel_7.add(lblNewLabel_3);
 		
 		dateChooser = new JDateChooser();
+		dateChooser.setOpaque(false);
+		dateChooser.setDateFormatString("dd/MM/yyyy");
 		dateChooser.setBackground(new Color(240, 247, 250));
 		panel_7.add(dateChooser);
 		
@@ -231,6 +234,8 @@ public class PhieuNhapGUI extends JPanel {
 		panel_8.add(lblNewLabel_4);
 		
 		dateChooser_1 = new JDateChooser();
+		dateChooser_1.setOpaque(false);
+		dateChooser_1.setDateFormatString("dd/MM/yyyy");
 		dateChooser_1.setBackground(new Color(240, 247, 250));
 		panel_8.add(dateChooser_1);
 		
@@ -245,7 +250,7 @@ public class PhieuNhapGUI extends JPanel {
 		panel_9.add(lblNewLabel_5);
 		
 		comboBox_5 = new JSpinner();
-		comboBox_5.setModel(new SpinnerNumberModel(Integer.valueOf(0), null, null, Integer.valueOf(100000)));
+		comboBox_5.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100000)));
 		panel_9.add(comboBox_5);
 		
 		panel_6 = new JPanel();
@@ -259,7 +264,7 @@ public class PhieuNhapGUI extends JPanel {
 		panel_6.add(lblNewLabel_2);
 		
 		comboBox_2 = new JSpinner();
-		comboBox_2.setModel(new SpinnerNumberModel(Integer.valueOf(0), null, null, Integer.valueOf(100000)));
+		comboBox_2.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100000)));
 		panel_6.add(comboBox_2);
 		
 		panel_3 = new JPanel();
@@ -301,15 +306,25 @@ public class PhieuNhapGUI extends JPanel {
 		makeHoverEff(btnxuat);
 		makeHoverEff(btnthem);
 		makeHoverEff(btnlammoi);
+		addStuff();
 
+	}
+
+	private void addStuff() {
+		btnthem.addActionListener(e -> {
+			JFrame fr = new ThemPhieuNhap();
+			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fr.setLocationRelativeTo(null);
+			fr.setVisible(true);
+		});		
 	}
 
 	private void addIcon() {
 		// TODO Auto-generated method stub
-		btnthem.setIcon(FontIcon.of(MaterialDesignP.PLUS_CIRCLE, 50, Color.green));
+		btnthem.setIcon(FontIcon.of(MaterialDesignP.PLUS_CIRCLE, 50, Color.decode("#2ecc71")));
 		btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION,50,Color.decode("#2196f3")));
 		btnhuy.setIcon(FontIcon.of(MaterialDesignC.CLOSE_CIRCLE_OUTLINE,50,Color.red));
-		btnxuat.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL,50,Color.green));
+		btnxuat.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL,50,Color.decode("#147943")));
 		btnlammoi.setIcon(FontIcon.of(MaterialDesignR.RELOAD,20,Color.white));
 		
 	}

@@ -75,12 +75,12 @@ public class FunctionBtn {
 			icon = FontIcon.of(FontAwesomeSolid.INBOX);
 			toggleButton.setText("Phiếu xuất");
 			panel.setBackground(Color.decode("#939201"));
-			panel = new PhieuNhapGUI();
+			panel = new PhieuXuatGUI();
 			break;
 		case RECIEPTS:
 			icon = FontIcon.of(FontAwesomeSolid.ENVELOPE_OPEN_TEXT);
 			toggleButton.setText("Phiếu nhập");
-			panel = new PhieuXuatGUI();
+			panel = new PhieuNhapGUI();
 			break;
 		case CUSTOMERS:
 			icon = FontIcon.of(FontAwesomeSolid.USERS);

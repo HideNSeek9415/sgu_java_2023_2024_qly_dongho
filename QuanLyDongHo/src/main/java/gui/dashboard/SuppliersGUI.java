@@ -1,7 +1,10 @@
 package gui.dashboard;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -49,6 +52,19 @@ public class SuppliersGUI extends NewJPanel {
 		table.getTableHeader().setBackground(Color.decode("#f4c82d"));
 		table.getTableHeader().setFont(table.getFont());
 		
+	}
+	
+	@Override
+	protected void setAddEvent() {
+		// TODO Auto-generated method stub
+		JFrame fr = new JFrame();
+		JPanel contentPane = new ThemNhaCungCap();
+		fr.setContentPane(contentPane);
+		fr.setBounds(10, 10, 761, 318);
+		fr.setResizable(false);
+		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		fr.setLocationRelativeTo(null);
+		fr.setVisible(true);
 	}
 
 }
