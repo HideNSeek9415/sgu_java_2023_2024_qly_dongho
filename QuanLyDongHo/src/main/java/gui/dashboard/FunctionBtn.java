@@ -54,7 +54,8 @@ public class FunctionBtn {
 		case HOME:
 			icon = FontIcon.of(FontAwesomeSolid.HOME);
 			toggleButton.setText("Trang chủ");
-			panel = new ProductGridPanel();
+//			panel = new ProductGridPanel();
+			panel = new TmpHomePanel();
 			break;
 		case PRODUCTS:
 			icon = FontIcon.of(FontAwesomeSolid.SHOPPING_BAG);
@@ -99,6 +100,7 @@ public class FunctionBtn {
 		case ACOOUNTS:
 			icon = FontIcon.of(FontAwesomeSolid.KEY);
 			toggleButton.setText("Tài khoản");
+			panel = new TmpHomePanel();
 			break;
 		case STATISTICAL:
 			icon = FontIcon.of(FontAwesomeSolid.CHART_LINE);
