@@ -316,7 +316,13 @@ public class PhieuNhapGUI extends JPanel {
 			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			fr.setLocationRelativeTo(null);
 			fr.setVisible(true);
-		});		
+		});
+		btnchitiet.addActionListener(e -> {
+			JFrame fr = new ChiTietPhieuNhap();
+			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fr.setLocationRelativeTo(null);
+			fr.setVisible(true);
+		});
 	}
 
 	private void addIcon() {

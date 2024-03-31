@@ -54,7 +54,7 @@ public class FunctionBtn {
 		case HOME:
 			icon = FontIcon.of(FontAwesomeSolid.HOME);
 			toggleButton.setText("Trang chủ");
-			panel = new NewJPanel(true, true, true, true, true, true, true) {};
+			panel = new ProductGridPanel();
 			break;
 		case PRODUCTS:
 			icon = FontIcon.of(FontAwesomeSolid.SHOPPING_BAG);

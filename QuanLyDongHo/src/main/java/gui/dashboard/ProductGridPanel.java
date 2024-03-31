@@ -1,4 +1,5 @@
-package Java;
+package gui.dashboard;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -16,9 +17,9 @@ public class ProductGridPanel extends JPanel {
         setLayout(new GridLayout(0, 4, 10, 10));
         setBackground(DEFAULT_BACKGROUND_COLOR);
     
-        String[] productNames = {"Sản phẩm 1", "Sản phẩm 2", "Sản phẩm 3", "Sản phẩm 4", "Sản phẩm 5", "Sản phẩm 6", "Sản phẩm 7", "Sản phẩm 8", "Sản phẩm 9", "Sản phẩm 10"};
-        double[] productPrices = {10.99, 19.99, 7.99, 14.99, 24.99, 12.99, 9.99, 16.99, 11.99, 8.99};
-        String[] productImages = {"Java/img/img1.png", "Java/img/img2.png", "Java/img/img3.png", "Java/img/img4.png", "Java/img/img5.png", "Java/img/img6.png", "Java/img/img7.png", "Java/img/img8.png", "Java/img/img9.png", "Java/img/img10.png"};
+        String[] productNames = {"Sản phẩm 1", "Sản phẩm 2", "Sản phẩm 3", "Sản phẩm 4", "Sản phẩm 5", "Sản phẩm 6", "Sản phẩm 7", "Sản phẩm 8", "Sản phẩm 9", "Sản phẩm 10", "Sản phẩm 1", "Sản phẩm 2", "Sản phẩm 3", "Sản phẩm 4", "Sản phẩm 5", "Sản phẩm 6", "Sản phẩm 7", "Sản phẩm 8", "Sản phẩm 9", "Sản phẩm 10"};
+        double[] productPrices = {10.99, 19.99, 7.99, 14.99, 24.99, 12.99, 9.99, 16.99, 11.99, 8.99, 10.99, 19.99, 7.99, 14.99, 24.99, 12.99, 9.99, 16.99, 11.99, 8.99};
+        String[] productImages = {"Java/img/img1.png", "Java/img/img2.png", "Java/img/img3.png", "Java/img/img4.png", "Java/img/img5.png", "Java/img/img6.png", "Java/img/img7.png", "Java/img/img8.png", "Java/img/img9.png", "Java/img/img10.png", "Java/img/img1.png", "Java/img/img2.png", "Java/img/img3.png", "Java/img/img4.png", "Java/img/img5.png", "Java/img/img6.png", "Java/img/img7.png", "Java/img/img8.png", "Java/img/img9.png", "Java/img/img10.png"};
     
         for (int i = 0; i < productNames.length; i++) {
             String productName = productNames[i];
