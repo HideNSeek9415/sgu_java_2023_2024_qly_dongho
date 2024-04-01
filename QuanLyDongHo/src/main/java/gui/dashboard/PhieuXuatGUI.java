@@ -34,6 +34,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Cursor;
+import javax.swing.JFrame;
 
 public class PhieuXuatGUI extends JPanel {
 
@@ -287,7 +288,16 @@ public class PhieuXuatGUI extends JPanel {
 		makeHoverEff(btnhuy);
 		makeHoverEff(btnxuat);
 		makeHoverEff(btnlammoi);
-
+                addStuff();
+	}
+        
+        private void addStuff() {
+		btnchitiet.addActionListener(e -> {
+			JFrame fr = new ChiTietPhieuXuat();
+			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			fr.setLocationRelativeTo(null);
+			fr.setVisible(true);
+		});
 	}
 
 	private void addIcon() {
