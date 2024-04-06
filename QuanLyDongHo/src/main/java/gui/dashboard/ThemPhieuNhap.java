@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -14,9 +15,20 @@ public class ThemPhieuNhap extends javax.swing.JFrame {
     public ThemPhieuNhap() {
     	getContentPane().setBackground(new Color(240, 247, 250));
         initComponents();
+        addEvent();
     }
 
-    @SuppressWarnings("unchecked")
+    private void addEvent() {
+		// TODO Auto-generated method stub
+    	btnThemSP.addActionListener(e -> {
+    		JFrame fr = new ThemSPGUI();
+    		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    		fr.setLocationRelativeTo(null);
+    		fr.setVisible(true);
+    	});
+	}
+
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

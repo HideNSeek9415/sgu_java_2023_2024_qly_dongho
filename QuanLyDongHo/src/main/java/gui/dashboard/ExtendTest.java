@@ -43,6 +43,7 @@ public class ExtendTest extends DashboardFrame {
 		addFunction(new FunctionBtn(FunctionBtn.ACOOUNTS));
 		addFunction(new FunctionBtn(FunctionBtn.STATISTICAL));
 		addFunction(new FunctionBtn(FunctionBtn.PERMISSION));
+		addFunction(new FunctionBtn(FunctionBtn.WARRANTY));
 		addFunction(new FunctionBtn(322));
 		changeLabel("Bùi Trung Hiếu", "Admin");
 	}

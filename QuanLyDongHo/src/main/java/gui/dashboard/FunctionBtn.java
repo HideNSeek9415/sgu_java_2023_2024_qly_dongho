@@ -14,6 +14,8 @@ import javax.swing.plaf.metal.MetalToggleButtonUI;
 
 import org.kordamp.ikonli.fontawesome.FontAwesome;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignS;
 import org.kordamp.ikonli.swing.FontIcon;
 
 
@@ -34,6 +36,8 @@ public class FunctionBtn {
 	public final static int ACOOUNTS = 10;
 	public final static int STATISTICAL = 11;
 	public final static int PERMISSION = 12;
+	public final static int WARRANTY = 13;
+	
 	
 	
 	public JToggleButton getToggleButton() {
@@ -110,6 +114,10 @@ public class FunctionBtn {
 		case PERMISSION:
 			icon = FontIcon.of(FontAwesomeSolid.LIST_ALT);
 			toggleButton.setText("Phân quyền");
+			break;
+		case WARRANTY:
+			icon = FontIcon.of(MaterialDesignS.SHIELD_CHECK);
+			toggleButton.setText("Bảo hành");
 			break;
 		default:
 			icon = FontIcon.of(FontAwesome.ANGLE_DOUBLE_DOWN);

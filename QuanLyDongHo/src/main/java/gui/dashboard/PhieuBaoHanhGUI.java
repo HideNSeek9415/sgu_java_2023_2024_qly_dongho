@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 public class PhieuBaoHanhGUI extends JPanel {
 
@@ -27,7 +29,6 @@ public class PhieuBaoHanhGUI extends JPanel {
 	private JPanel panel_5;
 	private JPanel panel_6;
 	private JPanel panel_7;
-	private JTextField textField;
 	private JLabel lblNewLabel_1;
 	private JTextField textField_1;
 	private JLabel lblNewLabel_2;
@@ -49,6 +50,10 @@ public class PhieuBaoHanhGUI extends JPanel {
 	private JTextField textField_7;
 	private JButton btnNewButton;
 	private JPanel panel_13;
+	private JPanel panel_14;
+	private JLabel lblNewLabel_8;
+	private JLabel lblNewLabel_9;
+	private JLabel lblNewLabel_10;
 
 	/**
 	 * Create the panel.
@@ -90,9 +95,32 @@ public class PhieuBaoHanhGUI extends JPanel {
 		panel_2.add(panel_5);
 		panel_5.setLayout(new BorderLayout(30, 30));
 		
-		textField = new JTextField();
-		panel_5.add(textField, BorderLayout.CENTER);
-		textField.setColumns(10);
+		panel_14 = new JPanel();
+		panel_14.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_5.add(panel_14, BorderLayout.CENTER);
+		panel_14.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		lblNewLabel_8 = new JLabel("Mã đơn hàng");
+		lblNewLabel_8.setBackground(new Color(255, 255, 255));
+		lblNewLabel_8.setOpaque(true);
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		panel_14.add(lblNewLabel_8);
+		
+		lblNewLabel_9 = new JLabel("Mã khách hàng");
+		lblNewLabel_9.setBorder(new MatteBorder(0, 1, 0, 1, (Color) new Color(0, 0, 0)));
+		lblNewLabel_9.setBackground(new Color(255, 255, 255));
+		lblNewLabel_9.setOpaque(true);
+		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		panel_14.add(lblNewLabel_9);
+		
+		lblNewLabel_10 = new JLabel("Mã sản phẩm");
+		lblNewLabel_10.setBackground(new Color(255, 255, 255));
+		lblNewLabel_10.setOpaque(true);
+		lblNewLabel_10.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_10.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		panel_14.add(lblNewLabel_10);
 		
 		panel_6 = new JPanel();
 		panel_6.setBackground(new Color(240, 247, 250));

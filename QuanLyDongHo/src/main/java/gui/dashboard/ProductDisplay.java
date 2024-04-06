@@ -36,18 +36,22 @@ public class ProductDisplay extends JPanel {
 	private JPanel pn2;
 	private JButton btnSell;
 	private JLabel lblName;
+	private JPanel pnPrice;
 	private JLabel lblPrice;
 	private JLabel lblStatus;
+	private JPanel panel_1;
+	private JLabel lblCross;
+	private JLabel lblSale;
 
 	/**
 	 * Create the panel.
 	 */
 	public ProductDisplay() {
 		setSize(new Dimension(270, 360));
-		setMaximumSize(new Dimension(270, 360));
+		setPreferredSize(new Dimension(240, 350));
+		setMaximumSize(getPreferredSize());
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setBackground(new Color(255, 255, 255));
-		setPreferredSize(new Dimension(240, 320));
 		setLayout(new BorderLayout(0, 0));
 		
 		lblImg = new JLabel("<html>IMAGE WILL TAKE<br>PLACE HERE</html>");
@@ -86,45 +90,78 @@ public class ProductDisplay extends JPanel {
 		pn2.setBorder(new EmptyBorder(0, 10, 0, 0));
 		pn2.setOpaque(false);
 		panel.add(pn2, BorderLayout.CENTER);
-		pn2.setLayout(new GridLayout(3, 0, 0, 0));
+		pn2.setLayout(new BorderLayout(0, 0));
 		
-		lblName = new JLabel("Tên sản phẩm ở đây");
+		lblName = new JLabel();
+		lblName.setText("Tên sản phẩm ở đây Tên sản phẩm ở đây");
+		lblName.setPreferredSize(new Dimension(112, 50));
+		lblName.setMaximumSize(lblName.getPreferredSize());
+		lblName.setMinimumSize(new Dimension(10, 10));
 		lblName.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblName.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblName.setPreferredSize(new Dimension(112, 50));
+		lblName.setVerticalAlignment(SwingConstants.TOP);
 		lblName.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		pn2.add(lblName);
+		pn2.add(lblName, BorderLayout.NORTH);
+		
+		pnPrice = new JPanel();
+		pnPrice.setOpaque(false);
+		pn2.add(pnPrice, BorderLayout.CENTER);
+		pnPrice.setLayout(new GridLayout(2, 1, 0, 0));
 		
 		lblPrice = new JLabel("23,490,000₫");
 		lblPrice.setForeground(new Color(227, 116, 42));
 		lblPrice.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		pn2.add(lblPrice);
+		pnPrice.add(lblPrice);
+		
+		panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		pnPrice.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		lblCross = new JLabel() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void setText(String text) {
+				super.setText("<html><strike>" + text + "</strike></html>");
+			}
+		};
+		lblCross.setText("20,930,000₫");
+		lblCross.setForeground(Color.GRAY);
+		lblCross.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		panel_1.add(lblCross);
+		
+		lblSale = new JLabel("-25%");
+		lblSale.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSale.setForeground(new Color(240, 92, 92));
+		lblSale.setOpaque(true);
+		lblSale.setBackground(new Color(249, 233, 226));
+		lblSale.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_1.add(lblSale);
 		
 		lblStatus = new JLabel("CÒN HÀNG");
 		lblStatus.setVerticalAlignment(SwingConstants.TOP);
 		lblStatus.setFont(new Font("Roboto Mono", Font.PLAIN, 15));
-		pn2.add(lblStatus);
+		pn2.add(lblStatus, BorderLayout.SOUTH);
 		
 		addStuff();
 
 	}
 
 	private void addStuff() {
-		// TODO Auto-generated method stub
 		btnSell.setIcon(FontIcon.of(MaterialDesignC.CART, 20, btnSell.getForeground()));
 		btnSell.setFocusPainted(false);
 		makeHoverEff(btnSell);
 		lblName.addMouseListener(new MouseAdapter() {
-			private String prdname = lblName.getText();
+			private String txt = lblName.getText();
 			@Override
 		    public void mouseEntered(MouseEvent e) {
-				lblName.setText("<html><u>" + prdname + "</u></html>");
-			}
-	
+				lblName.setText("<html><u>" + txt + "</u></html>");
+			}	
 			@Override
-			public void mouseExited(MouseEvent e) {
-				lblName.setText(prdname);
+		    public void mouseExited(MouseEvent e) {
+				lblName.setText("<html>" + txt + "</html>");
+
 			}
-			
 			@Override
 		    public void mouseClicked(MouseEvent e) {
 				JFrame fr = new ProductDetailsGUI();
@@ -133,6 +170,8 @@ public class ProductDisplay extends JPanel {
 				fr.setVisible(true);
 			}
 		});
+        MouseEvent mouseEvent = new MouseEvent(lblName, MouseEvent.MOUSE_EXITED, System.currentTimeMillis(), 0, 0, 0, 0, false);
+        lblName.dispatchEvent(mouseEvent);
 	}
 	
 	private void makeHoverEff(AbstractButton btn) {

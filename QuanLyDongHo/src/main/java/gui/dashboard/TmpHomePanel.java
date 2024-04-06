@@ -4,16 +4,23 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.metal.MetalScrollPaneUI;
+
 import java.awt.GridLayout;
+import java.awt.event.*;
 import java.awt.FlowLayout;
+import javax.swing.JScrollPane;
+import javax.swing.BoxLayout;
+import javax.swing.ScrollPaneConstants;
 
 public class TmpHomePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel panel;
 	
-	private int row = 2;
+	private int row = 4;
 	private int col = 4;
+	private JScrollPane scrollPane;
+	private JPanel panel;
 
 	/**
 	 * Create the panel.
@@ -24,10 +31,15 @@ public class TmpHomePanel extends JPanel {
 		setPreferredSize(new Dimension(1150, 800));
 		setLayout(new GridLayout(1, 0, 0, 0));
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBorder(null);
+		add(scrollPane);
+		
 		panel = new JPanel();
-		panel.setOpaque(false);
-		add(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 15));
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		scrollPane.setViewportView(panel);
+		panel.setLayout(new GridLayout(4, 4, 10, 10));
 		
 		addStuff();
 
@@ -35,11 +47,11 @@ public class TmpHomePanel extends JPanel {
 
 	private void addStuff() {
 		// TODO Auto-generated method stub
-		for (int i = 1; i <= row*col; i++) {
+		for (int i = 1; i <= 16; i++) {
 			JPanel prdpn = new ProductDisplay();
-			prdpn.setPreferredSize(new Dimension(240, 320));
-			prdpn.setMinimumSize(new Dimension(240, 320));
-			prdpn.setMinimumSize(new Dimension(240, 320));
+			prdpn.setPreferredSize(new Dimension(240, 350));
+			prdpn.setMinimumSize(new Dimension(240, 350));
+			prdpn.setMinimumSize(new Dimension(240, 350));
 			prdpn.setSize(new Dimension(240, 320));
 			panel.add(prdpn);
 		}

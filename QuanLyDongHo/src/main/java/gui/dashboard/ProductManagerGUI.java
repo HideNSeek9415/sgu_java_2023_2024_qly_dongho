@@ -63,23 +63,21 @@ public class ProductManagerGUI extends NewJPanel {
 		scrollPane.setViewportView(table);
 		
 		designTitle();
+		addStuff();
 
 	}
 		
+
+	private void addStuff() {
+		setToolsEnabled(false, false, false, true, true, true, true);
+	}
+
 
 	private void designTitle() {
 		// TODO Auto-generated method stub
 		table.getTableHeader().setBackground(Color.decode("#f4c82d"));
 		table.getTableHeader().setFont(table.getFont());
 		
-	}
-	
-	@Override
-	protected void setAddEvent() {
-		JFrame fr = new ThemSPGUI();
-		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		fr.setLocationRelativeTo(null);
-		fr.setVisible(true);
 	}
 
 }
