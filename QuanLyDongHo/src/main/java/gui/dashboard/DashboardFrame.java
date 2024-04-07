@@ -212,6 +212,13 @@ public class DashboardFrame extends JFrame {
 		    public void mouseExited(MouseEvent e) {
 				lblCurrentUser.setText(name);
 		    }
+			@Override
+		    public void mouseClicked(MouseEvent e) {
+				JFrame fr = new UserInfo();
+				fr.setLocationRelativeTo(null);
+				fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				fr.setVisible(true);
+		    }
 		});
 	}
 }

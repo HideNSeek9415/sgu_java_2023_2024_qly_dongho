@@ -66,5 +66,13 @@ public class SuppliersGUI extends NewJPanel {
 		fr.setLocationRelativeTo(null);
 		fr.setVisible(true);
 	}
+	
+	@Override
+	protected void setDetailEvent() {
+		JFrame fr = new SupplierDetails();
+		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		fr.setLocationRelativeTo(null);
+		fr.setVisible(true);
+	}
 
 }

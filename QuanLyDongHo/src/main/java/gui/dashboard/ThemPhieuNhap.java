@@ -21,10 +21,7 @@ public class ThemPhieuNhap extends javax.swing.JFrame {
     private void addEvent() {
 		// TODO Auto-generated method stub
     	btnThemSP.addActionListener(e -> {
-    		JFrame fr = new ThemSPGUI();
-    		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    		fr.setLocationRelativeTo(null);
-    		fr.setVisible(true);
+
     	});
 	}
 
