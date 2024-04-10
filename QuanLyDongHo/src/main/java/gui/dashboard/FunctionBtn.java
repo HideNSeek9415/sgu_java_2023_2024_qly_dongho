@@ -24,20 +24,18 @@ public class FunctionBtn {
 	private JPanel panel = new JPanel();
 	private FontIcon icon;
 	
-	public final static int HOME = 1;
-	public final static int PRODUCTS = 2;
-	public final static int PRODUCT_PROPERTIES = 3;
-	public final static int WAREHOUSE = 4;
-	public final static int ORDERS = 5;
-	public final static int RECIEPTS = 6;
-	public final static int CUSTOMERS = 7;
-	public final static int SUPPLIES = 8;
-	public final static int EMPLOYEES = 9;
-	public final static int ACOOUNTS = 10;
-	public final static int STATISTICAL = 11;
-	public final static int PERMISSION = 12;
-	public final static int WARRANTY = 13;
-	
+	public final static String HOME = "HOME";
+	public final static String PRODUCTS = "PRODUCTS";
+	public final static String ORDERS = "ORDERS";
+	public final static String RECEIPTS = "RECEIPTS";
+	public final static String CUSTOMERS = "CUSTOMERS";
+	public final static String SUPPLIERS = "SUPPLIERS";
+	public final static String EMPLOYEES = "EMPLOYEES";
+	public final static String ACCOUNTS = "ACOOUNTS";
+	public final static String STATISTICAL = "STATISTICAL";
+	public final static String PERMISSION = "PERMISSION";
+	public final static String WARRANTY = "WARRANTY";
+	public final static String HISTORY = "HISTORY";
 	
 	
 	public JToggleButton getToggleButton() {
@@ -48,7 +46,7 @@ public class FunctionBtn {
 		return panel;
 	}
 
-	public FunctionBtn(int type) {
+	public FunctionBtn(String type) {
 		toggleButton.setBackground(new Color(42, 62, 80));
 		toggleButton.setHorizontalAlignment(SwingConstants.LEFT);
 		toggleButton.setBorder(new EmptyBorder(0, 15, 0, 0));
@@ -66,23 +64,13 @@ public class FunctionBtn {
 			toggleButton.setText("Sản phẩm");
 			panel = new ProductManagerGUI();
 			break;
-		case PRODUCT_PROPERTIES:
-			icon = FontIcon.of(FontAwesomeSolid.SHAPES);
-			toggleButton.setText("Thuộc tính SP");
-			panel = new NewJPanel(true, true, true, false, false, true, true) {};
-			break;
-		case WAREHOUSE:
-			icon = FontIcon.of(FontAwesomeSolid.BOX_OPEN);
-			toggleButton.setText("Kho hàng");
-			panel = new NewJPanel(true, false, true, false, true, false, true) {};
-			break;
 		case ORDERS:
 			icon = FontIcon.of(FontAwesomeSolid.INBOX);
 			toggleButton.setText("Phiếu xuất");
 			panel.setBackground(Color.decode("#939201"));
 			panel = new PhieuXuatGUI();
 			break;
-		case RECIEPTS:
+		case RECEIPTS:
 			icon = FontIcon.of(FontAwesomeSolid.ENVELOPE_OPEN_TEXT);
 			toggleButton.setText("Phiếu nhập");
 			panel = new PhieuNhapGUI();
@@ -90,8 +78,9 @@ public class FunctionBtn {
 		case CUSTOMERS:
 			icon = FontIcon.of(FontAwesomeSolid.USERS);
 			toggleButton.setText("Khách hàng");
+			panel = new CustomerManagerGUI();
 			break;
-		case SUPPLIES:
+		case SUPPLIERS:
 			icon = FontIcon.of(FontAwesomeSolid.TRUCK);
 			toggleButton.setText("Nhà cung cấp");
 			panel = new SuppliersGUI();
@@ -101,7 +90,7 @@ public class FunctionBtn {
 			toggleButton.setText("Nhân viên");
 			panel = new EmployeesGUI();
 			break;
-		case ACOOUNTS:
+		case ACCOUNTS:
 			icon = FontIcon.of(FontAwesomeSolid.KEY);
 			toggleButton.setText("Tài khoản");
 			panel = new TmpHomePanel();
@@ -118,6 +107,10 @@ public class FunctionBtn {
 		case WARRANTY:
 			icon = FontIcon.of(MaterialDesignS.SHIELD_CHECK);
 			toggleButton.setText("Bảo hành");
+			break;
+		case HISTORY:
+			icon = FontIcon.of(MaterialDesignC.CLIPBOARD_TEXT_SEARCH_OUTLINE);
+			toggleButton.setText("Lịch sử mua hàng");
 			break;
 		default:
 			icon = FontIcon.of(FontAwesome.ANGLE_DOUBLE_DOWN);

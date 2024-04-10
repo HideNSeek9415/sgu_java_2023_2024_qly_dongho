@@ -19,7 +19,6 @@ public class ExtendTest extends DashboardFrame {
 					ExtendTest frame = new ExtendTest();
 					frame.setVisible(true);
 //					gui.ShowMsg.showValidationMsg("Xác nhận thông tin thành công", frame);
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -33,18 +32,17 @@ public class ExtendTest extends DashboardFrame {
 	public ExtendTest() {
 		super();
 		addFunction(new FunctionBtn(FunctionBtn.PRODUCTS));
-		addFunction(new FunctionBtn(FunctionBtn.PRODUCT_PROPERTIES));
-		addFunction(new FunctionBtn(FunctionBtn.WAREHOUSE));
-		addFunction(new FunctionBtn(FunctionBtn.RECIEPTS));
+		addFunction(new FunctionBtn(FunctionBtn.RECEIPTS));
 		addFunction(new FunctionBtn(FunctionBtn.ORDERS));
 		addFunction(new FunctionBtn(FunctionBtn.CUSTOMERS));
-		addFunction(new FunctionBtn(FunctionBtn.SUPPLIES));
+		addFunction(new FunctionBtn(FunctionBtn.SUPPLIERS));
 		addFunction(new FunctionBtn(FunctionBtn.EMPLOYEES));
-		addFunction(new FunctionBtn(FunctionBtn.ACOOUNTS));
+		addFunction(new FunctionBtn(FunctionBtn.ACCOUNTS));
 		addFunction(new FunctionBtn(FunctionBtn.STATISTICAL));
 		addFunction(new FunctionBtn(FunctionBtn.PERMISSION));
 		addFunction(new FunctionBtn(FunctionBtn.WARRANTY));
-		addFunction(new FunctionBtn(322));
+		addFunction(new FunctionBtn(FunctionBtn.HISTORY));
+		addFunction(new FunctionBtn(""));
 		changeLabel("Bùi Trung Hiếu", "Admin");
 	}
 

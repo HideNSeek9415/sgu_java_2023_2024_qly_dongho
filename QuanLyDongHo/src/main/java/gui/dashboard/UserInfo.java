@@ -114,6 +114,7 @@ public class UserInfo extends JFrame {
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel = new JLabel("Họ và tên:");
+		lblNewLabel.setForeground(new Color(0, 0, 0));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setPreferredSize(new Dimension(200, 16));
 		panel_3.add(lblNewLabel, BorderLayout.WEST);
@@ -125,6 +126,7 @@ public class UserInfo extends JFrame {
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		txtNguynVnA = new JLabel();
+		txtNguynVnA.setForeground(new Color(0, 0, 0));
 		txtNguynVnA.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtNguynVnA.setBorder(null);
 		txtNguynVnA.setText("Nguyễn Văn A");
@@ -137,6 +139,7 @@ public class UserInfo extends JFrame {
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 		lblGiiTnh = new JLabel("Giới tính:");
+		lblGiiTnh.setForeground(new Color(0, 0, 0));
 		lblGiiTnh.setPreferredSize(new Dimension(200, 16));
 		lblGiiTnh.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel_5.add(lblGiiTnh, BorderLayout.WEST);
@@ -148,6 +151,7 @@ public class UserInfo extends JFrame {
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
 		textField = new JLabel();
+		textField.setForeground(new Color(0, 0, 0));
 		textField.setText("Nam");
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textField.setBorder(null);
@@ -160,6 +164,7 @@ public class UserInfo extends JFrame {
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel_2 = new JLabel("Email:");
+		lblNewLabel_2.setForeground(new Color(0, 0, 0));
 		lblNewLabel_2.setPreferredSize(new Dimension(200, 16));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel_7.add(lblNewLabel_2, BorderLayout.WEST);
@@ -171,6 +176,9 @@ public class UserInfo extends JFrame {
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
 		txtEmialkdsdlkdowesko = new JTextField();
+		txtEmialkdsdlkdowesko.setForeground(new Color(0, 0, 0));
+		txtEmialkdsdlkdowesko.setSelectedTextColor(new Color(255, 255, 255));
+		txtEmialkdsdlkdowesko.setBackground(new Color(255, 255, 255));
 		txtEmialkdsdlkdowesko.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtEmialkdsdlkdowesko.setText("emialkd.sdl@kdowe.sko");
 		txtEmialkdsdlkdowesko.setBorder(null);
@@ -184,6 +192,7 @@ public class UserInfo extends JFrame {
 		panel_10.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel_1 = new JLabel("Số điện thoại:");
+		lblNewLabel_1.setForeground(new Color(0, 0, 0));
 		lblNewLabel_1.setPreferredSize(new Dimension(200, 16));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel_10.add(lblNewLabel_1, BorderLayout.WEST);
@@ -195,6 +204,9 @@ public class UserInfo extends JFrame {
 		panel_13.setLayout(new BorderLayout(0, 0));
 		
 		textField_1 = new JTextField();
+		textField_1.setForeground(new Color(0, 0, 0));
+		textField_1.setSelectedTextColor(new Color(255, 255, 255));
+		textField_1.setBackground(new Color(255, 255, 255));
 		textField_1.setText("0322569884");
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textField_1.setColumns(10);
@@ -208,6 +220,7 @@ public class UserInfo extends JFrame {
 		panel_11.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel_3 = new JLabel("Địa chỉ:");
+		lblNewLabel_3.setForeground(new Color(0, 0, 0));
 		lblNewLabel_3.setPreferredSize(new Dimension(200, 16));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel_11.add(lblNewLabel_3, BorderLayout.WEST);
@@ -219,6 +232,9 @@ public class UserInfo extends JFrame {
 		panel_12.setLayout(new BorderLayout(0, 0));
 		
 		txtPhPhng = new JTextField();
+		txtPhPhng.setForeground(new Color(0, 0, 0));
+		txtPhPhng.setSelectedTextColor(new Color(255, 255, 255));
+		txtPhPhng.setBackground(new Color(255, 255, 255));
 		txtPhPhng.setText("34 Phố Phường, P. 3, Q. Ba Chỉ, TP. Abc Def");
 		txtPhPhng.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtPhPhng.setColumns(10);
@@ -243,7 +259,7 @@ public class UserInfo extends JFrame {
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setBackground(new Color(0, 128, 0));
+		btnNewButton.setBackground(new Color(0, 128, 64));
 		panel_1.add(btnNewButton);
 		
 		btnHyThayi = new JButton("Hủy thay đổi");
@@ -251,7 +267,7 @@ public class UserInfo extends JFrame {
 		btnHyThayi.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnHyThayi.setForeground(new Color(255, 255, 255));
 		btnHyThayi.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnHyThayi.setBackground(new Color(180, 33, 33));
+		btnHyThayi.setBackground(new Color(255, 91, 91));
 		panel_1.add(btnHyThayi);
 		
 		panel_2 = new JPanel();
@@ -268,11 +284,12 @@ public class UserInfo extends JFrame {
 		panel_14.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel_8 = new JLabel("Warehouse Manager");
+		lblNewLabel_8.setForeground(new Color(0, 0, 0));
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_8.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblNewLabel_8.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setIcon(FontIcon.of(MaterialDesignA.ACCOUNT_CIRCLE, 70, Color.black));
+		lblNewLabel_8.setIcon(FontIcon.of(MaterialDesignA.ACCOUNT_CIRCLE, 70, lblNewLabel_8.getForeground()));
 		lblNewLabel_8.setPreferredSize(new Dimension(150, 16));
 		panel_14.add(lblNewLabel_8, BorderLayout.WEST);
 		
@@ -282,12 +299,14 @@ public class UserInfo extends JFrame {
 		panel_18.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		lblNewLabel_9 = new JLabel("Khách hàng");
+		lblNewLabel_9.setForeground(new Color(0, 0, 0));
 		lblNewLabel_9.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_18.add(lblNewLabel_9);
 		
 		lblNewLabel_10 = new JLabel("tiềm năng");
+		lblNewLabel_10.setForeground(new Color(0, 0, 0));
 		lblNewLabel_10.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_10.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -306,11 +325,15 @@ public class UserInfo extends JFrame {
 		panel_16.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel_4 = new JLabel("Tên người dùng:");
+		lblNewLabel_4.setForeground(new Color(0, 0, 0));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_4.setPreferredSize(new Dimension(150, 16));
 		panel_16.add(lblNewLabel_4, BorderLayout.WEST);
 		
 		lblNewLabel_5 = new JTextField("nguoidungfacebook");
+		lblNewLabel_5.setForeground(new Color(0, 0, 0));
+		lblNewLabel_5.setBackground(new Color(255, 255, 255));
+		lblNewLabel_5.setSelectedTextColor(new Color(255, 255, 255));
 		lblNewLabel_5.setBorder(null);
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_16.add(lblNewLabel_5, BorderLayout.CENTER);
@@ -322,11 +345,15 @@ public class UserInfo extends JFrame {
 		panel_17.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel_6 = new JLabel("Mật khẩu:");
+		lblNewLabel_6.setForeground(new Color(0, 0, 0));
 		lblNewLabel_6.setPreferredSize(new Dimension(150, 16));
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_17.add(lblNewLabel_6, BorderLayout.WEST);
 		
 		lblNewLabel_7 = new JTextField("nguoidungfacebook");
+		lblNewLabel_7.setForeground(new Color(0, 0, 0));
+		lblNewLabel_7.setBackground(new Color(255, 255, 255));
+		lblNewLabel_7.setSelectedTextColor(new Color(255, 255, 255));
 		lblNewLabel_7.setBorder(null);
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_17.add(lblNewLabel_7, BorderLayout.CENTER);
@@ -338,11 +365,15 @@ public class UserInfo extends JFrame {
 		panel_19.setLayout(new BorderLayout(0, 0));
 		
 		lblNewLabel_11 = new JLabel("Ngày tham gia:");
+		lblNewLabel_11.setForeground(new Color(0, 0, 0));
 		lblNewLabel_11.setPreferredSize(new Dimension(150, 16));
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_19.add(lblNewLabel_11, BorderLayout.WEST);
 		
 		textField_2 = new JTextField("24/6/2024");
+		textField_2.setForeground(new Color(0, 0, 0));
+		textField_2.setBackground(new Color(255, 255, 255));
+		textField_2.setSelectedTextColor(new Color(255, 255, 255));
 		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		textField_2.setBorder(null);
 		panel_19.add(textField_2, BorderLayout.CENTER);
