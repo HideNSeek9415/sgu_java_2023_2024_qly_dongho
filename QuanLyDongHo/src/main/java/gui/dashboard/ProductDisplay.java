@@ -38,6 +38,7 @@ public class ProductDisplay extends JPanel {
     private Product selectedProduct;
 
     public ProductDisplay(Product product) {
+    	selectedProduct = product;
         setSize(new Dimension(270, 360));
         setPreferredSize(new Dimension(240, 350));
         setMaximumSize(getPreferredSize());
@@ -46,6 +47,7 @@ public class ProductDisplay extends JPanel {
         setLayout(new BorderLayout(0, 0));
 
         lblImg = new JLabel();
+        lblImg.setSize(new Dimension(240, 240));
         lblImg.setBorder(null);
         lblImg.setOpaque(true);
         lblImg.setBackground(new Color(192, 192, 192));
@@ -55,18 +57,6 @@ public class ProductDisplay extends JPanel {
         lblImg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblImg.setPreferredSize(new Dimension(240, 240));
         add(lblImg, BorderLayout.NORTH);
-        
-        String imageURL = product.getImageUrl();
-        if (imageURL != null && !imageURL.isEmpty()) {
-            ImageIcon icon = createImageIcon(imageURL);
-            if (icon != null) {
-                lblImg.setIcon(icon);
-            } else {
-                lblImg.setText("<html>Image not found</html>");
-            }
-        } else {
-            lblImg.setText("<html>No image available</html>");
-        }
         
         panel = new JPanel();
         panel.setOpaque(false);
@@ -112,8 +102,8 @@ public class ProductDisplay extends JPanel {
         pn2.add(pnPrice, BorderLayout.CENTER);
         pnPrice.setLayout(new GridLayout(2, 1, 0, 0));
 
-        double salePrice = product.getSalePrice();
-        String formattedPrice = formatCurrency(salePrice);
+        double sellPrice = product.getsellPrice();
+        String formattedPrice = formatCurrency(sellPrice);
 
         lblPrice = new JLabel(formattedPrice);
         lblPrice.setForeground(new Color(227, 116, 42));
@@ -159,7 +149,7 @@ public class ProductDisplay extends JPanel {
         makeHoverEff(btnSell);
         lblImg.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                JFrame fr = new ProductDetailsGUI();
+                JFrame fr = new ProductDetailsGUI(selectedProduct);
                 fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 fr.setLocationRelativeTo(null);
                 fr.setVisible(true);
@@ -178,7 +168,7 @@ public class ProductDisplay extends JPanel {
             }
             @Override
             public void mouseClicked(MouseEvent e) {
-                JFrame fr = new ProductDetailsGUI();
+                JFrame fr = new ProductDetailsGUI(selectedProduct);
                 fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 fr.setLocationRelativeTo(null);
                 fr.setVisible(true);
@@ -186,9 +176,19 @@ public class ProductDisplay extends JPanel {
         });
         MouseEvent mouseEvent = new MouseEvent(lblName, MouseEvent.MOUSE_EXITED, System.currentTimeMillis(), 0, 0, 0, 0, false);
         lblName.dispatchEvent(mouseEvent);
+        lblCross.setVisible(selectedProduct.isDiscount());
+        lblSale.setVisible(selectedProduct.isDiscount());
+        addImageProduct();
     }
 
-    private void makeHoverEff(AbstractButton btn) {
+    private void addImageProduct() {
+    	Image icon = new ImageIcon(getClass().getResource(selectedProduct.getImageUrl())).getImage();
+    	icon = icon.getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), Image.SCALE_SMOOTH);
+    	lblImg.setText("");
+    	lblImg.setIcon(new ImageIcon(icon));
+	}
+
+	private void makeHoverEff(AbstractButton btn) {
         Color iconColor = ((FontIcon) btn.getIcon()).getIconColor();
         Color bg = btn.getBackground();
         Color fore = btn.getForeground();
@@ -218,15 +218,6 @@ public class ProductDisplay extends JPanel {
         });
     }
     
-    private ImageIcon createImageIcon(String imageURL) {
-        try {
-            URL url = new URL(imageURL);
-            return new ImageIcon(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     
     private String formatCurrency(double amount) {
     	DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");

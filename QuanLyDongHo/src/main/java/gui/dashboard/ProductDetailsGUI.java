@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -74,6 +75,7 @@ public class ProductDetailsGUI extends JFrame {
     private JLabel pnStatus_1;
     private JPanel pnProp1_2;
     private JPanel pnProp1_3;
+	private Product selectedProduct;
 
     /**
      * Launch the application.
@@ -84,7 +86,7 @@ public class ProductDetailsGUI extends JFrame {
                 try {
                     UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
                     
-                    ProductDetailsGUI frame = new ProductDetailsGUI();
+                    ProductDetailsGUI frame = new ProductDetailsGUI(null);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -96,18 +98,16 @@ public class ProductDetailsGUI extends JFrame {
     /**
      * Create the frame.
      */
-    public ProductDetailsGUI() {
-    	Product pd = new Product();
-    	ProductDisplay product = new ProductDisplay(pd);
-    		
-        String productName = product.getSelectedProduct().getProductName();
-        String category = product.getSelectedProduct().getCategory();
-        String brand = product.getSelectedProduct().getBrand();
-        double salePrice = product.getSelectedProduct().getSalePrice();
-        double discountPrice = product.getSelectedProduct().getDiscountPrice();
-        int quantity = product.getSelectedProduct().getQuantity();
-        String productStatus = product.getSelectedProduct().getProductStatus();
-        String imageURL = product.getSelectedProduct().getImageUrl();
+    public ProductDetailsGUI(Product product) {
+    	selectedProduct = product;
+        String productName = product.getProductName();
+        String category = product.getCategory();
+        String brand = product.getBrand();
+        double sellPrice = product.getsellPrice();
+        double discountPrice = product.getDiscountPrice();
+        int quantity = product.getQuantity();
+        String productStatus = product.getProductStatus();
+        String imageURL = product.getImageUrl();
         
     	setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -138,17 +138,6 @@ public class ProductDetailsGUI extends JFrame {
         pnLeft.add(lblImg);
         
         
-        if (imageURL != null && !imageURL.isEmpty()) {
-            ImageIcon icon = createImageIcon(imageURL);
-            if (icon != null) {
-                lblImg.setIcon(icon);
-            } else {
-                lblImg.setText("<html>Image not found</html>");
-            }
-        } else {
-            lblImg.setText("<html>No image available</html>");
-        }
-        
         pnRight = new JPanel();
         pnRight.setOpaque(false);
         contentPane.add(pnRight, BorderLayout.CENTER);
@@ -163,7 +152,7 @@ public class ProductDetailsGUI extends JFrame {
         lblPrdtName.setText(productName);
         lblPrdtName.setVerticalAlignment(SwingConstants.BOTTOM);
         lblPrdtName.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-        lblPrdtName.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        lblPrdtName.setFont(new Font("Times-Narrow", Font.BOLD, 23));
         pnInfo.add(lblPrdtName);
         
         pnProperties = new JPanel();
@@ -264,7 +253,7 @@ public class ProductDetailsGUI extends JFrame {
 
 
        
-        String formattedPrice = formatCurrency(salePrice);
+        String formattedPrice = formatCurrency(sellPrice);
 
         lblPaid = new JLabel(formattedPrice);
         lblPaid.setForeground(new Color(255, 0, 0));
@@ -366,6 +355,7 @@ public class ProductDetailsGUI extends JFrame {
         // TODO Auto-generated method stub
         makeHoverEff(btnSell);
         makeHoverEff(btnAddToCart);
+        addImageProduct();
     }
     
     private void makeHoverEff(AbstractButton btn) {
@@ -384,22 +374,19 @@ public class ProductDetailsGUI extends JFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 if (btn.isEnabled()) {
-                        btn.setBackground(bg);
-                        btn.setForeground(fore);
+                    btn.setBackground(bg);
+                    btn.setForeground(fore);
                 }
             }
         });
     }
     
-    private ImageIcon createImageIcon(String imageURL) {
-        try {
-            URL url = new URL(imageURL);
-            return new ImageIcon(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    private void addImageProduct() {
+    	Image icon = new ImageIcon(getClass().getResource(selectedProduct.getImageUrl())).getImage();
+    	icon = icon.getScaledInstance(312, 312, Image.SCALE_SMOOTH);
+    	lblImg.setText("");
+    	lblImg.setIcon(new ImageIcon(icon));
+	}
     
     private String formatCurrency(double amount) {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");

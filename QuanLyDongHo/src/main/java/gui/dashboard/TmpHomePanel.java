@@ -6,8 +6,12 @@ import java.awt.Color;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.metal.MetalScrollPaneUI;
 
+import dao.ProductDAO;
+import dto.Product;
+
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
@@ -47,8 +51,9 @@ public class TmpHomePanel extends JPanel {
 
 	private void addStuff() {
 		// TODO Auto-generated method stub
-		for (int i = 1; i <= 16; i++) {
-			JPanel prdpn = new ProductDisplay();
+		ArrayList<Product> products = ProductDAO.getInstance().readAllData();
+		for (Product product : products) {
+			JPanel prdpn = new ProductDisplay(product);
 			prdpn.setPreferredSize(new Dimension(240, 350));
 			prdpn.setMinimumSize(new Dimension(240, 350));
 			prdpn.setMinimumSize(new Dimension(240, 350));

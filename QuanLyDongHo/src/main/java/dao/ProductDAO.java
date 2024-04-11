@@ -3,41 +3,66 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-
 import dto.Product;
 
-public class ProductDAO {
-    private Connection connection;
+public class ProductDAO extends ObjectDAO implements ICrud<Product> {
+	
+	public static ProductDAO getInstance() {
+		return new ProductDAO();
+	}
+	
+    public ProductDAO() {}
 
-    public ProductDAO(Connection connection) {
-        this.connection = connection;
-    }
+	@Override
+	public String create(Product Obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public List<Product> getAllProducts() throws SQLException {
-        List<Product> productList = new ArrayList<>();
-        String query = "SELECT * FROM products";
+	@Override
+	public Product readByID(String ID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+	@Override
+	public ArrayList<Product> readAllData() {
+		// TODO Auto-generated method stub
+		ArrayList<Product> products = new ArrayList<>();
+		String query = "SELECT * FROM products";
+		try {
+			ResultSet rs = runQuery(query);
+			while (rs.next()) {
+	        	Product product = new Product(
+					rs.getInt("id"),
+					rs.getString("product_name"),
+					rs.getString("category"),
+					rs.getString("brand"),
+					rs.getDouble("sell_price"),
+					rs.getBoolean("discount"),
+					rs.getDouble("discount_price"),
+					rs.getInt("quantity"),
+					rs.getString("product_status"),
+					rs.getString("image_url")
+	        	);
+	        	products.add(product);
+			}
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
+	}
 
-        	while (resultSet.next()) {
-        		Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getString("category"),
-                        resultSet.getString("brand"),
-                        resultSet.getDouble("sale_price"),
-                        resultSet.getDouble("discount"),
-                        resultSet.getDouble("discount_price"),
-                        resultSet.getInt("quantity"),
-                        resultSet.getString("product_status"),
-                        resultSet.getString("image_url")
-                );
-                productList.add(product);
-            }
-        }
+	@Override
+	public boolean update(String ID, Product Obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-        return productList;
-    }
+	@Override
+	public boolean delete(Product Obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
