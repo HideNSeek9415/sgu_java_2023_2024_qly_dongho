@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -21,6 +22,13 @@ import javax.swing.JPasswordField;
 
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.swing.FontIcon;
+
+import bll.AccountBLL;
+import dao.AccountDAO;
+import dao.CustomerDAO;
+import dao.EmployeeDAO;
+import dto.Account;
+
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.plaf.metal.MetalButtonUI;
 import javax.swing.border.BevelBorder;
@@ -166,6 +174,36 @@ public class LoginGUI extends JFrame {
 		makeButtonEffect(btnLogin);
 		makeButtonEffect(btnRegis);
 		makeOtherEffect();
+		buttonEvent();
+	}
+
+	private void buttonEvent() {
+		btnLogin.addActionListener(e -> {
+			Account account = new Account();
+			account.setUsername(txtUsername.getText());
+			account.setPassword(new String(txtPasswd.getPassword()));
+			switch (AccountBLL.checkLoginData(account)) {
+			case AccountBLL.EMPTY_FIELD:
+				JOptionPane.showMessageDialog(null, "Các trường không được trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.USER_NOT_EXIST:
+				JOptionPane.showMessageDialog(null, "Tên người dùng không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.PASSWORD_INCORRECT:
+				JOptionPane.showMessageDialog(null, "Mật khẩu không chính xác", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.VALID:
+				account = AccountDAO.getInstance().getUserByUsername(account.getUsername());
+				if (AccountDAO.getInstance().getRoleId(account.getId()).equals("CTM")) {
+					String info = CustomerDAO.getInstance().getCustomerByAccountId(account.getId()).toString();
+					JOptionPane.showMessageDialog(null, info, "Info", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String info = EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId()).toString();
+					JOptionPane.showMessageDialog(null, info, "Info", JOptionPane.INFORMATION_MESSAGE);
+				}
+				break;
+			}
+		});
 	}
 
 	private void addIcon() {

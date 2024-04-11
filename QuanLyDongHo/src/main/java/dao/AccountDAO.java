@@ -62,7 +62,8 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 	
 	public Account getUserByUsername(String username) {
 		Account returnValue = null;
-		ResultSet rs = runQuery("select * from accounts where id = " + username);
+		String sql = String.format("select * from accounts where username = '%s'", username);
+		ResultSet rs = runQuery(sql);
 		try {
 			if (rs.next()) returnValue = new Account(
 					rs.getInt(1),
@@ -82,7 +83,8 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 	public boolean isActive(int accountId) {
 		boolean returnValue = false;
 		try {
-			ResultSet rs = runQuery("select account_status from accounts where id = " + accountId);
+			String sql = String.format("select account_status from accounts where id = '%d'", accountId);
+			ResultSet rs = runQuery(sql);
 			if (rs.next() && rs.getString(1).equals("active")) {
 				returnValue = true;
 			}
@@ -93,10 +95,11 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 		return returnValue;
 	}
 	
-	public String getRoleId(String accountId) {
+	public String getRoleId(int accountId) {
 		String returnValue = null;
 		try {
-			ResultSet rs = runQuery("select role_id from accounts where id = " + accountId);
+			String sql = String.format("select role_id from accounts where id = '%d'", accountId);
+			ResultSet rs = runQuery(sql);
 			if (rs.next()) returnValue = rs.getString(1);
 			closeConnection();
 		} catch (SQLException e) {

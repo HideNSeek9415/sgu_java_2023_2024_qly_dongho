@@ -8,7 +8,7 @@ public class AccountBLL {
 	public static final int VALID = 0;
 	public static final int EMPTY_FIELD = 1;
 	public static final int USER_NOT_EXIST = 2;
-	public static final int PASSWORD_MISMATCHED = 3;
+	public static final int PASSWORD_INCORRECT = 3;
 	public static final int USERNAME_EXISTED = 4;
 	public static final int INVALID_USERNAME = 5;
 	public static final int INVALID_PASSWORD = 6;
@@ -23,7 +23,7 @@ public class AccountBLL {
 			return USER_NOT_EXIST;
 		}
 		if (!accountToCheck.getPassword().equals(account.getPassword())) {
-			return PASSWORD_MISMATCHED;
+			return PASSWORD_INCORRECT;
 		}
 		return VALID;
 	}

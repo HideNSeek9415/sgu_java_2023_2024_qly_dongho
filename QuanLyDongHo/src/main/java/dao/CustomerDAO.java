@@ -44,10 +44,11 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 		return AccountDAO.getInstance().isActive(accountId);
 	}
 	
-	public Customer getEmployeeByAccountId(int accountId) {
+	public Customer getCustomerByAccountId(int accountId) {
 		Customer customer = null;
 		try {
-			ResultSet rs = runQuery("select * from employees where id = " + accountId);
+			String sql = String.format("select * from customers where account_id = '%d'", accountId);
+			ResultSet rs = runQuery(sql);
 			if (rs.next()) {
 				customer = new Customer(
 					rs.getInt("id"),

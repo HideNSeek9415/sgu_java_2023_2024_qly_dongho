@@ -48,7 +48,8 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 	public Employee getEmployeeByAccountId(int accountId) {
 		Employee employee = null;
 		try {
-			ResultSet rs = runQuery("select * from employees where id = " + accountId);
+			String sql = String.format("select * from employees where account_id = '%d'", accountId);
+			ResultSet rs = runQuery(sql);
 			if (rs.next()) {
 				employee = new Employee(
 					rs.getInt("id"),
