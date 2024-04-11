@@ -62,11 +62,11 @@ public class Product {
         this.brand = brand;
     }
 
-    public double getsellPrice() {
+    public double getSellPrice() {
         return sellPrice;
     }
 
-    public void setsellPrice(double sellPrice) {
+    public void setSellPrice(double sellPrice) {
         this.sellPrice = sellPrice;
     }
 

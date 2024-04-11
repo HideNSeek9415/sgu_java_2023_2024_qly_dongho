@@ -103,7 +103,7 @@ public class ProductDetailsGUI extends JFrame {
         String productName = product.getProductName();
         String category = product.getCategory();
         String brand = product.getBrand();
-        double sellPrice = product.getsellPrice();
+        double sellPrice = product.getSellPrice();
         double discountPrice = product.getDiscountPrice();
         int quantity = product.getQuantity();
         String productStatus = product.getProductStatus();

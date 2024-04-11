@@ -102,7 +102,7 @@ public class ProductDisplay extends JPanel {
         pn2.add(pnPrice, BorderLayout.CENTER);
         pnPrice.setLayout(new GridLayout(2, 1, 0, 0));
 
-        double sellPrice = product.getsellPrice();
+        double sellPrice = product.getSellPrice();
         String formattedPrice = formatCurrency(sellPrice);
 
         lblPrice = new JLabel(formattedPrice);
