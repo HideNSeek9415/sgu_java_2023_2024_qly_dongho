@@ -54,5 +54,5 @@ public abstract class ObjectDAO {
 		}
     	return num0fEffectedRow;
     }
-   
+    
 }
