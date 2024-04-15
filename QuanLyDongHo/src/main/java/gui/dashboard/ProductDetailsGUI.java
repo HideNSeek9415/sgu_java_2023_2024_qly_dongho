@@ -38,6 +38,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.metal.MetalButtonUI;
 
 public class ProductDetailsGUI extends JFrame {
 
@@ -64,7 +65,6 @@ public class ProductDetailsGUI extends JFrame {
     private JLabel lblSolg;
     private JLabel lblPaid;
     private JPanel panel;
-    private JSpinner spinner;
     private JButton btnSell;
     private JButton btnAddToCart;
     private JLabel lblCross;
@@ -76,6 +76,10 @@ public class ProductDetailsGUI extends JFrame {
     private JPanel pnProp1_2;
     private JPanel pnProp1_3;
 	private Product selectedProduct;
+	private JButton btnSub;
+	private JLabel lblAmount;
+	private JButton btnAdd;
+	private int numOfPrd = 1;
 
     /**
      * Launch the application.
@@ -267,7 +271,7 @@ public class ProductDetailsGUI extends JFrame {
             }
         };
         lblCross.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCross.setText(lblPaid.getText());
+        lblCross.setText("");
         lblCross.setForeground(new Color(128, 128, 128));
         lblCross.setFont(new Font("Segoe UI", Font.BOLD, 15));
         pnAmount.add(lblCross);
@@ -280,37 +284,40 @@ public class ProductDetailsGUI extends JFrame {
 
         panel = new JPanel();
         panel.setOpaque(false);
-        panel.setBorder(null);
+        panel.setBorder(new EmptyBorder(0, 0, 5, 0));
         pnAmount.add(panel);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setLayout(new GridLayout(0, 3, 10, 0));
         
-        SpinnerModel spinnerModel = new SpinnerNumberModel(1, 1, 100, 1);
-        spinner = new JSpinner(spinnerModel);
-        spinner.setBorder(new EmptyBorder(2, 40, 2, 40));
-        spinner.setPreferredSize(new Dimension(30, 28));
-        spinner.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        panel.add(spinner);
+        btnSub = new JButton("-");
+        btnSub.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnSub.setFocusPainted(false);
+        btnSub.setBorderPainted(false);
+        btnSub.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnSub.setBackground(new Color(246, 246, 246));
+        btnSub.setFont(new Font("SansSerif", Font.BOLD, 33));
+        btnSub.setUI(new MetalButtonUI());
+        panel.add(btnSub);
+        
+        lblAmount = new JLabel(String.valueOf(numOfPrd));
+        lblAmount.setHorizontalAlignment(SwingConstants.CENTER);
+        lblAmount.setFont(new Font("SansSerif", Font.BOLD, 18));
+        panel.add(lblAmount);
+        
+        btnAdd = new JButton("+");
+        btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnAdd.setFocusPainted(false);
+        btnAdd.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnAdd.setFont(new Font("SansSerif", Font.BOLD, 33));
+        btnAdd.setBorderPainted(false);
+        btnAdd.setBackground(new Color(246, 246, 246));
+        btnAdd.setUI(new MetalButtonUI());
+        panel.add(btnAdd);
 
         panel_1 = new JPanel();
         panel_1.setOpaque(false);
         panel_1.setBorder(new EmptyBorder(5, 30, 5, 30));
         pnAmount.add(panel_1);
         panel_1.setLayout(new BorderLayout(0, 0));
-
-        spinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int quantity = (int) spinner.getValue();
-                if (quantity == 0) {
-                    lblPaid.setText("");
-                } else {
-                    double price = Double.parseDouble(lblCross.getText().replaceAll("[^\\d.]", ""));
-                    double total = price * quantity;
-                    String formattedTotal = String.format("%,.0f₫", total);
-                    lblPaid.setText(formattedTotal);
-                }
-            }
-        });
 
         lblPaid_1 = new JLabel("-25%");
         lblPaid_1.setOpaque(true);
@@ -320,7 +327,7 @@ public class ProductDetailsGUI extends JFrame {
         lblPaid_1.setFont(new Font("Segoe UI", Font.BOLD, 21));
         lblPaid_1.setBorder(null);
         lblPaid_1.setBackground(new Color(249, 233, 226));
-        panel_1.add(lblPaid_1);
+//        panel_1.add(lblPaid_1);
         
         pnBtn = new JPanel();
         pnBtn.setBorder(new EmptyBorder(0, 30, 25, 30));
@@ -345,10 +352,29 @@ public class ProductDetailsGUI extends JFrame {
         pnBtn.add(btnAddToCart);
         
         addStuff();
+        updateAmount();
     }
         
     private void updateAmount() {
-        
+    	btnSub.setEnabled(false);
+        btnSub.addActionListener(e -> {
+        	numOfPrd--;
+        	if (numOfPrd == 1) {
+        		btnSub.setEnabled(false);
+        	}
+        	lblAmount.setText(String.valueOf(numOfPrd));
+        	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+        	String formatTotalPrice = String.format("%,.0fVNĐ", totalPrice);
+        	lblPaid.setText(formatTotalPrice);
+        });
+        btnAdd.addActionListener(e -> {
+        	numOfPrd++;
+        	btnSub.setEnabled(true);
+        	lblAmount.setText(String.valueOf(numOfPrd));
+        	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+        	String formatTotalPrice = String.format("%,.0fVNĐ", totalPrice);
+        	lblPaid.setText(formatTotalPrice);
+        });
     }
 
     private void addStuff() {

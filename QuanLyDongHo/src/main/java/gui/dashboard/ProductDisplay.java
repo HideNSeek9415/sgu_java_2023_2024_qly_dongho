@@ -19,6 +19,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 public class ProductDisplay extends JPanel {
 
@@ -40,14 +44,14 @@ public class ProductDisplay extends JPanel {
     public ProductDisplay(Product product) {
     	selectedProduct = product;
         setSize(new Dimension(270, 360));
-        setPreferredSize(new Dimension(240, 350));
+        setPreferredSize(new Dimension(200, 287));
         setMaximumSize(getPreferredSize());
-        setBorder(new LineBorder(new Color(0, 0, 0)));
+        setBorder(new LineBorder(new Color(137, 137, 137)));
         setBackground(new Color(255, 255, 255));
         setLayout(new BorderLayout(0, 0));
 
         lblImg = new JLabel();
-        lblImg.setSize(new Dimension(240, 240));
+        lblImg.setSize(new Dimension(200, 200));
         lblImg.setBorder(null);
         lblImg.setOpaque(true);
         lblImg.setBackground(new Color(192, 192, 192));
@@ -55,11 +59,12 @@ public class ProductDisplay extends JPanel {
         lblImg.setHorizontalAlignment(SwingConstants.CENTER);
         lblImg.setHorizontalTextPosition(SwingConstants.CENTER);
         lblImg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        lblImg.setPreferredSize(new Dimension(240, 240));
+        lblImg.setPreferredSize(new Dimension(200, 200));
         add(lblImg, BorderLayout.NORTH);
         
         panel = new JPanel();
         panel.setOpaque(false);
+        panel.setBackground(new Color(217, 255, 255));
         add(panel, BorderLayout.CENTER);
         panel.setLayout(new BorderLayout(0, 0));
 
@@ -81,20 +86,19 @@ public class ProductDisplay extends JPanel {
         pn1.add(btnSell);
 
         pn2 = new JPanel();
-        pn2.setBorder(new EmptyBorder(0, 10, 0, 0));
         pn2.setOpaque(false);
+        pn2.setBorder(new EmptyBorder(0, 10, 0, 0));
         panel.add(pn2, BorderLayout.CENTER);
         pn2.setLayout(new BorderLayout(0, 0));
 
         lblName = new JLabel();
         lblName.setText(product.getProductName());
-        lblName.setPreferredSize(new Dimension(112, 50));
+        lblName.setPreferredSize(new Dimension(112, 35));
         lblName.setMaximumSize(lblName.getPreferredSize());
         lblName.setMinimumSize(new Dimension(10, 10));
         lblName.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        lblName.setPreferredSize(new Dimension(112, 50));
         lblName.setVerticalAlignment(SwingConstants.TOP);
-        lblName.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        lblName.setFont(new Font("Segoe UI", Font.BOLD, 12));
         pn2.add(lblName, BorderLayout.NORTH);
 
         pnPrice = new JPanel();
@@ -107,7 +111,7 @@ public class ProductDisplay extends JPanel {
 
         lblPrice = new JLabel(formattedPrice);
         lblPrice.setForeground(new Color(227, 116, 42));
-        lblPrice.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        lblPrice.setFont(new Font("Times New Roman", Font.BOLD, 14));
         pnPrice.add(lblPrice);
 
         panel_1 = new JPanel();
@@ -136,8 +140,9 @@ public class ProductDisplay extends JPanel {
         panel_1.add(lblSale);
 
         lblStatus = new JLabel(product.getProductStatus());
+        lblStatus.setPreferredSize(new Dimension(60, 18));
         lblStatus.setVerticalAlignment(SwingConstants.TOP);
-        lblStatus.setFont(new Font("Roboto Mono", Font.PLAIN, 15));
+        lblStatus.setFont(new Font("Roboto Mono", Font.PLAIN, 11));
         pn2.add(lblStatus, BorderLayout.SOUTH);
 
         addStuff();

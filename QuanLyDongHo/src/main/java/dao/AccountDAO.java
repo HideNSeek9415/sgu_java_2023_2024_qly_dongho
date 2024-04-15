@@ -50,13 +50,11 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 
 	@Override
 	public boolean update(String ID, Account Obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(Account Obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

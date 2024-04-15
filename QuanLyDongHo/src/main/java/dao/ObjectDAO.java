@@ -34,6 +34,27 @@ public abstract class ObjectDAO {
     	return rs;
     }
     
+    protected ResultSet runQuery2(String sql, Object...objects) {
+    	ResultSet rs = null;
+    	try {
+    		conn = DataConnection.connect();
+			pstmt = conn.prepareStatement(sql);
+			int index = 1;
+    	    for (Object object : objects) {
+    	    	 if (object instanceof java.util.Date) {
+    	    		 pstmt.setDate(index, new java.sql.Date(((java.util.Date) object).getTime()));
+    	    	 } else {
+    	    		 pstmt.setObject(index, objects);
+    	    	 }
+    	    	 index++;
+    	    }
+			rs = stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return rs;
+    }
+    
     protected int runUpdate(String sql, Object...objects) {
     	int num0fEffectedRow = -1;
     	try {
