@@ -20,7 +20,7 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	}
 
 	@Override
-	public Product readByID(String ID) {
+	public Product readByID(int ID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -55,7 +55,7 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	}
 
 	@Override
-	public boolean update(String ID, Product Obj) {
+	public boolean update(int ID, Product Obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}

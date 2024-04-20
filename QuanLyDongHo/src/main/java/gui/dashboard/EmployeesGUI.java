@@ -25,12 +25,12 @@ public class EmployeesGUI extends NewJPanel {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"NV001", "Nh\u00E2n Vi\u00EAn 1", "Nam", "4/4/2003", "020232251", "Smaw, KDW, Freadk", null, null},
-				{"NV002", "Nh\u00E2n Vi\u00EAn 2", "N\u1EEF", "5/5/2000", "012515648", "Ndif, Fpekf, Kofiesnf", null, null},
-				{"NV003", "Nh\u00E2n Vi\u00EAn 3", "Nam", "3/3/1999", "039481274", "JFIe, Ifiejos, JFIe", null, null},
+				{"NV001", "Nh\u00E2n Vi\u00EAn 1", "Nam", "4/4/2003", "020232251", "Smaw, KDW, Freadk"},
+				{"NV002", "Nh\u00E2n Vi\u00EAn 2", "N\u1EEF", "5/5/2000", "012515648", "Ndif, Fpekf, Kofiesnf"},
+				{"NV003", "Nh\u00E2n Vi\u00EAn 3", "Nam", "3/3/1999", "039481274", "JFIe, Ifiejos, JFIe"},
 			},
 			new String[] {
-				"M\u00E3 NV", "T\u00EAn NV", "Gi\u1EDBi t\u00EDnh", "Ng\u00E0y sinh", "S\u0110T", "\u0110\u1ECBa ch\u1EC9", "T\u00E0i kho\u1EA3n", "M\u1EADt kh\u1EA9u"
+				"M\u00E3 NV", "T\u00EAn NV", "Gi\u1EDBi t\u00EDnh", "Ng\u00E0y sinh", "S\u0110T", "\u0110\u1ECBa ch\u1EC9"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);

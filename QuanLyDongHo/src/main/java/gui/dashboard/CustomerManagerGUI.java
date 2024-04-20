@@ -23,10 +23,10 @@ public class CustomerManagerGUI extends NewJPanel {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"M\u00E3 KH", "T\u00EAn kh\u00E1ch h\u00E0ng", " Gi\u1EDBi t\u00EDnh", "Ng\u00E0y sinh", "E-mail", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i", "T\u00E0i kho\u1EA3n", "M\u1EADt kh\u1EA9u"
+				"M\u00E3 KH", "T\u00EAn kh\u00E1ch h\u00E0ng", " Gi\u1EDBi t\u00EDnh", "Ng\u00E0y sinh", "E-mail", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i"
 			}
 		));
 		scrollPane.setViewportView(table);

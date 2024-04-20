@@ -19,7 +19,7 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 	}
 
 	@Override
-	public Account readByID(String ID) {
+	public Account readByID(int ID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -49,7 +49,7 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 	}
 
 	@Override
-	public boolean update(String ID, Account Obj) {
+	public boolean update(int ID, Account Obj) {
 		return false;
 	}
 

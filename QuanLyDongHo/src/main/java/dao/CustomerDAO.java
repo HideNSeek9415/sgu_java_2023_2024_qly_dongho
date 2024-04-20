@@ -17,7 +17,7 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 	}
 
 	@Override
-	public Customer readByID(String ID) {
+	public Customer readByID(int ID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -29,7 +29,7 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 	}
 
 	@Override
-	public boolean update(String ID, Customer Obj) {
+	public boolean update(int ID, Customer Obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}

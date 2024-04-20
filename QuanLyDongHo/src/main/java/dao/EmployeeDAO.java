@@ -18,7 +18,7 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 	}
 
 	@Override
-	public Employee readByID(String ID) {
+	public Employee readByID(int ID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -30,7 +30,7 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 	}
 
 	@Override
-	public boolean update(String ID, Employee Obj) {
+	public boolean update(int ID, Employee Obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}
