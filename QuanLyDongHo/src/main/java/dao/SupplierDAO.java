@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.ProductSupplier;
+import dto.Product;
 import dto.Supplier;
 
 
@@ -16,9 +16,9 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 	}
 
 	@Override
-	public String create(Supplier Obj) {
+	public boolean create(Supplier Obj) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -55,18 +55,28 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean delete(Supplier Obj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
-	public ArrayList<ProductSupplier> getDetails(int id) {
+	public ArrayList<Product> getProvidablePrds(int id) {
 		return null;
 	}
 	
-	public Boolean setDetails(int id, List<ProductSupplier> details) {
+	public Boolean addNewProvidablePrd(int PrdId, int SupplierId) {
+		return false;
+	}
+	
+	public Boolean removeProvidablePrd(int PrdId, int SupplierId) {
+		return false;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean recovery(int id) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

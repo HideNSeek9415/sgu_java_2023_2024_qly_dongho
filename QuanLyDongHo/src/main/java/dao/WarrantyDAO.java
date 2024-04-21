@@ -11,9 +11,9 @@ public class WarrantyDAO extends ObjectDAO implements ICrud<Warranty> {
 	}
 
 	@Override
-	public String create(Warranty Obj) {
+	public boolean create(Warranty Obj) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -35,11 +35,15 @@ public class WarrantyDAO extends ObjectDAO implements ICrud<Warranty> {
 	}
 
 	@Override
-	public boolean delete(Warranty Obj) {
+	public boolean delete(int id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
+
+	@Override
+	public boolean recovery(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

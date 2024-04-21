@@ -10,6 +10,7 @@ public abstract class ObjectDAO {
     private Connection conn = null;
     private Statement stmt = null;
     private PreparedStatement pstmt = null;
+    protected ResultSet rs = null;
 
     protected void closeConnection() {
     	try {
@@ -44,11 +45,11 @@ public abstract class ObjectDAO {
     	    	 if (object instanceof java.util.Date) {
     	    		 pstmt.setDate(index, new java.sql.Date(((java.util.Date) object).getTime()));
     	    	 } else {
-    	    		 pstmt.setObject(index, objects);
+    	    		 pstmt.setObject(index, object);
     	    	 }
     	    	 index++;
     	    }
-			rs = stmt.executeQuery(sql);
+			rs = pstmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -56,7 +57,7 @@ public abstract class ObjectDAO {
     }
     
     protected int runUpdate(String sql, Object...objects) {
-    	int num0fEffectedRow = -1;
+    	int numOfEffectedRow = -1;
     	try {
     		conn = DataConnection.connect();
     		pstmt = conn.prepareStatement(sql);
@@ -69,11 +70,11 @@ public abstract class ObjectDAO {
     	    	 }
     	    	 index++;
     	    }
-        	num0fEffectedRow = pstmt.executeUpdate();
+    	    numOfEffectedRow = pstmt.executeUpdate();
     	}catch (Exception e) {
     		e.printStackTrace();
 		}
-    	return num0fEffectedRow;
+    	return numOfEffectedRow;
     }
     
 }

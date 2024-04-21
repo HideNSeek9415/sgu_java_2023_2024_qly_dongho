@@ -14,9 +14,9 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
     public ProductDAO() {}
 
 	@Override
-	public String create(Product Obj) {
+	public boolean create(Product Obj) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -61,8 +61,15 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	}
 
 	@Override
-	public boolean delete(Product Obj) {
+	public boolean delete(int id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean recovery(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

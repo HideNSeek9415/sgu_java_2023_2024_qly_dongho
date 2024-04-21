@@ -13,9 +13,9 @@ public class ImportInvoiceDAO extends ObjectDAO implements ICrud<ImportInvoice> 
 	}
 
 	@Override
-	public String create(ImportInvoice Obj) {
+	public boolean create(ImportInvoice Obj) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -35,18 +35,24 @@ public class ImportInvoiceDAO extends ObjectDAO implements ICrud<ImportInvoice> 
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean delete(ImportInvoice Obj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	public ArrayList<ImportInvoiceDetail> getDetails(int id) {
 		return null;
 	}
 	
 	public Boolean setDetails(int id, List<ImportInvoiceDetail> details) {
+		return false;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean recovery(int id) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

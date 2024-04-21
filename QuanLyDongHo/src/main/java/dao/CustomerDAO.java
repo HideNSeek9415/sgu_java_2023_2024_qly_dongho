@@ -11,9 +11,9 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 	}
 
 	@Override
-	public String create(Customer Obj) {
+	public boolean create(Customer Obj) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -25,17 +25,31 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 	@Override
 	public ArrayList<Customer> readAllData() {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Customer> customers = new ArrayList<>();
+		try {
+			String sql = String.format("select * from customers");
+			ResultSet rs = runQuery(sql);
+			while (rs.next()) {
+				Customer customer = new Customer(
+					rs.getInt("id"),
+					rs.getString("full_name"),
+					rs.getString("gender"),
+					new java.util.Date(rs.getDate("date_of_birth").getTime()),
+					rs.getString("phone_number"),
+					rs.getString("address"),
+					rs.getInt("account_id")
+				);
+				customers.add(customer);
+			}
+			closeConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customers;
 	}
 
 	@Override
 	public boolean update(int ID, Customer Obj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(Customer Obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -65,6 +79,18 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 			e.printStackTrace();
 		}
 		return customer;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean recovery(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
