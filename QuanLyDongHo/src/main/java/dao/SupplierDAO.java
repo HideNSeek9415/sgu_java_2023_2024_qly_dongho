@@ -60,11 +60,11 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 		return null;
 	}
 	
-	public Boolean addNewProvidablePrd(int PrdId, int SupplierId) {
+	public Boolean addNewProvidablePrd(int SupplierId, int PrdId) {
 		return false;
 	}
 	
-	public Boolean removeProvidablePrd(int PrdId, int SupplierId) {
+	public Boolean removeProvidablePrd(int SupplierId, int PrdId) {
 		return false;
 	}
 

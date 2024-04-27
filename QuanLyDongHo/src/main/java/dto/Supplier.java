@@ -1,13 +1,25 @@
 package dto;
 
+import java.util.ArrayList;
+
 public class Supplier {
     private int supplierId;
     private String supplierName;
     private String email;
     private String supplierStatus;
     private String phoneNumber;
+    
+    private ArrayList<Product> providableProducts = new ArrayList<>();
 
-    public Supplier(int supplierId, String supplierName, String email, String supplierStatus, String phoneNumber) {
+    public ArrayList<Product> getProvidableProducts() {
+		return providableProducts;
+	}
+
+	public void setProvidableProducts(ArrayList<Product> providableProducts) {
+		this.providableProducts = providableProducts;
+	}
+
+	public Supplier(int supplierId, String supplierName, String email, String supplierStatus, String phoneNumber) {
         this.supplierId = supplierId;
         this.supplierName = supplierName;
         this.email = email;

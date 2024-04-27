@@ -5,8 +5,27 @@ public class ExportInvoiceDetail {
     private int exportInvoiceId;
     private int productId;
     private int sellPrice;
+    
+    private String productName;
+    private Warranty warranty;
 
-    public ExportInvoiceDetail(int detailsId, int exportInvoiceId, int productId, int sellPrice) {
+    public Warranty getWarranty() {
+		return warranty;
+	}
+
+	public void setWarranty(Warranty warranty) {
+		this.warranty = warranty;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public ExportInvoiceDetail(int detailsId, int exportInvoiceId, int productId, int sellPrice) {
         this.detailsId = detailsId;
         this.exportInvoiceId = exportInvoiceId;
         this.productId = productId;

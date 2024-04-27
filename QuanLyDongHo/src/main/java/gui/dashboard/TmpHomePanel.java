@@ -57,6 +57,7 @@ public class TmpHomePanel extends JPanel {
 	private JSpinner spinner_1;
 	private JTabbedPane tabbedPane;
 	private JPanel panel_6;
+	private JButton btnNewButton_2;
 
 	/**
 	 * Create the panel.
@@ -132,6 +133,10 @@ public class TmpHomePanel extends JPanel {
 		spinner_1.setPreferredSize(new Dimension(150, 28));
 		panel_4.add(spinner_1);
 		
+		btnNewButton_2 = new JButton("Đặt lại");
+		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panel_4.add(btnNewButton_2);
+		
 		lblNewLabel = new JLabel("Bạn muốn mua gì?");
 		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 17));
 		panel.add(lblNewLabel, BorderLayout.WEST);
@@ -139,26 +144,25 @@ public class TmpHomePanel extends JPanel {
 		panel_3 = new JPanel();
 		panel_3.setOpaque(false);
 		panel.add(panel_3, BorderLayout.WEST);
-		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
+		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		lblNewLabel_1 = new JLabel("Bạn muốn mua gì?");
 		lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 18));
 		panel_3.add(lblNewLabel_1);
 		
 		panel_1 = new JPanel();
-		panel_1.setBorder(new EmptyBorder(21, 0, 21, 0));
 		panel_1.setOpaque(false);
 		panel.add(panel_1, BorderLayout.EAST);
-		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		btnNewButton = new JButton("Giỏ hàng");
-		btnNewButton.setPreferredSize(new Dimension(105, 35));
+		btnNewButton = new JButton("");
+		btnNewButton.setPreferredSize(new Dimension(50, 50));
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setFont(new Font("SansSerif", Font.BOLD, 12));
 		btnNewButton.setFocusPainted(false);
 		btnNewButton.setBorder(new EmptyBorder(15, 0, 15, 0));
 		btnNewButton.setBackground(new Color(255, 128, 64));
-		btnNewButton.setIcon(FontIcon.of(MaterialDesignC.CART, 18, btnNewButton.getForeground()));
+		btnNewButton.setIcon(FontIcon.of(MaterialDesignC.CART, 25, btnNewButton.getForeground()));
 
 		panel_1.add(btnNewButton);
 		

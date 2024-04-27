@@ -66,7 +66,7 @@ public abstract class ObjectDAO {
     	    	 if (object instanceof java.util.Date) {
     	    		 pstmt.setDate(index, new java.sql.Date(((java.util.Date) object).getTime()));
     	    	 } else {
-    	    		 pstmt.setObject(index, objects);
+    	    		 pstmt.setObject(index, object);
     	    	 }
     	    	 index++;
     	    }

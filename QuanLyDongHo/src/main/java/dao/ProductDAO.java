@@ -16,7 +16,19 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	@Override
 	public boolean create(Product Obj) {
 		// TODO Auto-generated method stub
-		return false;
+		String sql = "INSERT INTO products (product_name, category, brand, sell_price, discount, discount_price, quantity, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		int affectedRowCount = runUpdate(sql,
+			Obj.getProductName(),
+			Obj.getCategory(),
+			Obj.getBrand(),
+			Obj.getSellPrice(),
+			Obj.isDiscount(),
+			Obj.getDiscountPrice(),
+			Obj.getQuantity(),
+			Obj.getImageUrl()
+		);
+		closeConnection();
+		return affectedRowCount > 0;
 	}
 
 	@Override

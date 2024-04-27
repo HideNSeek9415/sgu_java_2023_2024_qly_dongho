@@ -1,14 +1,43 @@
 package dto;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class ImportInvoice {
     private int importInvoiceId;
     private int employeeId;
     private int supplierId;
     private Date invoiceDate;
+    private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
+    
+    private String employeeName;
+    private String supplierName;
 
-    public ImportInvoice(int importInvoiceId, int employeeId, int supplierId, Date invoiceDate) {
+    public ArrayList<ImportInvoiceDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(ArrayList<ImportInvoiceDetail> details) {
+		this.details = details;
+	}
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	public ImportInvoice(int importInvoiceId, int employeeId, int supplierId, Date invoiceDate) {
         this.importInvoiceId = importInvoiceId;
         this.employeeId = employeeId;
         this.supplierId = supplierId;

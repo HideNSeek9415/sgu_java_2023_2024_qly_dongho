@@ -4,7 +4,7 @@ USE mywatchstore;
 
 CREATE TABLE roles (
     role_id ENUM('SLR', 'WHM', 'ADM', 'CTM') PRIMARY KEY,
-    role_name VARCHAR(255) NOT NULL
+    role_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE permissions (
@@ -13,7 +13,7 @@ CREATE TABLE permissions (
 		'CUSTOMERS', 'SUPPLIERS', 'EMPLOYEES', 'ACCOUNTS',
 		'STATISTICAL', 'PERMISSION', 'WARRANTY', 'HISTORY'
 	) PRIMARY KEY,
-    permission_name VARCHAR(255) NOT NULL
+    permission_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE decentralization (
@@ -54,7 +54,7 @@ DELIMITER ;
 CREATE TABLE customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
-    gender ENUM('male', 'female') NOT NULL,
+    gender ENUM('Nam', 'Nữ') NOT NULL,
     date_of_birth DATE NOT NULL,
     phone_number VARCHAR(20) UNIQUE,
     address TEXT,
@@ -65,7 +65,7 @@ CREATE TABLE customers (
 CREATE TABLE employees (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
-    gender ENUM('male', 'female') NOT NULL,
+    gender ENUM('Nam', 'Nữ') NOT NULL,
     date_of_birth DATE NOT NULL,
     phone_number VARCHAR(20) UNIQUE,
     address TEXT,
@@ -257,17 +257,17 @@ INSERT INTO accounts (username, passwd, role_id) VALUES
 ('duanaoday2', '12345678', 'CTM');
 
 INSERT INTO employees (full_name, gender, date_of_birth, phone_number, address, account_id) VALUES 
-('Bùi Trung Hiếu', 'male', '2004-05-04', '0123456789', '123 Main Street, City, Country', 1),
-('Cao Thái Bảo', 'male', '2004-07-02', '0987654321', '456 Oak Avenue, City, Country', 2),
-('Tô Gia Huy', 'male', '2004-07-31', '0555123456', '789 Elm Street, City, Country', 3),
-('Trương Mậu Điền', 'male', '2004-05-03', '0777888999', '321 Pine Street, City, Country', 4),
-('Trần Thị Khánh Như', 'female', '2004-08-11', '0111222333', '654 Cedar Street, City, Country', 5);
+('Bùi Trung Hiếu', 'Nam', '2004-05-04', '0123456789', '123 Main Street, City, Country', 1),
+('Cao Thái Bảo', 'Nam', '2004-07-02', '0987654321', '456 Oak Avenue, City, Country', 2),
+('Tô Gia Huy', 'Nam', '2004-07-31', '0555123456', '789 Elm Street, City, Country', 3),
+('Trương Mậu Điền', 'Nam', '2004-05-03', '0777888999', '321 Pine Street, City, Country', 4),
+('Trần Thị Khánh Như', 'Nữ', '2004-08-11', '0111222333', '654 Cedar Street, City, Country', 5);
 
 INSERT INTO customers (full_name, gender, date_of_birth, phone_number, address, account_id) VALUES
-('Emma Wilson', 'male', '1980-07-12', '0123123123', '1010 Maple Street, City, Country', 6),
-('Olivia Garcia', 'female', '1992-04-18', '0333666999', '1313 Oak Street, City, Country', 7),
-('Ava Martinez', 'female', '1987-10-30', '0666777888', '1515 Elm Street, City, Country', 8),
-('Sarah Clark', 'female', '1989-12-30', '0444555666', '987 Birch Street, City, Country', 9);
+('Emma Wilson', 'Nam', '1980-07-12', '0123123123', '1010 Maple Street, City, Country', 6),
+('Olivia Garcia', 'Nữ', '1992-04-18', '0333666999', '1313 Oak Street, City, Country', 7),
+('Ava Martinez', 'Nữ', '1987-10-30', '0666777888', '1515 Elm Street, City, Country', 8),
+('Sarah Clark', 'Nữ', '1989-12-30', '0444555666', '987 Birch Street, City, Country', 9);
 
 INSERT INTO suppliers (supplier_name, email, phone_number) VALUES 
 ('ABC Electronics', 'abc_electronics@example.com', '1234567890'),
@@ -302,4 +302,6 @@ join accounts as a on a.id = c.account_id;
 select s.supplier_name, p.product_name
 from products as p
 join product_supplier as ps on ps.product_id = p.id
-join suppliers as s on s.supplier_id = ps.supplier_id
+join suppliers as s on s.supplier_id = ps.supplier_id;
+
+select r.role_name from roles as r join accounts as a on a.role_id = r.role_id where a.id = 2;
