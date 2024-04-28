@@ -77,4 +77,19 @@ public abstract class ObjectDAO {
     	return numOfEffectedRow;
     }
     
+    public static int getLastIndex() {
+    	int lastId = -1;
+    	try {
+    		Connection c = DataConnection.connect();
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT LAST_INSERT_ID()");
+			r.next();
+			lastId = r.getInt(1);
+			c.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return lastId;
+    } 
+    
 }

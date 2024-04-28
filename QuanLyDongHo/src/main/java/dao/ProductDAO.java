@@ -33,8 +33,29 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 
 	@Override
 	public Product readByID(int ID) {
-		// TODO Auto-generated method stub
-		return null;
+		Product product = null;
+		String query = "SELECT * FROM products where id = ?";
+		try {
+			ResultSet rs = runQuery2(query, ID);
+			if (rs.next()) {
+	        	product = new Product(
+					rs.getInt("id"),
+					rs.getString("product_name"),
+					rs.getString("category"),
+					rs.getString("brand"),
+					rs.getDouble("sell_price"),
+					rs.getBoolean("discount"),
+					rs.getDouble("discount_price"),
+					rs.getInt("quantity"),
+					rs.getString("product_status"),
+					rs.getString("image_url")
+	        	);
+			}
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return product;
 	}
 
 	@Override

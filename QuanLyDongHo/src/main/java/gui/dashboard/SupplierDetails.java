@@ -5,10 +5,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.stream.Collectors;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -27,7 +37,14 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignM;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignS;
 import org.kordamp.ikonli.swing.FontIcon;
+
+import bll.ProductBLL;
+import bll.SupplierBLL;
+import dto.Product;
+import dto.Supplier;
+
 import javax.swing.JFileChooser;
+import javax.swing.DefaultComboBoxModel;
 
 public class SupplierDetails extends JFrame {
 
@@ -81,6 +98,11 @@ public class SupplierDetails extends JFrame {
 	private JButton btnExit1;
 	private JPanel panel_15;
 	private JButton btnExit2;
+	
+	private DefaultTableModel model;
+	private Product curPrd = null;
+	private ArrayList<Product> provided;
+	public static Supplier selectedSupplier;
 
 	/**
 	 * Launch the application.
@@ -125,7 +147,7 @@ public class SupplierDetails extends JFrame {
 		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panel.add(lblNewLabel, BorderLayout.WEST);
 		
-		lblSupplierName = new JLabel("Trường ĐH Sài Gòn");
+		lblSupplierName = new JLabel(selectedSupplier.getSupplierName());
 		lblSupplierName.setForeground(Color.WHITE);
 		lblSupplierName.setFont(new Font("SansSerif", Font.BOLD, 20));
 		panel.add(lblSupplierName, BorderLayout.CENTER);
@@ -152,9 +174,11 @@ public class SupplierDetails extends JFrame {
 				{null, null, null, null},
 			},
 			new String[] {
-				"M\u00E3 s\u1EA3n ph\u1EA9m", "T\u00EAn s\u1EA3n ph\u1EA9m", "Ki\u1EC3u d\u00E1ng", "Th\u01B0\u01A1ng hi\u1EC7u"
+				"M\u00E3 SP", "T\u00EAn s\u1EA3n ph\u1EA9m", "Ki\u1EC3u d\u00E1ng", "Th\u01B0\u01A1ng hi\u1EC7u"
 			}
 		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		table.getColumnModel().getColumn(1).setPreferredWidth(200);
 		scrollPane.setViewportView(table);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
@@ -201,7 +225,7 @@ public class SupplierDetails extends JFrame {
 		lblNewLabel_3.setFont(new Font("SansSerif", Font.BOLD, 13));
 		panel_4.add(lblNewLabel_3);
 		
-		lblPrdName = new JLabel("Sản phẩm có tên ABCDEF");
+		lblPrdName = new JLabel("");
 		panel_4.add(lblPrdName);
 		
 		panel_5 = new JPanel();
@@ -214,7 +238,7 @@ public class SupplierDetails extends JFrame {
 		lblNewLabel_5.setFont(new Font("SansSerif", Font.BOLD, 13));
 		panel_5.add(lblNewLabel_5);
 		
-		lblPrdType = new JLabel("Sản phẩm có tên ABCDEF");
+		lblPrdType = new JLabel("");
 		panel_5.add(lblPrdType);
 		
 		panel_6 = new JPanel();
@@ -227,7 +251,7 @@ public class SupplierDetails extends JFrame {
 		lblNewLabel_7.setFont(new Font("SansSerif", Font.BOLD, 13));
 		panel_6.add(lblNewLabel_7);
 		
-		lblPrdBrand = new JLabel("Sản phẩm có tên ABCDEF");
+		lblPrdBrand = new JLabel("");
 		panel_6.add(lblPrdBrand);
 		
 		panel_7 = new JPanel();
@@ -286,6 +310,8 @@ public class SupplierDetails extends JFrame {
 		panel_11.add(lblNewLabel_10);
 		
 		cbbPrdType = new JComboBox();
+		cbbPrdType.setModel(new DefaultComboBoxModel(new String[] {"Kiểu đồng hồ", "Đồng hồ cơ", "Đồng hồ điện tử", "Đồng hồ thông minh"}));
+		cbbPrdType.setMaximumRowCount(4);
 		cbbPrdType.setBackground(new Color(255, 255, 255));
 		panel_11.add(cbbPrdType);
 		
@@ -300,6 +326,7 @@ public class SupplierDetails extends JFrame {
 		panel_12.add(lblNewLabel_11);
 		
 		cbbPrdBrand = new JComboBox();
+		cbbPrdBrand.setModel(new DefaultComboBoxModel(new String[] {"Thương hiệu", "CASIO", "ORIENT", "APPLE", "CITIZEN"}));
 		cbbPrdBrand.setBackground(Color.WHITE);
 		panel_12.add(cbbPrdBrand);
 		
@@ -318,6 +345,7 @@ public class SupplierDetails extends JFrame {
 		panel_17.setLayout(new BorderLayout(0, 0));
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		panel_17.add(textField, BorderLayout.CENTER);
 		textField.setColumns(10);
 		
@@ -353,6 +381,92 @@ public class SupplierDetails extends JFrame {
 		btnExit2.setFocusPainted(false);
 		btnExit2.setBackground(new Color(128, 40, 26));
 		panel_15.add(btnExit2);
+		model = (DefaultTableModel) table.getModel();
+		reloadTable();
+		
+		defBtnEvent();
+	}
+
+	private void defBtnEvent() {
+		// TODO Auto-generated method stub
+		btnSearch.addActionListener(e -> {
+			int id = Integer.parseInt(searchById.getText());
+			curPrd = ProductBLL.getById(id);
+			if (curPrd != null) {
+				lblPrdName.setText(curPrd.getProductName());
+				lblPrdType.setText(curPrd.getCategory());
+				lblPrdBrand.setText(curPrd.getBrand());
+			} else {
+				String er = "Không tìm thấy sản phẩm";
+				lblPrdName.setText(er);
+				lblPrdType.setText(er);
+				lblPrdBrand.setText(er);
+			}
+		});
+		btnAddPrd.addActionListener(e -> {
+			if (curPrd != null) {
+				int id = curPrd.getId();
+				for (Product prd : provided) {
+					if (prd.getId() == id) return;
+				}
+				SupplierBLL.addProduct(selectedSupplier.getSupplierId(), id);
+				reloadTable();
+			} 
+		});
+		btnAddNewPrd.addActionListener(e -> {
+			String pName = txtNewPrdName.getText();
+			String pCategory = (String) cbbPrdType.getSelectedItem();
+			String pBrand = (String) cbbPrdBrand.getSelectedItem();
+			if (!pName.isBlank() && cbbPrdBrand.getSelectedIndex() != 0 && cbbPrdType.getSelectedIndex() != 0) {
+				Product prd = new Product();
+				prd.setProductName(pName);
+				prd.setBrand(pBrand);
+				prd.setCategory(pCategory);
+				prd.setImageUrl(saveImg());
+				SupplierBLL.addNewProduct(selectedSupplier.getSupplierId(), prd);
+			}
+			reloadTable();
+		});
+		btnUrl.addActionListener(e -> {
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+			int result = fileChooser.showOpenDialog(null);
+			if (result == JFileChooser.APPROVE_OPTION) {
+                textField.setText(fileChooser.getSelectedFile().getPath());
+            }
+		});
+	}
+	
+	private String saveImg() {
+		String imgPath = textField.getText();
+		String newName = new Random().ints(15, 'a', 'z' + 1)
+                .mapToObj(c -> String.valueOf((char) c))
+                .collect(Collectors.joining()) + ".jpg";
+        try {
+        	Path source = Paths.get(imgPath);
+        	String desP = getClass().getResource("/img/products").getPath().substring(1).replace('/', '\\');
+        	desP = desP.replace("target\\classes", "src\\main\\resources");
+			Path destination = Paths.get(desP, newName);
+			Files.copy(source, destination);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return "/img/products/" + newName;
+	}
+
+	private void reloadTable() {
+		model.setRowCount(0);
+		provided = SupplierBLL.getProvidedList(selectedSupplier.getSupplierId());
+		provided.forEach(prd -> {
+			Object[] data = {
+				prd.getId(),
+				prd.getProductName(),
+				prd.getCategory(),
+				prd.getBrand()
+			};
+			model.addRow(data);
+		});
 	}
 
 }

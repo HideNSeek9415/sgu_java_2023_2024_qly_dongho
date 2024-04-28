@@ -456,7 +456,6 @@ public class RegisGUI extends JFrame {
 			private final static int step = 10;
 			private final static int delayPerStep = 12;
 
-
 			@Override
 			public void run() {
 				try {

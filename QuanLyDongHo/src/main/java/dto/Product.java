@@ -6,10 +6,10 @@ public class Product {
     private String category;
     private String brand;
     private double sellPrice;
-    private boolean discount;
+    private boolean discount = false;
     private double discountPrice;
     private int quantity;
-    private String productStatus;
+    private String productStatus = "active";
     private String imageUrl;
 
     public Product(int id, String productName, String category, String brand, double sellPrice, boolean discount, double discountPrice, int quantity, String productStatus, String imageUrl) {

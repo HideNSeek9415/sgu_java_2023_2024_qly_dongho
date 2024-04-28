@@ -18,7 +18,6 @@ public class ExtendTest extends DashboardFrame {
 					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 					ExtendTest frame = new ExtendTest();
 					frame.setVisible(true);
-//					gui.ShowMsg.showValidationMsg("Xác nhận thông tin thành công", frame);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -29,6 +28,7 @@ public class ExtendTest extends DashboardFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public ExtendTest() {
 		super();
 		addFunction(new FunctionBtn(FunctionBtn.PRODUCTS));

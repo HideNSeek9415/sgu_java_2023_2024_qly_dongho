@@ -8,13 +8,19 @@ import java.awt.Dimension;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import bll.SupplierBLL;
+import dto.Supplier;
+
 import java.awt.Font;
+import java.util.ArrayList;
 
 public class SuppliersGUI extends NewJPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private DefaultTableModel model;
 
 	/**
 	 * Create the panel.
@@ -30,11 +36,11 @@ public class SuppliersGUI extends NewJPanel {
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"NCC01", "Trường ĐH Sài Gòn", "273 An Dương Vương, Phường 3, Quận 5, TP HCM", "sgu@edu.com.vn", "0695912684"},
-				{"NCC02", "CTTNHH MTV Bán Cái Đồng Hồ", "022 Financial Center Rd, Downtown Dubai, Dubai", "bdha@ko.ko", "0188923543"},
+				{"NCC01", "Trường ĐH Sài Gòn", "sgu@edu.com.vn", "0695912684"},
+				{"NCC02", "CTTNHH MTV Bán Cái Đồng Hồ", "bdha@ko.ko", "0188923543"},
 			},
 			new String[] {
-				"Mã NCC", "Tên nhà cung cấp", "Địa chỉ", "E-mail", "Số điện thoại"
+				"Mã NCC", "Tên nhà cung cấp", "E-mail", "Số điện thoại"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -42,11 +48,27 @@ public class SuppliersGUI extends NewJPanel {
 		table.getColumnModel().getColumn(1).setPreferredWidth(220);
 		table.getColumnModel().getColumn(2).setPreferredWidth(240);
 		table.getColumnModel().getColumn(3).setPreferredWidth(100);
-		table.getColumnModel().getColumn(4).setPreferredWidth(100);
 		scrollPane.setViewportView(table);
 		designTitle();
+		model = (DefaultTableModel) table.getModel();
+		reloadTable();
 	}
 	
+	private void reloadTable() {
+		// TODO Auto-generated method stub
+		ArrayList<Supplier> suppliers = SupplierBLL.getSupplierList();
+		model.setRowCount(0);
+		for (Supplier supplier : suppliers) {
+			Object[] data = {
+				supplier.getSupplierId(),
+				supplier.getSupplierName(),
+				supplier.getEmail(),
+				supplier.getPhoneNumber()
+			};
+			model.addRow(data);
+		}
+	}
+
 	private void designTitle() {
 		// TODO Auto-generated method stub
 		table.getTableHeader().setBackground(Color.decode("#f4c82d"));
@@ -69,6 +91,8 @@ public class SuppliersGUI extends NewJPanel {
 	
 	@Override
 	protected void setDetailEvent() {
+		int Sid = (Integer) table.getValueAt(table.getSelectedRow(), 0);
+		SupplierDetails.selectedSupplier = SupplierBLL.getByID(Sid);
 		JFrame fr = new SupplierDetails();
 		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		fr.setLocationRelativeTo(null);
