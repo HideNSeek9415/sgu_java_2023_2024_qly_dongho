@@ -15,6 +15,8 @@ public class ProductManagerGUI extends NewJPanel {
     private static final long serialVersionUID = 1L;
     private JScrollPane scrollPane;
     private JTable table;
+    private DefaultTableModel model;
+    ArrayList<Product> productList;
 
     public ProductManagerGUI() {
         pnContent.setLayout(new BorderLayout(0, 0));
@@ -26,17 +28,8 @@ public class ProductManagerGUI extends NewJPanel {
         table = new JTable();
         table.setRowHeight(25);
         table.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-
-        ProductDAO productDAO = ProductDAO.getInstance();
-		ArrayList<Product> productList = productDAO.readAllData();
-		displayProducts(productList);
         
-        scrollPane.setViewportView(table);
-        designTitle();
-    }
-
-    private void displayProducts(ArrayList<Product> productList) {
-    	DefaultTableModel model = new DefaultTableModel(
+    	DefaultTableModel md = new DefaultTableModel(
             	new Object[][] {},
             	new String[] {
             		"Mã SP",
@@ -46,23 +39,10 @@ public class ProductManagerGUI extends NewJPanel {
             		"Thương hiệu",
             		"Giá",
             		"Giá giảm",
-            		"Giảm giá"
+            		"Trạng thái"
             	}
         );
-        for (Product product : productList) {
-            Object[] rowData = {
-                    product.getId(),
-                    product.getProductName(),
-                    product.getQuantity(),
-                    product.getCategory(),
-                    product.getBrand(),
-                    product.getSellPrice(),
-                    product.getDiscountPrice(),
-                    product.isDiscount() ? "Đang giảm giá" : "Không"
-            };
-            model.addRow(rowData);
-        }
-        table.setModel(model);
+        table.setModel(md);
 
         table.getColumnModel().getColumn(0).setResizable(false);
         table.getColumnModel().getColumn(0).setPreferredWidth(70);
@@ -81,6 +61,32 @@ public class ProductManagerGUI extends NewJPanel {
         table.getColumnModel().getColumn(6).setPreferredWidth(80);
         table.getColumnModel().getColumn(7).setResizable(false);
         table.getColumnModel().getColumn(7).setPreferredWidth(80);
+    	model = md;
+
+		displayProducts();
+		
+        
+        scrollPane.setViewportView(table);
+        designTitle();
+    }
+
+    public void displayProducts() {
+    	productList = ProductDAO.getInstance().readAllData();
+    	model.setRowCount(0);
+
+        for (Product product : productList) {
+            Object[] rowData = {
+                product.getId(),
+                product.getProductName(),
+                product.getQuantity(),
+                product.getCategory(),
+                product.getBrand(),
+                product.getSellPrice(),
+                product.getDiscountPrice(),
+                product.getStatus()
+            };
+            model.addRow(rowData);
+        }
     }
 
     private void designTitle() {
@@ -89,8 +95,10 @@ public class ProductManagerGUI extends NewJPanel {
     }
 
     @Override
-    protected void setAddEvent() {
-        JFrame fr = new ThemSPGUI();
+    protected void setDetailEvent() {
+    	int id = (Integer) table.getValueAt(table.getSelectedRow(), 0);
+    	Product p = ProductDAO.getInstance().readByID(id);
+        JFrame fr = new ThemSPGUI(p);
         fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         fr.setLocationRelativeTo(null);
         fr.setVisible(true);

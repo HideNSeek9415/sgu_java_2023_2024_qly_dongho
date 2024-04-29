@@ -653,6 +653,7 @@ public class PermissionTable extends JPanel {
 			cbNCCS.setSelected(ConfigPRJ.supplier.get("edit"));
 			cbNCCO.setSelected(ConfigPRJ.supplier.get("other"));
 		});
+		btnReload.doClick();
 	}
 }
 

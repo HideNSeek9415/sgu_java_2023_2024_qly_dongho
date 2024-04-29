@@ -18,4 +18,8 @@ public class ProductBLL {
 	public static Product getById(int id) {
 		return ProductDAO.getInstance().readByID(id);
 	}
+	
+	public static boolean updateProduct(Product p) {
+		return ProductDAO.getInstance().update(0, p);
+	}
 }

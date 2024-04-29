@@ -178,7 +178,7 @@ public class TmpHomePanel extends JPanel {
 
 	}
 
-	private void reloadPanel() {
+	public void reloadPanel() {
 		// TODO Auto-generated method stub
 		int productPerPage = 10;
 		tabbedPane.removeAll();
@@ -196,15 +196,6 @@ public class TmpHomePanel extends JPanel {
 			}
 			tabbedPane.addTab(String.valueOf(i + 1), null, pnPrd[i], null);
 		}
-		
-//		for (Product product : products) {
-//			JPanel prdpn = new ProductDisplay(product);
-//			prdpn.setPreferredSize(new Dimension(240, 350));
-//			prdpn.setMinimumSize(new Dimension(240, 350));
-//			prdpn.setMinimumSize(new Dimension(240, 350));
-//			prdpn.setSize(new Dimension(240, 320));
-//			panel.add(prdpn);
-//		}
 		
 		for (int i = 0; i < products.size(); i++) {
 			JPanel prdpn = new ProductDisplay(products.get(i));

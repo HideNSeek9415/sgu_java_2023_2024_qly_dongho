@@ -2,6 +2,8 @@ package system;
 
 import java.util.HashMap;
 
+import javax.swing.JPanel;
+
 import dao.PermissionDAO;
 import dto.Person;
 
@@ -15,7 +17,8 @@ public class ConfigPRJ {
 	public static HashMap<String, Boolean> customer = new HashMap<>();
 	public static HashMap<String, Boolean> employee = new HashMap<>();
 	public static HashMap<String, Boolean> supplier = new HashMap<>();
- 
+	
+	public static HashMap<String, JPanel> menu = new HashMap<>();
 	
 	public static void loadUser(Person user) {
 		currentUser = user;

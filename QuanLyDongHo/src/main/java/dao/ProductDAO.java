@@ -16,7 +16,7 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	@Override
 	public boolean create(Product Obj) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO products (product_name, category, brand, sell_price, discount, discount_price, quantity, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO products (product_name, category, brand, sell_price, discount, discount_price, quantity, product_status, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int affectedRowCount = runUpdate(sql,
 			Obj.getProductName(),
 			Obj.getCategory(),
@@ -25,6 +25,7 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 			Obj.isDiscount(),
 			Obj.getDiscountPrice(),
 			Obj.getQuantity(),
+			Obj.getProductStatus(),
 			Obj.getImageUrl()
 		);
 		closeConnection();
@@ -89,8 +90,20 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 
 	@Override
 	public boolean update(int ID, Product Obj) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "UPDATE products SET product_name = ?, category = ?, brand = ?, sell_price = ?, discount = ?, discount_price = ?, quantity = ?, product_status = ?, image_url = ? WHERE id = ?";
+		int affectedRowCount = runUpdate(sql,
+			Obj.getProductName(),
+			Obj.getCategory(),
+			Obj.getBrand(),
+			Obj.getSellPrice(),
+			Obj.isDiscount(),
+			Obj.getDiscountPrice(),
+			Obj.getQuantity(),
+			Obj.getProductStatus(),
+			Obj.getImageUrl(),
+			Obj.getId()
+		);
+		return affectedRowCount > 0;
 	}
 
 	@Override

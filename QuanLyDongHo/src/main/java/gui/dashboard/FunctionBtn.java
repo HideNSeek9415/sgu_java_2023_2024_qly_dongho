@@ -18,6 +18,8 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignS;
 import org.kordamp.ikonli.swing.FontIcon;
 
+import system.ConfigPRJ;
+
 
 public class FunctionBtn {
 	private JToggleButton toggleButton = new JToggleButton();
@@ -56,62 +58,73 @@ public class FunctionBtn {
 		case HOME:
 			icon = FontIcon.of(FontAwesomeSolid.HOME);
 			toggleButton.setText("Trang chủ");
-//			panel = new ProductGridPanel();
 			panel = new TmpHomePanel();
+			ConfigPRJ.menu.put("HOME", panel);
 			break;
 		case PRODUCTS:
 			icon = FontIcon.of(FontAwesomeSolid.SHOPPING_BAG);
 			toggleButton.setText("Sản phẩm");
 			panel = new ProductManagerGUI();
+			ConfigPRJ.menu.put("PRODUCTS", panel);
 			break;
 		case ORDERS:
 			icon = FontIcon.of(FontAwesomeSolid.INBOX);
 			toggleButton.setText("Phiếu xuất");
 			panel.setBackground(Color.decode("#939201"));
 			panel = new PhieuXuatGUI();
+			ConfigPRJ.menu.put("ORDERS", panel);
 			break;
 		case RECEIPTS:
 			icon = FontIcon.of(FontAwesomeSolid.ENVELOPE_OPEN_TEXT);
 			toggleButton.setText("Phiếu nhập");
 			panel = new PhieuNhapGUI();
+			ConfigPRJ.menu.put("RECEIPTS", panel);
 			break;
 		case CUSTOMERS:
 			icon = FontIcon.of(FontAwesomeSolid.USERS);
 			toggleButton.setText("Khách hàng");
 			panel = new CustomerManagerGUI();
+			ConfigPRJ.menu.put("CUSTOMERS", panel);
 			break;
 		case SUPPLIERS:
 			icon = FontIcon.of(FontAwesomeSolid.TRUCK);
 			toggleButton.setText("Nhà cung cấp");
 			panel = new SuppliersGUI();
+			ConfigPRJ.menu.put("SUPPLIERS", panel);
 			break;
 		case EMPLOYEES:
 			icon = FontIcon.of(FontAwesomeSolid.ADDRESS_CARD);
 			toggleButton.setText("Nhân viên");
 			panel = new EmployeesGUI();
+			ConfigPRJ.menu.put("EMPLOYEES", panel);
 			break;
 		case ACCOUNTS:
 			icon = FontIcon.of(FontAwesomeSolid.KEY);
 			toggleButton.setText("Tài khoản");
 			panel = new TmpHomePanel();
+			ConfigPRJ.menu.put("ACCOUNTS", panel);
 			break;
 		case STATISTICAL:
 			icon = FontIcon.of(FontAwesomeSolid.CHART_LINE);
 			toggleButton.setText("Thống kê");
 			panel = new StatisticalGUI();
+			ConfigPRJ.menu.put("STATISTICAL", panel);
 			break;
 		case PERMISSION:
 			icon = FontIcon.of(FontAwesomeSolid.LIST_ALT);
 			toggleButton.setText("Phân quyền");
 			panel = new PermissionGUI();
+			ConfigPRJ.menu.put("PERMISSION", panel);
 			break;
 		case WARRANTY:
 			icon = FontIcon.of(MaterialDesignS.SHIELD_CHECK);
 			toggleButton.setText("Bảo hành");
+			ConfigPRJ.menu.put("WARRANTY", panel);
 			break;
 		case HISTORY:
 			icon = FontIcon.of(MaterialDesignC.CLIPBOARD_TEXT_SEARCH_OUTLINE);
 			toggleButton.setText("Lịch sử mua hàng");
+			ConfigPRJ.menu.put("HISTORY", panel);
 			break;
 		default:
 			icon = FontIcon.of(FontAwesome.ANGLE_DOUBLE_DOWN);
