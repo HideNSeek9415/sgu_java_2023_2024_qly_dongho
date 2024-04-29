@@ -83,9 +83,19 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 		return false;
 	}
 	
-	public boolean isActive(int accountId) {
-		closeConnection();
-		return AccountDAO.getInstance().isActive(accountId);
+	public boolean isActive(int id) {
+		boolean returnValue = false;
+		try {
+			String sql = String.format("select a.account_status from accounts as a join employees as e on e.account_id = a.id where id = '%d'", id);
+			rs = runQuery(sql);
+			if (rs.next() && rs.getString(1).equals("active")) {
+				returnValue = true;
+			}
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return returnValue;
 	}
 	
 	public Employee getEmployeeByAccountId(int accountId) {
@@ -137,6 +147,20 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 			e.printStackTrace();
 		}
 		closeConnection();
+		return ret;
+	}
+	
+	public String getRole(int id) {
+		String sql = "select a.role_id from accounts as a join employees as e on e.account_id = a.id where e.id = ?";
+		String ret = null;
+		rs = runQuery2(sql, id);
+		try {
+			if (rs.next()) {
+				ret = rs.getString("role_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return ret;
 	}
 

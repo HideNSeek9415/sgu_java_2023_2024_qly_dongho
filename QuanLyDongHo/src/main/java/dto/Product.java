@@ -5,14 +5,14 @@ public class Product {
     private String productName;
     private String category;
     private String brand;
-    private double sellPrice;
+    private int sellPrice;
     private boolean discount = false;
-    private double discountPrice;
+    private int discountPrice;
     private int quantity;
-    private String productStatus = "active";
+    private boolean productStatus;
     private String imageUrl;
 
-    public Product(int id, String productName, String category, String brand, double sellPrice, boolean discount, double discountPrice, int quantity, String productStatus, String imageUrl) {
+    public Product(int id, String productName, String category, String brand, int sellPrice, boolean discount, int discountPrice, int quantity, boolean productStatus, String imageUrl) {
         this.id = id;
         this.productName = productName;
         this.category = category;
@@ -23,6 +23,10 @@ public class Product {
         this.quantity = quantity;
         this.productStatus = productStatus;
         this.imageUrl = imageUrl;
+    }
+    
+    public String getStatus() {
+    	return getProductStatus() ? getQuantity() > 0 ? isDiscount() ? "Đang giảm giá" : "Đang bán" : "Hết hàng" : "Không còn bán";
     }
 
     public Product() {
@@ -61,11 +65,11 @@ public class Product {
         this.brand = brand;
     }
 
-    public double getSellPrice() {
+    public int getSellPrice() {
         return sellPrice;
     }
 
-    public void setSellPrice(double sellPrice) {
+    public void setSellPrice(int sellPrice) {
         this.sellPrice = sellPrice;
     }
 
@@ -77,11 +81,11 @@ public class Product {
         this.discount = discount;
     }
 
-    public double getDiscountPrice() {
+    public int getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(double discountPrice) {
+    public void setDiscountPrice(int discountPrice) {
         this.discountPrice = discountPrice;
     }
 
@@ -93,11 +97,11 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public String getProductStatus() {
+    public boolean getProductStatus() {
         return productStatus;
     }
 
-    public void setProductStatus(String productStatus) {
+    public void setProductStatus(boolean productStatus) {
         this.productStatus = productStatus;
     }
 

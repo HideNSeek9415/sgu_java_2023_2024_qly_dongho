@@ -8,28 +8,21 @@ CREATE TABLE roles (
 );
 
 CREATE TABLE permissions (
-    permission_code ENUM (
-		'HOME', 'PRODUCTS', 'ORDERS', 'RECEIPTS',
-		'CUSTOMERS', 'SUPPLIERS', 'EMPLOYEES', 'ACCOUNTS',
-		'STATISTICAL', 'PERMISSION', 'WARRANTY', 'HISTORY'
-	) PRIMARY KEY,
+    permission_code ENUM ('PRODUCT', 'ORDER', 'RECEIPT', 'CUSTOMER', 'EMPLOYEE', 'SUPPLIER', 'WARRANTY') PRIMARY KEY,
     permission_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE decentralization (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT,
     role_id ENUM('SLR', 'WHM', 'ADM', 'CTM'),
-    permission_code ENUM (
-		'HOME', 'PRODUCTS', 'ORDERS', 'RECEIPTS',
-		'CUSTOMERS', 'SUPPLIERS', 'EMPLOYEES', 'ACCOUNTS',
-		'STATISTICAL', 'PERMISSION', 'WARRANTY', 'HISTORY'
-	),
+    permission_code ENUM ('PRODUCT', 'ORDER', 'RECEIPT', 'CUSTOMER', 'EMPLOYEE', 'SUPPLIER', 'WARRANTY'),
     adding BOOLEAN DEFAULT FALSE,
     editing BOOLEAN DEFAULT FALSE,
     deleting BOOLEAN DEFAULT FALSE,
+    other BOOLEAN DEFAULT FALSE,
+	PRIMARY KEY (id, role_id),
     FOREIGN KEY (role_id) REFERENCES roles(role_id),
-    FOREIGN KEY (permission_code) REFERENCES permissions(permission_code),
-    UNIQUE(role_id, permission_code)
+    FOREIGN KEY (permission_code) REFERENCES permissions(permission_code)
 );
 
 CREATE TABLE accounts (
@@ -39,7 +32,7 @@ CREATE TABLE accounts (
     account_status ENUM('active', 'inactive') DEFAULT 'active',
     role_id ENUM('SLR', 'WHM', 'ADM', 'CTM') DEFAULT 'CTM',
     created_date DATE,
-	FOREIGN KEY (role_id) REFERENCES decentralization(role_id)
+	FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
 DELIMITER //
@@ -82,7 +75,7 @@ CREATE TABLE products (
     discount BOOLEAN DEFAULT FALSE,
     discount_price INT,
     quantity INT,
-    product_status ENUM('selling', 'discounted', 'out_of_stock', 'not_sell') DEFAULT 'selling',
+    product_status BOOLEAN DEFAULT TRUE,
     image_url VARCHAR(255)
 );
 
@@ -163,17 +156,13 @@ INSERT INTO roles (role_id, role_name) VALUES
 ('CTM', 'Khách hàng');
 
 INSERT INTO permissions (permission_code, permission_name) VALUES
-('HOME', 'Trang mua hàng'),
-('PRODUCTS', 'Sản phẩm'),
-('ORDERS', 'Phiếu xuất'),
-('RECEIPTS', 'Phiếu nhập'),
-('CUSTOMERS', 'Khách hàng'),
-('EMPLOYEES', 'Nhân viên'),
-('SUPPLIERS', 'Nhà cung cấp'),
-('ACCOUNTS', 'Tài khoản'),
-('STATISTICAL', 'Thống kê'),
-('WARRANTY', 'Bảo hành'),
-('HISTORY', 'Lịch sử mua hàng');
+('PRODUCT', 'Sản phẩm'),
+('ORDER', 'Phiếu xuất'),
+('RECEIPT', 'Phiếu nhập'),
+('CUSTOMER', 'Khách hàng'),
+('EMPLOYEE', 'Nhân viên'),
+('SUPPLIER', 'Nhà cung cấp'),
+('WARRANTY', 'Bảo hành');
 /*
 Quyền của người dùng
 1. Nhân viên bán hàng
@@ -205,28 +194,21 @@ Quyền của người dùng
     - Xem lịch sử mua hàng
 */
 
-INSERT INTO decentralization (role_id, permission_code, adding, editing, deleting) VALUES
-('SLR', 'PRODUCTS', FALSE, FALSE, FALSE),
-('SLR', 'ORDERS', FALSE, FALSE, FALSE),
-('SLR', 'RECEIPTS', FALSE, FALSE, FALSE),
-('SLR', 'WARRANTY', FALSE, FALSE, FALSE),
-('SLR', 'SUPPLIERS', FALSE, FALSE, FALSE),
-('WHM', 'PRODUCTS', FALSE, FALSE, FALSE),
-('WHM', 'ORDERS', FALSE, FALSE, FALSE),
-('WHM', 'RECEIPTS', TRUE, FALSE, FALSE),
-('WHM', 'SUPPLIERS', TRUE, FALSE, FALSE),
-('ADM', 'HOME', FALSE, FALSE, FALSE),
-('ADM', 'PRODUCTS', TRUE, TRUE, TRUE),
-('ADM', 'EMPLOYEES', TRUE, TRUE, TRUE),
-('ADM', 'CUSTOMERS', TRUE, TRUE, TRUE),
-('ADM', 'ACCOUNTS', TRUE, TRUE, TRUE),
-('ADM', 'SUPPLIERS', TRUE, TRUE, TRUE),
-('ADM', 'ORDERS', TRUE, FALSE, FALSE),
-('ADM', 'RECEIPTS', TRUE, FALSE, FALSE),
-('ADM', 'WARRANTY', TRUE, FALSE, FALSE),
-('ADM', 'STATISTICAL', TRUE, FALSE, FALSE),
-('CTM', 'HOME', TRUE, FALSE, FALSE),
-('CTM', 'HISTORY', FALSE, FALSE, FALSE);
+INSERT INTO decentralization (role_id, permission_code, adding, editing, deleting, other) VALUES
+('SLR', 'PRODUCT', FALSE, FALSE, FALSE, NULL),
+('SLR', 'EMPLOYEE', FALSE, FALSE, FALSE, NULL),
+('SLR', 'CUSTOMER', NULL, FALSE, FALSE, NULL),
+('SLR', 'ORDER', TRUE, TRUE, NULL, NULL),
+('SLR', 'RECEIPT', FALSE, FALSE, NULL, NULL),
+('SLR', 'WARRANTY', NULL, NULL, NULL, TRUE),
+('SLR', 'SUPPLIER', TRUE, TRUE, TRUE, TRUE),
+('WHM', 'PRODUCT', TRUE, TRUE, TRUE, NULL),
+('WHM', 'EMPLOYEE', FALSE, FALSE, FALSE, NULL),
+('WHM', 'CUSTOMER', NULL, FALSE, FALSE, NULL),
+('WHM', 'ORDER', FALSE, FALSE, NULL, NULL),
+('WHM', 'RECEIPT', TRUE, TRUE, NULL, NULL),
+('WHM', 'WARRANTY', NULL, NULL, NULL, FALSE),
+('WHM', 'SUPPLIER', TRUE, TRUE, TRUE, TRUE);
 
 INSERT INTO products (product_name, category, brand, sell_price, discount, discount_price, quantity, image_url) VALUES
 ('Đồng Hồ Casio Nam MTP-1374L-1AVDF', 'Đồng hồ cơ', 'CASIO', 2270000, FALSE, 0, 0, '/img/products/anh1.jpg'),
@@ -304,4 +286,8 @@ from products as p
 join product_supplier as ps on ps.product_id = p.id
 join suppliers as s on s.supplier_id = ps.supplier_id;
 
-select r.role_name from roles as r join accounts as a on a.role_id = r.role_id where a.id = 2;
+-- select r.role_name from roles as r join accounts as a on a.role_id = r.role_id where a.id = 2;
+
+-- select * from products
+
+select * from decentralization

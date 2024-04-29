@@ -60,7 +60,7 @@ public class EmployeesGUI extends NewJPanel {
 				(new SimpleDateFormat("dd/MM/yyyy")).format(employee.getDateOfBirth()),
 				employee.getPhoneNumber(),
 				employee.getAddress(),
-				EmployeeDAO.getInstance().getRoleName(employee.getAccountId())
+				EmployeeDAO.getInstance().getRole(employee.getId())
 			};
 			model.addRow(data);
 		}

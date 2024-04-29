@@ -103,6 +103,7 @@ public class FunctionBtn {
 		case PERMISSION:
 			icon = FontIcon.of(FontAwesomeSolid.LIST_ALT);
 			toggleButton.setText("Phân quyền");
+			panel = new PermissionGUI();
 			break;
 		case WARRANTY:
 			icon = FontIcon.of(MaterialDesignS.SHIELD_CHECK);

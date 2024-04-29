@@ -22,6 +22,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -64,7 +65,7 @@ public class ThemSPGUI extends javax.swing.JFrame {
         jPanel2.setOpaque(false);
         jPanel17 = new javax.swing.JPanel();
         jPanel17.setOpaque(false);
-        buttonShowIllustrationImg = new javax.swing.JButton();
+        buttonShowIllustrationImg = new JLabel();
         jPanel18 = new javax.swing.JPanel();
         jPanel18.setOpaque(false);
         jPanel18.setBorder(new EmptyBorder(0, 0, 0, 10));
@@ -89,7 +90,7 @@ public class ThemSPGUI extends javax.swing.JFrame {
         jPanel14 = new javax.swing.JPanel();
         jPanel14.setOpaque(false);
         jLabel9 = new javax.swing.JLabel();
-        comboBoxProductStatus = new javax.swing.JComboBox<>();
+        comboBoxProductStatus = new JLabel();
         comboBoxProductStatus.setBackground(new Color(255, 255, 255));
         jPanel6 = new javax.swing.JPanel();
         jPanel6.setOpaque(false);
@@ -117,7 +118,7 @@ public class ThemSPGUI extends javax.swing.JFrame {
         jLabel10.setFont(new Font("Arial", Font.BOLD, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("THÊM SẢN PHẨM");
+        jLabel10.setText("Thông tin sản phẩm");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
@@ -144,11 +145,6 @@ public class ThemSPGUI extends javax.swing.JFrame {
 
         buttonShowIllustrationImg.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         buttonShowIllustrationImg.setText("Hình minh họa");
-        buttonShowIllustrationImg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonShowIllustrationImgActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17Layout.setHorizontalGroup(
@@ -184,7 +180,7 @@ public class ThemSPGUI extends javax.swing.JFrame {
                 jLabel8.setText("Mã SP");
 
         jPanel5.add(jPanel12);
-        textFieldProductID = new javax.swing.JTextField();
+        textFieldProductID = new JLabel();
         jPanel12.add(textFieldProductID);
         jPanel3.setLayout(new GridLayout(0, 1, 0, 0));
         jLabel1 = new javax.swing.JLabel();
@@ -218,7 +214,9 @@ public class ThemSPGUI extends javax.swing.JFrame {
         
                 jLabel4.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
                 jLabel4.setText("Thương hiệu");
-                textFieldBrand = new javax.swing.JTextField();
+                textFieldBrand = new JComboBox();
+                textFieldBrand.setFont(new Font("Tahoma", Font.BOLD, 12));
+                textFieldBrand.setModel(new DefaultComboBoxModel(new String[] {"CASIO", "ORIENT", "APPLE", "CITIZEN"}));
                 jPanel7.add(textFieldBrand);
         jPanel8.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -243,7 +241,7 @@ public class ThemSPGUI extends javax.swing.JFrame {
         comboBoxDiscount.setBackground(new Color(255, 255, 255));
         
                 comboBoxDiscount.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-                comboBoxDiscount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Có", "Không" }));
+                comboBoxDiscount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Không", "Có" }));
         jPanel10.setLayout(new GridLayout(0, 1, 0, 0));
 
         jPanel5.add(jPanel10);
@@ -263,16 +261,13 @@ public class ThemSPGUI extends javax.swing.JFrame {
                 jLabel2.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
                 jLabel2.setText("Tồn kho");
                 
-                textFieldQuantity = new JTextField();
+                textFieldQuantity = new JLabel();
                 jPanel13.add(textFieldQuantity);
-                textFieldQuantity.setColumns(10);
         jPanel14.setLayout(new GridLayout(0, 1, 0, 0));
 
         jLabel9.setFont(new Font("Arial", Font.PLAIN, 14)); // NOI18N
         jLabel9.setText("Trạng thái SP");
         jPanel14.add(jLabel9);
-
-        comboBoxProductStatus.setModel(new DefaultComboBoxModel(new String[] {" ", "selling", "Không có sẵn"}));
         jPanel14.add(comboBoxProductStatus);
 
         jPanel5.add(jPanel14);
@@ -285,11 +280,6 @@ public class ThemSPGUI extends javax.swing.JFrame {
         jButton2.setFont(new Font("Arial", Font.BOLD, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Hoàn tất");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridx = 0;
@@ -303,11 +293,6 @@ public class ThemSPGUI extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Hủy bỏ");
         jButton3.setPreferredSize(new Dimension(110, 25));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.ipadx = 41;
         gridBagConstraints.ipady = 13;
@@ -322,41 +307,6 @@ public class ThemSPGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    	//Cập nhật lại thông tin về trang Admin
-    	int selectedRow = table.getSelectedRow();
-		table.setValueAt( textFieldProductID.getText(), selectedRow, 0 );
-		table.setValueAt( textFieldProductname.getText(), selectedRow, 1 );
-		table.setValueAt( textFieldQuantity.getText(), selectedRow, 2 );
-		table.setValueAt( comboBoxCategory.getSelectedItem(), selectedRow, 3 );
-		table.setValueAt( textFieldBrand.getText(), selectedRow, 4 );
-//    			table.setValueAt( ((ChinhSuaSPGUI) fr).getPro, selectedRow, 6 );
-        JOptionPane.showMessageDialog(rootPane, "Cập nhật cấu hình thành công");
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    	
-    	
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void buttonShowIllustrationImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowIllustrationImgActionPerformed
-    	if(evt.getSource() == buttonShowIllustrationImg) {
-
-            JFileChooser file_upload = new JFileChooser();
-            file_upload.setCurrentDirectory(new File("."));
-
-            //file_upload.showOpenDialog(null);
-            //int res = file_upload.showOpenDialog(null);
-            int res_2 = file_upload.showSaveDialog(null);
-
-            if(res_2 == JFileChooser.APPROVE_OPTION) {
-                File file_path = file_upload.getSelectedFile();
-                System.out.println(file_path.getAbsolutePath());
-            }
-        }
-    }//GEN-LAST:event_buttonShowIllustrationImgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,9 +344,9 @@ public class ThemSPGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonShowIllustrationImg;
+    private JLabel buttonShowIllustrationImg;
     private javax.swing.JComboBox<String> comboBoxCategory;
-    private javax.swing.JComboBox<String> comboBoxProductStatus;
+    private JLabel comboBoxProductStatus;
     private javax.swing.JComboBox<String> comboBoxDiscount;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -426,12 +376,12 @@ public class ThemSPGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField textFieldBrand;
+    private JComboBox textFieldBrand;
     private javax.swing.JTextField textFieldDiscountPrice;
     protected javax.swing.JTextField textFieldProductname;
-    private javax.swing.JTextField textFieldProductID;
+    private JLabel textFieldProductID;
     private javax.swing.JTextField textFieldSellPrice;
-    private JTextField textFieldQuantity;
+    private JLabel textFieldQuantity;
     // End of variables declaration//GEN-END:variables
     
   //Chỉnh sửa và hiển thị phân loại lên trên thông tin chi tiết (Trong trường hợp đã tồn tại sẵn phân loại)
@@ -455,10 +405,6 @@ public class ThemSPGUI extends javax.swing.JFrame {
     	textFieldProductID.setText(id);
     }
     
-    public void setProductBrand(String brand) {
-    	textFieldBrand.setText(brand);
-    }
-    
     public void setProductColor(String color) {
     	textFieldDiscountPrice.setText(color);
     }
@@ -472,16 +418,8 @@ public class ThemSPGUI extends javax.swing.JFrame {
 		return comboBoxCategory.getSelectedItem().toString();
 	}
 
-	public String getComboBoxProductStatusValue() {
-		return comboBoxProductStatus.getSelectedItem().toString();
-	}
-
 	public String getComboBoxDiscountValue() {
 		return comboBoxDiscount.getSelectedItem().toString();
-	}
-
-	public String getTextFieldBrandValue() {
-		return textFieldBrand.getText();
 	}
 
 

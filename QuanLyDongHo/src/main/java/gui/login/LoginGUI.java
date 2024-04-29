@@ -28,7 +28,7 @@ import dao.AccountDAO;
 import dao.CustomerDAO;
 import dao.EmployeeDAO;
 import dto.Account;
-import system.SystemInfo;
+import system.ConfigPRJ;
 
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.plaf.metal.MetalButtonUI;
@@ -200,7 +200,7 @@ public class LoginGUI extends JFrame {
 				JOptionPane.showMessageDialog(null, "Mật khẩu không chính xác", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				break;
 			case AccountBLL.VALID:
-				JOptionPane.showMessageDialog(null, SystemInfo.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, ConfigPRJ.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
 				break;
 			}
 		});

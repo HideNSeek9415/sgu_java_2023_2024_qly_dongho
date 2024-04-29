@@ -43,11 +43,11 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 					rs.getString("product_name"),
 					rs.getString("category"),
 					rs.getString("brand"),
-					rs.getDouble("sell_price"),
+					rs.getInt("sell_price"),
 					rs.getBoolean("discount"),
-					rs.getDouble("discount_price"),
+					rs.getInt("discount_price"),
 					rs.getInt("quantity"),
-					rs.getString("product_status"),
+					rs.getBoolean("product_status"),
 					rs.getString("image_url")
 	        	);
 			}
@@ -71,11 +71,11 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 					rs.getString("product_name"),
 					rs.getString("category"),
 					rs.getString("brand"),
-					rs.getDouble("sell_price"),
+					rs.getInt("sell_price"),
 					rs.getBoolean("discount"),
-					rs.getDouble("discount_price"),
+					rs.getInt("discount_price"),
 					rs.getInt("quantity"),
-					rs.getString("product_status"),
+					rs.getBoolean("product_status"),
 					rs.getString("image_url")
 	        	);
 	        	products.add(product);

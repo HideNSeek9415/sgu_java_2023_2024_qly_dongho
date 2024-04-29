@@ -15,8 +15,9 @@ public class ExtendTest extends DashboardFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					System.out.println("câu chuyện về một chú cáo nâu nhanh nhẹn nhảy qua chú chó lười biếng");
 					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-					ExtendTest frame = new ExtendTest();
+					ExtendTest frame = new ExtendTest();	
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

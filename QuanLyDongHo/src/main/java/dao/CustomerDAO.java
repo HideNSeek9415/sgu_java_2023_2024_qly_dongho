@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import dto.Customer;
 
@@ -87,8 +88,19 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 		return false;
 	}
 	
-	public boolean isActive(int accountId) {
-		return AccountDAO.getInstance().isActive(accountId);
+	public boolean isActive(int id) {
+		boolean returnValue = false;
+		try {
+			String sql = String.format("select a.account_status from accounts as a join customers as e on e.account_id = a.id where id = '%d'", id);
+			rs = runQuery(sql);
+			if (rs.next() && rs.getString(1).equals("active")) {
+				returnValue = true;
+			}
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return returnValue; 
 	}
 	
 	public Customer getCustomerByAccountId(int accountId) {

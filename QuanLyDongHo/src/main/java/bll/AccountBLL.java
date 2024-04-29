@@ -6,7 +6,7 @@ import dao.AccountDAO;
 import dao.CustomerDAO;
 import dao.EmployeeDAO;
 import dto.Account;
-import system.SystemInfo;
+import system.ConfigPRJ;
 
 public class AccountBLL { 
 	
@@ -32,9 +32,9 @@ public class AccountBLL {
 		}
 		account = AccountDAO.getInstance().getUserByUsername(account.getUsername());
 		if (AccountDAO.getInstance().getRoleId(account.getId()).equals("CTM")) {
-			SystemInfo.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(account.getId());
+			ConfigPRJ.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(account.getId());
 		} else {
-			SystemInfo.currentUser = EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId());
+			ConfigPRJ.currentUser = EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId());
 		}
 		return VALID;
 	}

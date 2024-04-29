@@ -6,7 +6,7 @@ import dao.AccountDAO;
 import dao.CustomerDAO;
 import dto.Account;
 import dto.Customer;
-import system.SystemInfo;
+import system.ConfigPRJ;
 
 public class CustomerBLL {
 	
@@ -41,6 +41,6 @@ public class CustomerBLL {
 		Account updateAc = AccountDAO.getInstance().getUserByUsername(acc.getUsername());
 		ctm.setAccount(updateAc);
 		CustomerDAO.getInstance().create(ctm);
-		SystemInfo.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(updateAc.getId());
+		ConfigPRJ.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(updateAc.getId());
 	}
 }

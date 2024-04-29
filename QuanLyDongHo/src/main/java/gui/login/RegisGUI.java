@@ -38,7 +38,7 @@ import bll.CustomerBLL;
 import dao.CustomerDAO;
 import dto.Account;
 import dto.Customer;
-import system.SystemInfo;
+import system.ConfigPRJ;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.JRadioButton;
@@ -404,7 +404,7 @@ public class RegisGUI extends JFrame {
 				break;
 			case CustomerBLL.VALID:
 				CustomerBLL.addCustomer(ctm);
-				JOptionPane.showMessageDialog(null, SystemInfo.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, ConfigPRJ.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
 				break;
 			}
 		});
