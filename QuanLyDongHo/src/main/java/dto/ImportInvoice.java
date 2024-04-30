@@ -1,5 +1,7 @@
 package dto;
 
+import dao.EmployeeDAO;
+import dao.SupplierDAO;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -8,33 +10,35 @@ public class ImportInvoice {
     private int employeeId;
     private int supplierId;
     private Date invoiceDate;
-    private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
-    
-    private String employeeName;
+    private String fullNameEmployee;
     private String supplierName;
+    private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
 
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+
+    
+    
+public String getFullNameEmployee() {
+        return fullNameEmployee;
+    }
+
+    public void setFullNameEmployee(String fullNameEmployee) {
+        this.fullNameEmployee = fullNameEmployee;
+    }
+    
     public ArrayList<ImportInvoiceDetail> getDetails() {
 		return details;
 	}
 
 	public void setDetails(ArrayList<ImportInvoiceDetail> details) {
 		this.details = details;
-	}
-
-	public String getEmployeeName() {
-		return employeeName;
-	}
-
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
-
-	public String getSupplierName() {
-		return supplierName;
-	}
-
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
 	}
 
 	public ImportInvoice(int importInvoiceId, int employeeId, int supplierId, Date invoiceDate) {
@@ -76,5 +80,23 @@ public class ImportInvoice {
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
+    
+    public void setEmployeeFullName() {
+        Employee employee = EmployeeDAO.getInstance().readByID(employeeId);
+        if (employee != null) {
+            fullNameEmployee = employee.getFullName();
+        } else {
+            fullNameEmployee = "";
+        }
+    }
+    
+    public void setSupplierFullName() {
+    Supplier supplier = SupplierDAO.getInstance().readByID(supplierId);
+    if (supplier != null) {
+        supplierName = supplier.getSupplierName();
+    } else {
+        supplierName = "";
+    }
+}
 }
 

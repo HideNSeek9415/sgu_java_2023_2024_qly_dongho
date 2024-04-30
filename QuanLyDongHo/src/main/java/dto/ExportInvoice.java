@@ -1,5 +1,7 @@
 package dto;
 
+import dao.CustomerDAO;
+import dao.EmployeeDAO;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ public class ExportInvoice {
     private int employeeId;
     private int customerId;
     private Date invoiceDate;
-	private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
+    private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
     
     private String employeeName;
     private String customerName;
@@ -76,5 +78,22 @@ public class ExportInvoice {
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
-
+    
+    public void setEmployeeFullName() {
+        Employee employee = EmployeeDAO.getInstance().readByID(employeeId);
+        if (employee != null) {
+            employeeName = employee.getFullName();
+        } else {
+            employeeName = "";
+        }
+    }
+    
+    public void setCustomerFullName() {
+        Customer customer = CustomerDAO.getInstance().readByID(customerId);
+        if (customer != null) {
+            customerName = customer.getFullName();
+        } else {
+            customerName = "";
+        }
+    }
 }
