@@ -211,21 +211,21 @@ INSERT INTO decentralization (role_id, permission_code, adding, editing, deletin
 ('WHM', 'SUPPLIER', TRUE, TRUE, TRUE, TRUE);
 
 INSERT INTO products (product_name, category, brand, sell_price, discount, discount_price, quantity, image_url) VALUES
-('Đồng Hồ Casio Nam MTP-1374L-1AVDF', 'Đồng hồ cơ', 'CASIO', 2270000, FALSE, 0, 0, '/img/products/anh1.jpg'),
-('Đồng Hồ Casio Nam AE-1200WHD-1AVDF', 'Đồng hồ điện tử', 'CASIO', 1506000, FALSE, 0, 0, '/img/products/anh2.jpg'),
-('Đồng Hồ Casio Nam MTP-VT01L-1BUDF', 'Đồng hồ cơ', 'CASIO', 1182000, FALSE, 0, 0, '/img/products/anh3.jpg'),
-('Đồng Hồ Casio Nam MTP-1374D-1AVDF', 'Đồng hồ cơ', 'CASIO', 2394000, FALSE, 0, 0, '/img/products/anh4.jpg'),
-('Đồng Hồ Orient Nam FAG00002W0', 'Đồng hồ cơ', 'ORIENT', 8690000, FALSE, 0, 0, '/img/products/anh5.jpg'),
-('Đồng Hồ Orient Nam FAG02005W0', 'Đồng hồ cơ', 'ORIENT', 6790000, FALSE, 0, 0, '/img/products/anh6.jpg'),
-('Đồng Hồ Casio Nam G-Shock DW-9052-1VDR', 'Đồng hồ điện tử', 'CASIO', 2746000, FALSE, 0, 0, '/img/products/anh7.jpg'),
-('Đồng Hồ Casio Nam F-91WM-9ADF', 'Đồng hồ điện tử', 'CASIO', 623000, FALSE, 0, 0, '/img/products/anh8.jpg'),
-('Apple Watch Series 9 GPS', 'Đồng hồ thông minh', 'APPLE', 9790000, FALSE, 0, 0, '/img/products/anh9.jpg'),
-('Apple Watch Ultra 2 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 20990000, FALSE, 0, 0, '/img/products/anh10.jpg'),
-('Apple Watch Ultra 2 GPS + Titanium', 'Đồng hồ thông minh', 'APPLE', 21990000, FALSE, 0, 0, '/img/products/anh11.jpg'),
-('Apple Watch Series 9 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 19990000, FALSE, 0, 0, '/img/products/anh12.jpg'),
-('Đồng Hồ Citizen Nam BE9180-52E', 'Đồng hồ cơ', 'CITIZEN', 3780000, FALSE, 0, 0, '/img/products/anh13.jpg'),
-('Đồng Hồ Citizen Nam NH8390-03X', 'Đồng hồ cơ', 'CITIZEN', 8177000, FALSE, 0, 0, '/img/products/anh14.jpg'),
-('Đồng Hồ Citizen Nam AU1062-56E', 'Đồng hồ cơ', 'CITIZEN', 7185000, FALSE, 0, 0, '/img/products/anh15.jpg');
+('Đồng Hồ Casio Nam MTP-1374L-1AVDF', 'Đồng hồ cơ', 'CASIO', 2270000, FALSE, 0, 20, '/img/products/anh1.jpg'),
+('Đồng Hồ Casio Nam AE-1200WHD-1AVDF', 'Đồng hồ điện tử', 'CASIO', 1506000, FALSE, 0, 30, '/img/products/anh2.jpg'),
+('Đồng Hồ Casio Nam MTP-VT01L-1BUDF', 'Đồng hồ cơ', 'CASIO', 1182000, FALSE, 0, 40, '/img/products/anh3.jpg'),
+('Đồng Hồ Casio Nam MTP-1374D-1AVDF', 'Đồng hồ cơ', 'CASIO', 2394000, FALSE, 0, 15, '/img/products/anh4.jpg'),
+('Đồng Hồ Orient Nam FAG00002W0', 'Đồng hồ cơ', 'ORIENT', 8690000, FALSE, 0, 28, '/img/products/anh5.jpg'),
+('Đồng Hồ Orient Nam FAG02005W0', 'Đồng hồ cơ', 'ORIENT', 6790000, FALSE, 0, 19, '/img/products/anh6.jpg'),
+('Đồng Hồ Casio Nam G-Shock DW-9052-1VDR', 'Đồng hồ điện tử', 'CASIO', 2746000, FALSE, 0, 34, '/img/products/anh7.jpg'),
+('Đồng Hồ Casio Nam F-91WM-9ADF', 'Đồng hồ điện tử', 'CASIO', 623000, FALSE, 0, 76, '/img/products/anh8.jpg'),
+('Apple Watch Series 9 GPS', 'Đồng hồ thông minh', 'APPLE', 9790000, FALSE, 0, 23, '/img/products/anh9.jpg'),
+('Apple Watch Ultra 2 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 20990000, FALSE, 0, 12, '/img/products/anh10.jpg'),
+('Apple Watch Ultra 2 GPS + Titanium', 'Đồng hồ thông minh', 'APPLE', 21990000, FALSE, 0, 36, '/img/products/anh11.jpg'),
+('Apple Watch Series 9 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 19990000, FALSE, 0, 25, '/img/products/anh12.jpg'),
+('Đồng Hồ Citizen Nam BE9180-52E', 'Đồng hồ cơ', 'CITIZEN', 3780000, FALSE, 0, 13, '/img/products/anh13.jpg'),
+('Đồng Hồ Citizen Nam NH8390-03X', 'Đồng hồ cơ', 'CITIZEN', 8177000, FALSE, 0, 32, '/img/products/anh14.jpg'),
+('Đồng Hồ Citizen Nam AU1062-56E', 'Đồng hồ cơ', 'CITIZEN', 7185000, FALSE, 0, 55, '/img/products/anh15.jpg');
     
 INSERT INTO accounts (username, passwd, role_id) VALUES 
 ('trunghieu', '3122560017', 'ADM'),
@@ -259,6 +259,8 @@ INSERT INTO suppliers (supplier_name, email, phone_number) VALUES
 ('Fashion Trends Corp.', 'fashion_trends@example.com', '1112223333'),
 ('Nature''s Best Foods', 'natures_best@example.com', '4445556666');
 
+
+
 INSERT INTO product_supplier (product_id, supplier_id) VALUES 
 (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1), (12, 1),
 (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2),
@@ -267,6 +269,33 @@ INSERT INTO product_supplier (product_id, supplier_id) VALUES
 (1, 5), (2, 5), (3, 5),
 (4, 6), (6, 6), (9, 6), (7, 6); 
 
+INSERT INTO export_invoices (employee_id, customer_id, invoice_date)
+VALUES
+  (1, 1, '2022-01-01'),
+  (2, 2, '2022-01-02'),
+  (1, 3, '2022-01-03');
+
+
+
+INSERT INTO export_invoice_details (export_invoice_id, product_id, sell_price)
+VALUES
+  (1, 1, 100),
+  (1, 2, 200),
+  (2, 3, 150),
+  (2, 1, 120),
+  (3, 2, 180),
+  (3, 3, 170);
+ 
+INSERT INTO import_invoices (employee_id, supplier_id, invoice_date) VALUES
+(1, 1, '2022-01-01'),
+(2, 2, '2022-02-01'),
+(1, 3, '2022-03-01');
+
+INSERT INTO import_invoice_details (import_invoice_id, product_id, quantity, import_price) VALUES 
+(1, 1, 10, 100),
+(1, 2, 5, 200),
+(2, 3, 8, 150),
+(3, 1, 12, 110);
 
 -- TEST QUERY --
 -- Xem danh sách nhân viên - tài khoản - mật khẩu - ngày tạo - vai trò
@@ -291,3 +320,23 @@ join suppliers as s on s.supplier_id = ps.supplier_id;
 -- select * from products
 
 select * from decentralization
+
+--QUERY PHIẾU XUẤT
+SELECT export_invoices.export_invoice_id, employees.full_name as employee_name, customers.full_name as customer_name, export_invoices.invoice_date
+FROM export_invoices
+JOIN customers ON export_invoices.customer_id = customers.id
+JOIN employees ON export_invoices.employee_id = employees.id;
+
+SELECT export_invoice_details.details_id, export_invoice_details.export_invoice_id, products.product_name, export_invoice_details.sell_price
+FROM export_invoice_details
+JOIN products ON export_invoice_details.product_id = products.id;
+
+--QUERY PHIẾU NHẬP
+SELECT import_invoices.import_invoice_id, employees.full_name, suppliers.supplier_name, import_invoices.supplier_id, import_invoices.invoice_date 
+FROM import_invoices 
+JOIN employees ON import_invoices.employee_id = employees.id 
+JOIN suppliers ON import_invoices.supplier_id = suppliers.supplier_id;
+
+SELECT import_invoice_details.details_id,products.id as product_id, products.product_name, products.brand, import_invoice_details.quantity, import_invoice_details.import_price
+FROM import_invoice_details
+JOIN products ON import_invoice_details.product_id = products.id;
