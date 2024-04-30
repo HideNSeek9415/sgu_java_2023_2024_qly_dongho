@@ -116,7 +116,14 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 	}
 	
 	public Boolean removeProvidablePrd(int SupplierId, int PrdId) {
-		return false;
+		int affectedRowCount = 0;
+		try {
+			String sql = "DELETE FROM product_supplier WHERE product_id = ? AND supplier_id = ?";
+			affectedRowCount = runUpdate(sql, PrdId, SupplierId); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return affectedRowCount > 0;
 	}
 
 	@Override

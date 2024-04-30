@@ -28,9 +28,13 @@ public class SupplierBLL {
 		SupplierDAO.getInstance().addNewProvidablePrd(sid, pid);
 	}
 	
+	public static void rmProduct(int sid, int pid) {
+		SupplierDAO.getInstance().removeProvidablePrd(sid, pid);
+	}
+	
 	public static void addNewProduct(int sid, Product np) {
 		ProductDAO.getInstance().create(np);
-		int pid = ProductDAO.getLastIndex();
+		int pid = ProductDAO.getInstance().size();
 		SupplierDAO.getInstance().addNewProvidablePrd(sid, pid);
 	}
 }

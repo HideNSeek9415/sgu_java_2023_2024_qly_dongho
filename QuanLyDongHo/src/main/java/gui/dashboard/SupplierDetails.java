@@ -42,6 +42,7 @@ import bll.ProductBLL;
 import bll.SupplierBLL;
 import dto.Product;
 import dto.Supplier;
+import system.ConfigPRJ;
 
 import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
@@ -124,7 +125,7 @@ public class SupplierDetails extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SupplierDetails() {
+	public SupplierDetails() {		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 602);
 		contentPane = new JPanel();
@@ -274,7 +275,7 @@ public class SupplierDetails extends JFrame {
 		pnAvailable.add(panel_8);
 		panel_8.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		btnExit1 = new JButton("Hủy thao tác");
+		btnExit1 = new JButton("Xóa sản phẩm");
 		btnExit1.setForeground(Color.WHITE);
 		btnExit1.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnExit1.setFocusPainted(false);
@@ -375,7 +376,7 @@ public class SupplierDetails extends JFrame {
 		pnNew.add(panel_15);
 		panel_15.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		btnExit2 = new JButton("Hủy thao tác");
+		btnExit2 = new JButton("Xóa sản phẩm");
 		btnExit2.setForeground(Color.WHITE);
 		btnExit2.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnExit2.setFocusPainted(false);
@@ -424,6 +425,8 @@ public class SupplierDetails extends JFrame {
 				prd.setCategory(pCategory);
 				prd.setImageUrl(saveImg());
 				SupplierBLL.addNewProduct(selectedSupplier.getSupplierId(), prd);
+				((TmpHomePanel) ConfigPRJ.menu.get("HOME")).reloadPanel();
+	    		((ProductManagerGUI) ConfigPRJ.menu.get("PRODUCTS")).displayProducts();
 			}
 			reloadTable();
 		});
@@ -436,6 +439,16 @@ public class SupplierDetails extends JFrame {
                 textField.setText(fileChooser.getSelectedFile().getPath());
             }
 		});
+		btnExit1.addActionListener(e -> {
+			int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+			SupplierBLL.rmProduct(selectedSupplier.getSupplierId(), id);
+			reloadTable();
+		});
+		btnExit2.addActionListener(e -> {
+			int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+			SupplierBLL.rmProduct(selectedSupplier.getSupplierId(), id);
+			reloadTable();
+		});
 	}
 	
 	private String saveImg() {
@@ -446,9 +459,11 @@ public class SupplierDetails extends JFrame {
         try {
         	Path source = Paths.get(imgPath);
         	String desP = getClass().getResource("/img/products").getPath().substring(1).replace('/', '\\');
-        	desP = desP.replace("target\\classes", "src\\main\\resources");
+        	String desP2 = desP.replace("target\\classes", "src\\main\\resources");
 			Path destination = Paths.get(desP, newName);
+			Path destination2 = Paths.get(desP2, newName);
 			Files.copy(source, destination);
+			Files.copy(source, destination2);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

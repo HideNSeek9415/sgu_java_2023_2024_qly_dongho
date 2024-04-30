@@ -28,7 +28,6 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 			Obj.getProductStatus(),
 			Obj.getImageUrl()
 		);
-		closeConnection();
 		return affectedRowCount > 0;
 	}
 
@@ -116,6 +115,19 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	public boolean recovery(int id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public int size() {
+		int size = -1;
+		rs = runQuery("Select count(1) from products");
+		try {
+			if (rs.next()) {
+				size = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return size;
 	}
 
 }

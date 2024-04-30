@@ -83,7 +83,9 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 
 	@Override
 	public boolean delete(int id) {
-		return false;
+		String sql = "update accounts set account_status = 'inactive' where id = ?";
+		int rowChanges = runUpdate(sql, id);
+		return rowChanges > 0;
 	}
 	
 	public Account getUserByUsername(String username) {

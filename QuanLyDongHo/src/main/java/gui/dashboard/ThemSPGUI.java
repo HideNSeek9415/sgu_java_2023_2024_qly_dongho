@@ -6,12 +6,20 @@ package gui.dashboard;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.Random;
+import java.util.stream.Collectors;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.GroupLayout.Alignment;
@@ -57,6 +65,10 @@ public class ThemSPGUI extends javax.swing.JFrame {
 	private static final long serialVersionUID = 8788851938238260823L;
 	private JTable table;
 	private Product prd;
+	private Boolean imgChg = false;
+	private String newImgPath = "";
+
+
 
     
     public ThemSPGUI(Product p) {
@@ -85,22 +97,23 @@ public class ThemSPGUI extends javax.swing.JFrame {
     	
     	btnDR.setSelected(!prd.getProductStatus());
   		if (btnDR.isSelected()) {
-			btnDR.setText("Khôi phục");
+			btnDR.setText("Đăng bán");
 			btnDR.setBackground(Color.decode("#19727a"));
 		} else {
-			btnDR.setText("Xóa");
+			btnDR.setText("Tạm ngưng");
 			btnDR.setBackground(Color.decode("#167ac6"));
 		}
     	
     	btnDR.addActionListener(e -> {
     		if (btnDR.isSelected()) {
-    			btnDR.setText("Khôi phục");
+    			btnDR.setText("Đăng bán");
     			btnDR.setBackground(Color.decode("#19727a"));
     		} else {
-    			btnDR.setText("Xóa");
+    			btnDR.setText("Tạm ngưng");
     			btnDR.setBackground(Color.decode("#167ac6"));
     		}
     	});
+    	
     	
     	btnUpdate.addActionListener(e -> {
     		prd.setProductName(txtName.getText());
@@ -111,11 +124,54 @@ public class ThemSPGUI extends javax.swing.JFrame {
     		prd.setDiscount(cbbDiscount.getSelectedIndex() == 0 ? false : true);
     		prd.setProductStatus(!btnDR.isSelected());
     		ProductBLL.updateProduct(prd);
+    		if (imgChg) {
+    			prd.setImageUrl(saveImg(newImgPath));
+    		}
     		this.dispose();
     		((TmpHomePanel) ConfigPRJ.menu.get("HOME")).reloadPanel();
     		((ProductManagerGUI) ConfigPRJ.menu.get("PRODUCTS")).displayProducts();
-
     	});
+    	
+    	JFrame self = this;
+    	lblImage.addMouseListener(new MouseAdapter() {
+    		
+    		JFrame fr = self;
+    		
+    	    public void mouseClicked(MouseEvent e) {
+    	    	JFileChooser fileChooser = new JFileChooser();
+    			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+    			int result = fileChooser.showOpenDialog(null);
+    			if (result == JFileChooser.APPROVE_OPTION) {
+    				imgChg = true;
+    				newImgPath = fileChooser.getSelectedFile().getPath();
+        	    	Image ic = new ImageIcon(newImgPath).getImage();
+        	    	ic = ic.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
+        	    	lblImage.setIcon(new ImageIcon(ic));
+                }
+    			fr.revalidate();
+    			fr.repaint();
+    	    }
+    	});
+	}
+    
+	private String saveImg(String path) {
+		String imgPath = path;
+		String newName = new Random().ints(15, 'a', 'z' + 1)
+                .mapToObj(c -> String.valueOf((char) c))
+                .collect(Collectors.joining()) + ".jpg";
+        try {
+        	Path source = Paths.get(imgPath);
+        	String desP = getClass().getResource("/img/products").getPath().substring(1).replace('/', '\\');
+        	String desP2 = desP.replace("target\\classes", "src\\main\\resources");
+			Path destination = Paths.get(desP, newName);
+			Path destination2 = Paths.get(desP2, newName);
+			Files.copy(source, destination);
+			Files.copy(source, destination2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return "/img/products/" + newName;
 	}
 
 	public JTable getTable() {
@@ -207,10 +263,10 @@ public class ThemSPGUI extends javax.swing.JFrame {
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addGap(40)
-        			.addComponent(jLabel10, GroupLayout.PREFERRED_SIZE, 680, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(btnDR, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(9, Short.MAX_VALUE))
+        			.addComponent(jLabel10, GroupLayout.PREFERRED_SIZE, 415, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+        			.addComponent(btnDR, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+        			.addGap(61))
         );
         jPanel1Layout.setVerticalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)

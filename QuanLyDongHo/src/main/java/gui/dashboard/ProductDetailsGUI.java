@@ -15,6 +15,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -382,6 +383,13 @@ public class ProductDetailsGUI extends JFrame {
         makeHoverEff(btnSell);
         makeHoverEff(btnAddToCart);
         addImageProduct();
+        btnAddToCart.addActionListener(e -> {
+        	for (int i = 0; i < numOfPrd; i++) {        		
+        		zShoppingCartFrame.addProduct(selectedProduct.getId());
+        	}
+        	JOptionPane.showMessageDialog(null, "Đã thêm " + numOfPrd + " sản phẩm vào giỏ hàng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        	this.dispose();
+        });
     }
     
     private void makeHoverEff(AbstractButton btn) {

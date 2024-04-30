@@ -259,8 +259,6 @@ INSERT INTO suppliers (supplier_name, email, phone_number) VALUES
 ('Fashion Trends Corp.', 'fashion_trends@example.com', '1112223333'),
 ('Nature''s Best Foods', 'natures_best@example.com', '4445556666');
 
-
-
 INSERT INTO product_supplier (product_id, supplier_id) VALUES 
 (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1), (12, 1),
 (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2),
@@ -274,8 +272,6 @@ VALUES
   (1, 1, '2022-01-01'),
   (2, 2, '2022-01-02'),
   (1, 3, '2022-01-03');
-
-
 
 INSERT INTO export_invoice_details (export_invoice_id, product_id, sell_price)
 VALUES

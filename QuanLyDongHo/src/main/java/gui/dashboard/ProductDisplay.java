@@ -184,6 +184,11 @@ public class ProductDisplay extends JPanel {
         lblCross.setVisible(selectedProduct.isDiscount());
         lblSale.setVisible(selectedProduct.isDiscount());
         addImageProduct();
+        btnSell.addActionListener(e -> {
+        	zShoppingCartFrame.addProduct(selectedProduct.getId());
+        	JOptionPane.showMessageDialog(null, "Đã thêm sản phẩm vào giỏ hàng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+        });
     }
 
     private void addImageProduct() {
