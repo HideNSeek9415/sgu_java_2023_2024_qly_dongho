@@ -34,9 +34,12 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import com.toedter.calendar.JDateChooser;
+import dao.ImportInvoiceDAO;
+import dto.ImportInvoice;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
+import java.util.ArrayList;
 
 public class PhieuNhapGUI extends JPanel {
 
@@ -291,7 +294,7 @@ public class PhieuNhapGUI extends JPanel {
 				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"STT", "M\u00E3 phi\u1EBFu nh\u1EADp", "Nh\u00E0 cung c\u1EA5p", "Nh\u00E2n vi\u00EAn nh\u1EADp", "Th\u1EDDi gian", "T\u1ED5ng ti\u1EC1n"
+				"M\u00E3 phi\u1EBFu nh\u1EADp", "Nh\u00E0 cung c\u1EA5p", "Nh\u00E2n vi\u00EAn nh\u1EADp", "Th\u1EDDi gian", "T\u1ED5ng ti\u1EC1n"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(51);
@@ -307,9 +310,26 @@ public class PhieuNhapGUI extends JPanel {
 		makeHoverEff(btnthem);
 		makeHoverEff(btnlammoi);
 		addStuff();
-
+                reloadTable();
 	}
 
+private void reloadTable() {
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.setRowCount(0);
+    ArrayList<ImportInvoice> importInvoices = ImportInvoiceDAO.getInstance().readAllData();
+
+    for (ImportInvoice importInvoice : importInvoices) {
+        importInvoice.setEmployeeFullName(); // Cập nhật fullNameEmployee
+        importInvoice.setSupplierFullName();
+        Object[] data = {
+            importInvoice.getImportInvoiceId(),
+            importInvoice.getSupplierName(),
+            importInvoice.getFullNameEmployee(), // Sử dụng fullNameEmployee
+            importInvoice.getInvoiceDate(),
+        };
+        model.addRow(data);
+    }
+}
 	private void addStuff() {
 		btnthem.addActionListener(e -> {
 			JFrame fr = new ThemPhieuNhap();

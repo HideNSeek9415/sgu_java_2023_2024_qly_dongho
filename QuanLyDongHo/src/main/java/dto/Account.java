@@ -1,5 +1,6 @@
 package dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Account {
@@ -9,7 +10,25 @@ public class Account {
     private String accountStatus;
     private String roleId;
     private Date createdDate;
-    
+    private String roleName;
+    private ArrayList<String> permission = new ArrayList<>();
+
+	public ArrayList<String> getPermission() {
+		return permission;
+	}
+
+	public void setPermission(ArrayList<String> permission) {
+		this.permission = permission;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
 	public Account(int id, String username, String password, String accountStatus, String roleId, Date createdDate) {
 		super();
 		this.id = id;

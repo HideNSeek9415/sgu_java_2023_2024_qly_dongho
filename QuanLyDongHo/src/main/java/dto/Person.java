@@ -10,7 +10,16 @@ public class Person {
     private String phoneNumber;
     private String address;
     private int accountId;
+    private Account account;
     
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
 	public Person(int id, String fullName, String gender, Date dateOfBirth, String phoneNumber, String address, int accountId) {
 		this.id = id;
 		this.fullName = fullName;

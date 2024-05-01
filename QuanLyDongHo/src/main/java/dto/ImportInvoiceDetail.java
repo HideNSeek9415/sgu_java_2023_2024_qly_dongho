@@ -6,6 +6,17 @@ public class ImportInvoiceDetail {
     private int productId;
     private int quantity;
     private int importPrice;
+    
+    private String productName;
+
+    public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 
     public ImportInvoiceDetail(int detailsId, int importInvoiceId, int productId, int quantity, int importPrice) {
         this.detailsId = detailsId;

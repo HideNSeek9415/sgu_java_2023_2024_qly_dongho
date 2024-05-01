@@ -33,7 +33,10 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import com.toedter.calendar.JDateChooser;
+import dao.ExportInvoiceDAO;
+import dto.ExportInvoice;
 import java.awt.Cursor;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class PhieuXuatGUI extends JPanel {
@@ -274,7 +277,7 @@ public class PhieuXuatGUI extends JPanel {
 				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"STT", "M\u00E3 phi\u1EBFu xu\u1EA5t", "Kh\u00E1ch h\u00E0ng", "Nh\u00E2n vi\u00EAn nh\u1EADp", "Th\u1EDDi gian", "T\u1ED5ng ti\u1EC1n"
+				"M\u00E3 phi\u1EBFu xu\u1EA5t", "Kh\u00E1ch h\u00E0ng", "Nh\u00E2n vi\u00EAn nh\u1EADp", "Th\u1EDDi gian", "T\u1ED5ng ti\u1EC1n"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(51);
@@ -289,8 +292,25 @@ public class PhieuXuatGUI extends JPanel {
 		makeHoverEff(btnxuat);
 		makeHoverEff(btnlammoi);
                 addStuff();
+                reloadTable();
 	}
-        
+        private void reloadTable() {
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.setRowCount(0);
+    ArrayList<ExportInvoice> exportInvoices = ExportInvoiceDAO.getInstance().readAllData();
+
+    for (ExportInvoice exportInvoice : exportInvoices) {
+        exportInvoice.setEmployeeFullName(); // Cập nhật fullNameEmployee
+        exportInvoice.setCustomerFullName();
+        Object[] data = {
+            exportInvoice.getExportInvoiceId(),
+            exportInvoice.getCustomerName(),
+            exportInvoice.getEmployeeName(), // Sử dụng fullNameEmployee
+            exportInvoice.getInvoiceDate(),
+        };
+        model.addRow(data);
+    }
+}
         private void addStuff() {
 		btnchitiet.addActionListener(e -> {
 			JFrame fr = new ChiTietPhieuXuat();

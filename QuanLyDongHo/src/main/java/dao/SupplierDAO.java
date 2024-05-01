@@ -24,6 +24,7 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 	}
 	
 	@Override
+<<<<<<< HEAD
 	public boolean create(Supplier obj) {
 		try {
             String query = "insert into mywatchstore.suppliers values (?, ?, ?, ?, ?)";
@@ -52,12 +53,38 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
             }
         }
 		return false;
+=======
+	public boolean create(Supplier Obj) {
+		String sql = "INSERT INTO suppliers (supplier_name, email, phone_number) VALUES (?, ?, ?)";
+		int affectedRowCount = runUpdate(sql,
+			Obj.getSupplierName(),
+			Obj.getEmail(),
+			Obj.getPhoneNumber()
+		);
+		closeConnection();
+		return affectedRowCount > 0;
+>>>>>>> c70bf685ade918b55237da08f39bf58d9f86323d
 	}
 
 	@Override
 	public Supplier readByID(int ID) {
-		// TODO Auto-generated method stub
-		return null;
+		Supplier supplier = null;
+		String sql = "SELECT * FROM suppliers WHERE supplier_id = ?";
+		try {
+			rs = runQuery2(sql, ID);
+			if (rs.next()) {
+				supplier = new Supplier(
+					rs.getInt("supplier_id"),
+					rs.getString("supplier_name"),
+					rs.getString("email"),
+                    rs.getString("supplier_status"),
+					rs.getString("phone_number")
+				);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return supplier;
 	}
 
 	@Override
@@ -118,15 +145,52 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 	}
 	
 	public ArrayList<Product> getProvidablePrds(int id) {
-		return null;
+		ArrayList<Product> products = new ArrayList<>();
+		String query = "SELECT * FROM products as p join product_supplier as ps on ps.product_id = p.id where ps.supplier_id = ?";
+		try {
+			ResultSet rs = runQuery2(query, id);
+			while (rs.next()) {
+	        	Product product = new Product(
+					rs.getInt("id"),
+					rs.getString("product_name"),
+					rs.getString("category"),
+					rs.getString("brand"),
+					rs.getInt("sell_price"),
+					rs.getBoolean("discount"),
+					rs.getInt("discount_price"),
+					rs.getInt("quantity"),
+					rs.getBoolean("product_status"),
+					rs.getString("image_url")
+	        	);
+	        	products.add(product);
+			}
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return products;
 	}
 	
-	public Boolean addNewProvidablePrd(int PrdId, int SupplierId) {
-		return false;
+	public Boolean addNewProvidablePrd(int SupplierId, int PrdId) {
+		int affectedRowCount = 0;
+		try {
+			String sql = "INSERT INTO product_supplier (product_id, supplier_id) VALUES (?, ?)";
+			affectedRowCount = runUpdate(sql, PrdId, SupplierId); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return affectedRowCount > 0;
 	}
 	
-	public Boolean removeProvidablePrd(int PrdId, int SupplierId) {
-		return false;
+	public Boolean removeProvidablePrd(int SupplierId, int PrdId) {
+		int affectedRowCount = 0;
+		try {
+			String sql = "DELETE FROM product_supplier WHERE product_id = ? AND supplier_id = ?";
+			affectedRowCount = runUpdate(sql, PrdId, SupplierId); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return affectedRowCount > 0;
 	}
 
 	@Override

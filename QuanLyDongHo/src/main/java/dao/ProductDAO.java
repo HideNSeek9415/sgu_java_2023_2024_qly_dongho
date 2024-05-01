@@ -16,13 +16,46 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	@Override
 	public boolean create(Product Obj) {
 		// TODO Auto-generated method stub
-		return false;
+		String sql = "INSERT INTO products (product_name, category, brand, sell_price, discount, discount_price, quantity, product_status, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		int affectedRowCount = runUpdate(sql,
+			Obj.getProductName(),
+			Obj.getCategory(),
+			Obj.getBrand(),
+			Obj.getSellPrice(),
+			Obj.isDiscount(),
+			Obj.getDiscountPrice(),
+			Obj.getQuantity(),
+			Obj.getProductStatus(),
+			Obj.getImageUrl()
+		);
+		return affectedRowCount > 0;
 	}
 
 	@Override
 	public Product readByID(int ID) {
-		// TODO Auto-generated method stub
-		return null;
+		Product product = null;
+		String query = "SELECT * FROM products where id = ?";
+		try {
+			ResultSet rs = runQuery2(query, ID);
+			if (rs.next()) {
+	        	product = new Product(
+					rs.getInt("id"),
+					rs.getString("product_name"),
+					rs.getString("category"),
+					rs.getString("brand"),
+					rs.getInt("sell_price"),
+					rs.getBoolean("discount"),
+					rs.getInt("discount_price"),
+					rs.getInt("quantity"),
+					rs.getBoolean("product_status"),
+					rs.getString("image_url")
+	        	);
+			}
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return product;
 	}
 
 	@Override
@@ -38,11 +71,11 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 					rs.getString("product_name"),
 					rs.getString("category"),
 					rs.getString("brand"),
-					rs.getDouble("sell_price"),
+					rs.getInt("sell_price"),
 					rs.getBoolean("discount"),
-					rs.getDouble("discount_price"),
+					rs.getInt("discount_price"),
 					rs.getInt("quantity"),
-					rs.getString("product_status"),
+					rs.getBoolean("product_status"),
 					rs.getString("image_url")
 	        	);
 	        	products.add(product);
@@ -56,8 +89,20 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 
 	@Override
 	public boolean update(int ID, Product Obj) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "UPDATE products SET product_name = ?, category = ?, brand = ?, sell_price = ?, discount = ?, discount_price = ?, quantity = ?, product_status = ?, image_url = ? WHERE id = ?";
+		int affectedRowCount = runUpdate(sql,
+			Obj.getProductName(),
+			Obj.getCategory(),
+			Obj.getBrand(),
+			Obj.getSellPrice(),
+			Obj.isDiscount(),
+			Obj.getDiscountPrice(),
+			Obj.getQuantity(),
+			Obj.getProductStatus(),
+			Obj.getImageUrl(),
+			Obj.getId()
+		);
+		return affectedRowCount > 0;
 	}
 
 	@Override
@@ -70,6 +115,19 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 	public boolean recovery(int id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public int size() {
+		int size = -1;
+		rs = runQuery("Select count(1) from products");
+		try {
+			if (rs.next()) {
+				size = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return size;
 	}
 
 }

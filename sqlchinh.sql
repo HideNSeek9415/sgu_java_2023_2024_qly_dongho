@@ -4,32 +4,25 @@ USE mywatchstore;
 
 CREATE TABLE roles (
     role_id ENUM('SLR', 'WHM', 'ADM', 'CTM') PRIMARY KEY,
-    role_name VARCHAR(255) NOT NULL
+    role_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE permissions (
-    permission_code ENUM (
-		'HOME', 'PRODUCTS', 'ORDERS', 'RECEIPTS',
-		'CUSTOMERS', 'SUPPLIERS', 'EMPLOYEES', 'ACCOUNTS',
-		'STATISTICAL', 'PERMISSION', 'WARRANTY', 'HISTORY'
-	) PRIMARY KEY,
-    permission_name VARCHAR(255) NOT NULL
+    permission_code ENUM ('PRODUCT', 'ORDER', 'RECEIPT', 'CUSTOMER', 'EMPLOYEE', 'SUPPLIER', 'WARRANTY') PRIMARY KEY,
+    permission_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE decentralization (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT,
     role_id ENUM('SLR', 'WHM', 'ADM', 'CTM'),
-    permission_code ENUM (
-		'HOME', 'PRODUCTS', 'ORDERS', 'RECEIPTS',
-		'CUSTOMERS', 'SUPPLIERS', 'EMPLOYEES', 'ACCOUNTS',
-		'STATISTICAL', 'PERMISSION', 'WARRANTY', 'HISTORY'
-	),
+    permission_code ENUM ('PRODUCT', 'ORDER', 'RECEIPT', 'CUSTOMER', 'EMPLOYEE', 'SUPPLIER', 'WARRANTY'),
     adding BOOLEAN DEFAULT FALSE,
     editing BOOLEAN DEFAULT FALSE,
     deleting BOOLEAN DEFAULT FALSE,
+    other BOOLEAN DEFAULT FALSE,
+	PRIMARY KEY (id, role_id),
     FOREIGN KEY (role_id) REFERENCES roles(role_id),
-    FOREIGN KEY (permission_code) REFERENCES permissions(permission_code),
-    UNIQUE(role_id, permission_code)
+    FOREIGN KEY (permission_code) REFERENCES permissions(permission_code)
 );
 
 CREATE TABLE accounts (
@@ -39,7 +32,7 @@ CREATE TABLE accounts (
     account_status ENUM('active', 'inactive') DEFAULT 'active',
     role_id ENUM('SLR', 'WHM', 'ADM', 'CTM') DEFAULT 'CTM',
     created_date DATE,
-	FOREIGN KEY (role_id) REFERENCES decentralization(role_id)
+	FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
 DELIMITER //
@@ -54,7 +47,7 @@ DELIMITER ;
 CREATE TABLE customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
-    gender ENUM('male', 'female') NOT NULL,
+    gender ENUM('Nam', 'Nữ') NOT NULL,
     date_of_birth DATE NOT NULL,
     phone_number VARCHAR(20) UNIQUE,
     address TEXT,
@@ -65,7 +58,7 @@ CREATE TABLE customers (
 CREATE TABLE employees (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
-    gender ENUM('male', 'female') NOT NULL,
+    gender ENUM('Nam', 'Nữ') NOT NULL,
     date_of_birth DATE NOT NULL,
     phone_number VARCHAR(20) UNIQUE,
     address TEXT,
@@ -82,7 +75,7 @@ CREATE TABLE products (
     discount BOOLEAN DEFAULT FALSE,
     discount_price INT,
     quantity INT,
-    product_status ENUM('selling', 'discounted', 'out_of_stock', 'not_sell') DEFAULT 'selling',
+    product_status BOOLEAN DEFAULT TRUE,
     image_url VARCHAR(255)
 );
 
@@ -163,17 +156,13 @@ INSERT INTO roles (role_id, role_name) VALUES
 ('CTM', 'Khách hàng');
 
 INSERT INTO permissions (permission_code, permission_name) VALUES
-('HOME', 'Trang mua hàng'),
-('PRODUCTS', 'Sản phẩm'),
-('ORDERS', 'Phiếu xuất'),
-('RECEIPTS', 'Phiếu nhập'),
-('CUSTOMERS', 'Khách hàng'),
-('EMPLOYEES', 'Nhân viên'),
-('SUPPLIERS', 'Nhà cung cấp'),
-('ACCOUNTS', 'Tài khoản'),
-('STATISTICAL', 'Thống kê'),
-('WARRANTY', 'Bảo hành'),
-('HISTORY', 'Lịch sử mua hàng');
+('PRODUCT', 'Sản phẩm'),
+('ORDER', 'Phiếu xuất'),
+('RECEIPT', 'Phiếu nhập'),
+('CUSTOMER', 'Khách hàng'),
+('EMPLOYEE', 'Nhân viên'),
+('SUPPLIER', 'Nhà cung cấp'),
+('WARRANTY', 'Bảo hành');
 /*
 Quyền của người dùng
 1. Nhân viên bán hàng
@@ -205,45 +194,38 @@ Quyền của người dùng
     - Xem lịch sử mua hàng
 */
 
-INSERT INTO decentralization (role_id, permission_code, adding, editing, deleting) VALUES
-('SLR', 'PRODUCTS', FALSE, FALSE, FALSE),
-('SLR', 'ORDERS', FALSE, FALSE, FALSE),
-('SLR', 'RECEIPTS', FALSE, FALSE, FALSE),
-('SLR', 'WARRANTY', FALSE, FALSE, FALSE),
-('SLR', 'SUPPLIERS', FALSE, FALSE, FALSE),
-('WHM', 'PRODUCTS', FALSE, FALSE, FALSE),
-('WHM', 'ORDERS', FALSE, FALSE, FALSE),
-('WHM', 'RECEIPTS', TRUE, FALSE, FALSE),
-('WHM', 'SUPPLIERS', TRUE, FALSE, FALSE),
-('ADM', 'HOME', FALSE, FALSE, FALSE),
-('ADM', 'PRODUCTS', TRUE, TRUE, TRUE),
-('ADM', 'EMPLOYEES', TRUE, TRUE, TRUE),
-('ADM', 'CUSTOMERS', TRUE, TRUE, TRUE),
-('ADM', 'ACCOUNTS', TRUE, TRUE, TRUE),
-('ADM', 'SUPPLIERS', TRUE, TRUE, TRUE),
-('ADM', 'ORDERS', TRUE, FALSE, FALSE),
-('ADM', 'RECEIPTS', TRUE, FALSE, FALSE),
-('ADM', 'WARRANTY', TRUE, FALSE, FALSE),
-('ADM', 'STATISTICAL', TRUE, FALSE, FALSE),
-('CTM', 'HOME', TRUE, FALSE, FALSE),
-('CTM', 'HISTORY', FALSE, FALSE, FALSE);
+INSERT INTO decentralization (role_id, permission_code, adding, editing, deleting, other) VALUES
+('SLR', 'PRODUCT', FALSE, FALSE, FALSE, NULL),
+('SLR', 'EMPLOYEE', FALSE, FALSE, FALSE, NULL),
+('SLR', 'CUSTOMER', NULL, FALSE, FALSE, NULL),
+('SLR', 'ORDER', TRUE, TRUE, NULL, NULL),
+('SLR', 'RECEIPT', FALSE, FALSE, NULL, NULL),
+('SLR', 'WARRANTY', NULL, NULL, NULL, TRUE),
+('SLR', 'SUPPLIER', TRUE, TRUE, TRUE, TRUE),
+('WHM', 'PRODUCT', TRUE, TRUE, TRUE, NULL),
+('WHM', 'EMPLOYEE', FALSE, FALSE, FALSE, NULL),
+('WHM', 'CUSTOMER', NULL, FALSE, FALSE, NULL),
+('WHM', 'ORDER', FALSE, FALSE, NULL, NULL),
+('WHM', 'RECEIPT', TRUE, TRUE, NULL, NULL),
+('WHM', 'WARRANTY', NULL, NULL, NULL, FALSE),
+('WHM', 'SUPPLIER', TRUE, TRUE, TRUE, TRUE);
 
 INSERT INTO products (product_name, category, brand, sell_price, discount, discount_price, quantity, image_url) VALUES
-('Đồng Hồ Casio Nam MTP-1374L-1AVDF', 'Đồng hồ cơ', 'CASIO', 2270000, FALSE, 0, 0, '/img/products/anh1.jpg'),
-('Đồng Hồ Casio Nam AE-1200WHD-1AVDF', 'Đồng hồ điện tử', 'CASIO', 1506000, FALSE, 0, 0, '/img/products/anh2.jpg'),
-('Đồng Hồ Casio Nam MTP-VT01L-1BUDF', 'Đồng hồ cơ', 'CASIO', 1182000, FALSE, 0, 0, '/img/products/anh3.jpg'),
-('Đồng Hồ Casio Nam MTP-1374D-1AVDF', 'Đồng hồ cơ', 'CASIO', 2394000, FALSE, 0, 0, '/img/products/anh4.jpg'),
-('Đồng Hồ Orient Nam FAG00002W0', 'Đồng hồ cơ', 'ORIENT', 8690000, FALSE, 0, 0, '/img/products/anh5.jpg'),
-('Đồng Hồ Orient Nam FAG02005W0', 'Đồng hồ cơ', 'ORIENT', 6790000, FALSE, 0, 0, '/img/products/anh6.jpg'),
-('Đồng Hồ Casio Nam G-Shock DW-9052-1VDR', 'Đồng hồ điện tử', 'CASIO', 2746000, FALSE, 0, 0, '/img/products/anh7.jpg'),
-('Đồng Hồ Casio Nam F-91WM-9ADF', 'Đồng hồ điện tử', 'CASIO', 623000, FALSE, 0, 0, '/img/products/anh8.jpg'),
-('Apple Watch Series 9 GPS', 'Đồng hồ thông minh', 'APPLE', 9790000, FALSE, 0, 0, '/img/products/anh9.jpg'),
-('Apple Watch Ultra 2 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 20990000, FALSE, 0, 0, '/img/products/anh10.jpg'),
-('Apple Watch Ultra 2 GPS + Titanium', 'Đồng hồ thông minh', 'APPLE', 21990000, FALSE, 0, 0, '/img/products/anh11.jpg'),
-('Apple Watch Series 9 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 19990000, FALSE, 0, 0, '/img/products/anh12.jpg'),
-('Đồng Hồ Citizen Nam BE9180-52E', 'Đồng hồ cơ', 'CITIZEN', 3780000, FALSE, 0, 0, '/img/products/anh13.jpg'),
-('Đồng Hồ Citizen Nam NH8390-03X', 'Đồng hồ cơ', 'CITIZEN', 8177000, FALSE, 0, 0, '/img/products/anh14.jpg'),
-('Đồng Hồ Citizen Nam AU1062-56E', 'Đồng hồ cơ', 'CITIZEN', 7185000, FALSE, 0, 0, '/img/products/anh15.jpg');
+('Đồng Hồ Casio Nam MTP-1374L-1AVDF', 'Đồng hồ cơ', 'CASIO', 2270000, FALSE, 0, 20, '/img/products/anh1.jpg'),
+('Đồng Hồ Casio Nam AE-1200WHD-1AVDF', 'Đồng hồ điện tử', 'CASIO', 1506000, FALSE, 0, 30, '/img/products/anh2.jpg'),
+('Đồng Hồ Casio Nam MTP-VT01L-1BUDF', 'Đồng hồ cơ', 'CASIO', 1182000, FALSE, 0, 40, '/img/products/anh3.jpg'),
+('Đồng Hồ Casio Nam MTP-1374D-1AVDF', 'Đồng hồ cơ', 'CASIO', 2394000, FALSE, 0, 15, '/img/products/anh4.jpg'),
+('Đồng Hồ Orient Nam FAG00002W0', 'Đồng hồ cơ', 'ORIENT', 8690000, FALSE, 0, 28, '/img/products/anh5.jpg'),
+('Đồng Hồ Orient Nam FAG02005W0', 'Đồng hồ cơ', 'ORIENT', 6790000, FALSE, 0, 19, '/img/products/anh6.jpg'),
+('Đồng Hồ Casio Nam G-Shock DW-9052-1VDR', 'Đồng hồ điện tử', 'CASIO', 2746000, FALSE, 0, 34, '/img/products/anh7.jpg'),
+('Đồng Hồ Casio Nam F-91WM-9ADF', 'Đồng hồ điện tử', 'CASIO', 623000, FALSE, 0, 76, '/img/products/anh8.jpg'),
+('Apple Watch Series 9 GPS', 'Đồng hồ thông minh', 'APPLE', 9790000, FALSE, 0, 23, '/img/products/anh9.jpg'),
+('Apple Watch Ultra 2 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 20990000, FALSE, 0, 12, '/img/products/anh10.jpg'),
+('Apple Watch Ultra 2 GPS + Titanium', 'Đồng hồ thông minh', 'APPLE', 21990000, FALSE, 0, 36, '/img/products/anh11.jpg'),
+('Apple Watch Series 9 GPS + Cellular', 'Đồng hồ thông minh', 'APPLE', 19990000, FALSE, 0, 25, '/img/products/anh12.jpg'),
+('Đồng Hồ Citizen Nam BE9180-52E', 'Đồng hồ cơ', 'CITIZEN', 3780000, FALSE, 0, 13, '/img/products/anh13.jpg'),
+('Đồng Hồ Citizen Nam NH8390-03X', 'Đồng hồ cơ', 'CITIZEN', 8177000, FALSE, 0, 32, '/img/products/anh14.jpg'),
+('Đồng Hồ Citizen Nam AU1062-56E', 'Đồng hồ cơ', 'CITIZEN', 7185000, FALSE, 0, 55, '/img/products/anh15.jpg');
     
 INSERT INTO accounts (username, passwd, role_id) VALUES 
 ('trunghieu', '3122560017', 'ADM'),
@@ -257,17 +239,17 @@ INSERT INTO accounts (username, passwd, role_id) VALUES
 ('duanaoday2', '12345678', 'CTM');
 
 INSERT INTO employees (full_name, gender, date_of_birth, phone_number, address, account_id) VALUES 
-('Bùi Trung Hiếu', 'male', '2004-05-04', '0123456789', '123 Main Street, City, Country', 1),
-('Cao Thái Bảo', 'male', '2004-07-02', '0987654321', '456 Oak Avenue, City, Country', 2),
-('Tô Gia Huy', 'male', '2004-07-31', '0555123456', '789 Elm Street, City, Country', 3),
-('Trương Mậu Điền', 'male', '2004-05-03', '0777888999', '321 Pine Street, City, Country', 4),
-('Trần Thị Khánh Như', 'female', '2004-08-11', '0111222333', '654 Cedar Street, City, Country', 5);
+('Bùi Trung Hiếu', 'Nam', '2004-05-04', '0123456789', '123 Main Street, City, Country', 1),
+('Cao Thái Bảo', 'Nam', '2004-07-02', '0987654321', '456 Oak Avenue, City, Country', 2),
+('Tô Gia Huy', 'Nam', '2004-07-31', '0555123456', '789 Elm Street, City, Country', 3),
+('Trương Mậu Điền', 'Nam', '2004-05-03', '0777888999', '321 Pine Street, City, Country', 4),
+('Trần Thị Khánh Như', 'Nữ', '2004-08-11', '0111222333', '654 Cedar Street, City, Country', 5);
 
 INSERT INTO customers (full_name, gender, date_of_birth, phone_number, address, account_id) VALUES
-('Emma Wilson', 'male', '1980-07-12', '0123123123', '1010 Maple Street, City, Country', 6),
-('Olivia Garcia', 'female', '1992-04-18', '0333666999', '1313 Oak Street, City, Country', 7),
-('Ava Martinez', 'female', '1987-10-30', '0666777888', '1515 Elm Street, City, Country', 8),
-('Sarah Clark', 'female', '1989-12-30', '0444555666', '987 Birch Street, City, Country', 9);
+('Emma Wilson', 'Nam', '1980-07-12', '0123123123', '1010 Maple Street, City, Country', 6),
+('Olivia Garcia', 'Nữ', '1992-04-18', '0333666999', '1313 Oak Street, City, Country', 7),
+('Ava Martinez', 'Nữ', '1987-10-30', '0666777888', '1515 Elm Street, City, Country', 8),
+('Sarah Clark', 'Nữ', '1989-12-30', '0444555666', '987 Birch Street, City, Country', 9);
 
 INSERT INTO suppliers (supplier_name, email, phone_number) VALUES 
 ('ABC Electronics', 'abc_electronics@example.com', '1234567890'),
@@ -285,6 +267,31 @@ INSERT INTO product_supplier (product_id, supplier_id) VALUES
 (1, 5), (2, 5), (3, 5),
 (4, 6), (6, 6), (9, 6), (7, 6); 
 
+INSERT INTO export_invoices (employee_id, customer_id, invoice_date)
+VALUES
+  (1, 1, '2022-01-01'),
+  (2, 2, '2022-01-02'),
+  (1, 3, '2022-01-03');
+
+INSERT INTO export_invoice_details (export_invoice_id, product_id, sell_price)
+VALUES
+  (1, 1, 100),
+  (1, 2, 200),
+  (2, 3, 150),
+  (2, 1, 120),
+  (3, 2, 180),
+  (3, 3, 170);
+ 
+INSERT INTO import_invoices (employee_id, supplier_id, invoice_date) VALUES
+(1, 1, '2022-01-01'),
+(2, 2, '2022-02-01'),
+(1, 3, '2022-03-01');
+
+INSERT INTO import_invoice_details (import_invoice_id, product_id, quantity, import_price) VALUES 
+(1, 1, 10, 100),
+(1, 2, 5, 200),
+(2, 3, 8, 150),
+(3, 1, 12, 110);
 
 -- TEST QUERY --
 -- Xem danh sách nhân viên - tài khoản - mật khẩu - ngày tạo - vai trò
@@ -302,4 +309,30 @@ join accounts as a on a.id = c.account_id;
 select s.supplier_name, p.product_name
 from products as p
 join product_supplier as ps on ps.product_id = p.id
-join suppliers as s on s.supplier_id = ps.supplier_id
+join suppliers as s on s.supplier_id = ps.supplier_id;
+
+-- select r.role_name from roles as r join accounts as a on a.role_id = r.role_id where a.id = 2;
+
+-- select * from products
+
+select * from decentralization
+
+--QUERY PHIẾU XUẤT
+SELECT export_invoices.export_invoice_id, employees.full_name as employee_name, customers.full_name as customer_name, export_invoices.invoice_date
+FROM export_invoices
+JOIN customers ON export_invoices.customer_id = customers.id
+JOIN employees ON export_invoices.employee_id = employees.id;
+
+SELECT export_invoice_details.details_id, export_invoice_details.export_invoice_id, products.product_name, export_invoice_details.sell_price
+FROM export_invoice_details
+JOIN products ON export_invoice_details.product_id = products.id;
+
+--QUERY PHIẾU NHẬP
+SELECT import_invoices.import_invoice_id, employees.full_name, suppliers.supplier_name, import_invoices.supplier_id, import_invoices.invoice_date 
+FROM import_invoices 
+JOIN employees ON import_invoices.employee_id = employees.id 
+JOIN suppliers ON import_invoices.supplier_id = suppliers.supplier_id;
+
+SELECT import_invoice_details.details_id,products.id as product_id, products.product_name, products.brand, import_invoice_details.quantity, import_invoice_details.import_price
+FROM import_invoice_details
+JOIN products ON import_invoice_details.product_id = products.id;

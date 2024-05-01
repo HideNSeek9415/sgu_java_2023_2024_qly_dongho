@@ -15,6 +15,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -110,7 +111,7 @@ public class ProductDetailsGUI extends JFrame {
         double sellPrice = product.getSellPrice();
         double discountPrice = product.getDiscountPrice();
         int quantity = product.getQuantity();
-        String productStatus = product.getProductStatus();
+        String productStatus = product.getStatus();
         String imageURL = product.getImageUrl();
         
     	setResizable(false);
@@ -211,7 +212,7 @@ public class ProductDetailsGUI extends JFrame {
         lblSLng.setFont(new Font("Roboto Mono", Font.BOLD, 13));
         pnProp4.add(lblSLng);
 
-        lblQuantity = new JLabel("123");
+        lblQuantity = new JLabel(String.valueOf(quantity));
         lblQuantity.setVerticalAlignment(SwingConstants.TOP);
         lblQuantity.setForeground(new Color(166, 44, 44));
         lblQuantity.setFont(new Font("Roboto Mono", Font.BOLD, 13));
@@ -364,7 +365,7 @@ public class ProductDetailsGUI extends JFrame {
         	}
         	lblAmount.setText(String.valueOf(numOfPrd));
         	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
-        	String formatTotalPrice = String.format("%,.0fVNĐ", totalPrice);
+        	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
         	lblPaid.setText(formatTotalPrice);
         });
         btnAdd.addActionListener(e -> {
@@ -372,7 +373,7 @@ public class ProductDetailsGUI extends JFrame {
         	btnSub.setEnabled(true);
         	lblAmount.setText(String.valueOf(numOfPrd));
         	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
-        	String formatTotalPrice = String.format("%,.0fVNĐ", totalPrice);
+        	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
         	lblPaid.setText(formatTotalPrice);
         });
     }
@@ -382,6 +383,13 @@ public class ProductDetailsGUI extends JFrame {
         makeHoverEff(btnSell);
         makeHoverEff(btnAddToCart);
         addImageProduct();
+        btnAddToCart.addActionListener(e -> {
+        	for (int i = 0; i < numOfPrd; i++) {        		
+        		zShoppingCartFrame.addProduct(selectedProduct.getId());
+        	}
+        	JOptionPane.showMessageDialog(null, "Đã thêm " + numOfPrd + " sản phẩm vào giỏ hàng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        	this.dispose();
+        });
     }
     
     private void makeHoverEff(AbstractButton btn) {

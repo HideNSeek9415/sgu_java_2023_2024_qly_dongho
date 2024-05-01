@@ -1,9 +1,14 @@
 package bll;
 
-import dao.AccountDAO;
-import dto.Account;
+import java.util.ArrayList;
 
-public class AccountBLL {
+import dao.AccountDAO;
+import dao.CustomerDAO;
+import dao.EmployeeDAO;
+import dto.Account;
+import system.ConfigPRJ;
+
+public class AccountBLL { 
 	
 	public static final int VALID = 0;
 	public static final int EMPTY_FIELD = 1;
@@ -14,7 +19,7 @@ public class AccountBLL {
 	public static final int INVALID_PASSWORD = 6;
 	public static final int CONFIRM_PASSWD_MISMATCHED = 7;
 	
-	public static int checkLoginData(Account account) {
+	public static int login(Account account) {
 		if (account.getUsername().trim().equals("") || account.getPassword().trim().equals("")) {
 			return EMPTY_FIELD;
 		}
@@ -25,17 +30,23 @@ public class AccountBLL {
 		if (!accountToCheck.getPassword().equals(account.getPassword())) {
 			return PASSWORD_INCORRECT;
 		}
+		account = AccountDAO.getInstance().getUserByUsername(account.getUsername());
+		if (AccountDAO.getInstance().getRoleId(account.getId()).equals("CTM")) {
+			ConfigPRJ.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(account.getId());
+		} else {
+			ConfigPRJ.currentUser = EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId());
+		}
 		return VALID;
 	}
 	
-	public static int checkSigninData(Account account, String confirm) {
+	public static int signin(Account account, String confirm) {
 		if (account.getUsername().trim().equals("") || account.getPassword().trim().equals("") || confirm.trim().equals("")) {
 			return EMPTY_FIELD;
 		}
 		if (AccountDAO.getInstance().getUserByUsername(account.getUsername()) != null) {
 			return USERNAME_EXISTED;
 		}
-		if (!account.getUsername().matches("^[a-z][a-z0-9_]{5,}$")) {
+		if (!account.getUsername().matches("^[a-z][a-z0-9]{5,}$")) {
 			return INVALID_USERNAME;
 		}
 		if (account.getPassword().length() < 8) {
@@ -46,4 +57,5 @@ public class AccountBLL {
 		}
 		return VALID;
 	}
+	
 }

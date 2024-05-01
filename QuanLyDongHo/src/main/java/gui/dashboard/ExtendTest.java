@@ -15,10 +15,10 @@ public class ExtendTest extends DashboardFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					System.out.println("câu chuyện về một chú cáo nâu nhanh nhẹn nhảy qua chú chó lười biếng");
 					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-					ExtendTest frame = new ExtendTest();
+					ExtendTest frame = new ExtendTest();	
 					frame.setVisible(true);
-//					gui.ShowMsg.showValidationMsg("Xác nhận thông tin thành công", frame);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -29,6 +29,7 @@ public class ExtendTest extends DashboardFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public ExtendTest() {
 		super();
 		addFunction(new FunctionBtn(FunctionBtn.PRODUCTS));

@@ -28,6 +28,7 @@ import dao.AccountDAO;
 import dao.CustomerDAO;
 import dao.EmployeeDAO;
 import dto.Account;
+import system.ConfigPRJ;
 
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.plaf.metal.MetalButtonUI;
@@ -52,6 +53,7 @@ public class LoginGUI extends JFrame {
 	private JButton btnLogin;
 	private JButton btnRegis;
 	private JLabel lblForgotPasswd;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -99,6 +101,11 @@ public class LoginGUI extends JFrame {
 		this.pnLogo = new JPanel();
 		this.pnLogo.setBackground(new Color(42, 62, 80));
 		this.contentPane.add(this.pnLogo, BorderLayout.CENTER);
+		pnLogo.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		lblNewLabel_1 = new JLabel();
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		pnLogo.add(lblNewLabel_1);
 		
 		this.pnContent = new JPanel();
 		this.pnContent.setPreferredSize(new Dimension(10, 310));
@@ -182,7 +189,7 @@ public class LoginGUI extends JFrame {
 			Account account = new Account();
 			account.setUsername(txtUsername.getText());
 			account.setPassword(new String(txtPasswd.getPassword()));
-			switch (AccountBLL.checkLoginData(account)) {
+			switch (AccountBLL.login(account)) {
 			case AccountBLL.EMPTY_FIELD:
 				JOptionPane.showMessageDialog(null, "Các trường không được trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				break;
@@ -193,14 +200,7 @@ public class LoginGUI extends JFrame {
 				JOptionPane.showMessageDialog(null, "Mật khẩu không chính xác", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				break;
 			case AccountBLL.VALID:
-				account = AccountDAO.getInstance().getUserByUsername(account.getUsername());
-				if (AccountDAO.getInstance().getRoleId(account.getId()).equals("CTM")) {
-					String info = CustomerDAO.getInstance().getCustomerByAccountId(account.getId()).toString();
-					JOptionPane.showMessageDialog(null, info, "Info", JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					String info = EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId()).toString();
-					JOptionPane.showMessageDialog(null, info, "Info", JOptionPane.INFORMATION_MESSAGE);
-				}
+				JOptionPane.showMessageDialog(null, ConfigPRJ.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
 				break;
 			}
 		});
@@ -242,6 +242,7 @@ public class LoginGUI extends JFrame {
 	}
 	
 	private void makeOtherEffect() {
+		txtPasswd.setEchoChar('\u25CF');
 		this.lblForgotPasswd.addMouseListener(new MouseAdapter() {
 			@Override
 		    public void mouseEntered(MouseEvent e) {

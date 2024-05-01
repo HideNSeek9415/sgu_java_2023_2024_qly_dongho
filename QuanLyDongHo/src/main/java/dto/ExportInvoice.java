@@ -1,5 +1,8 @@
 package dto;
 
+import dao.CustomerDAO;
+import dao.EmployeeDAO;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ExportInvoice {
@@ -7,8 +10,36 @@ public class ExportInvoice {
     private int employeeId;
     private int customerId;
     private Date invoiceDate;
+    private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
+    
+    private String employeeName;
+    private String customerName;
+    
+    public String getEmployeeName() {
+		return employeeName;
+	}
 
-    public ExportInvoice(int exportInvoiceId, int employeeId, int customerId, Date invoiceDate) {
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+    public ArrayList<ImportInvoiceDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(ArrayList<ImportInvoiceDetail> details) {
+		this.details = details;
+	}
+
+	public ExportInvoice(int exportInvoiceId, int employeeId, int customerId, Date invoiceDate) {
         this.exportInvoiceId = exportInvoiceId;
         this.employeeId = employeeId;
         this.customerId = customerId;
@@ -47,5 +78,22 @@ public class ExportInvoice {
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
-
+    
+    public void setEmployeeFullName() {
+        Employee employee = EmployeeDAO.getInstance().readByID(employeeId);
+        if (employee != null) {
+            employeeName = employee.getFullName();
+        } else {
+            employeeName = "";
+        }
+    }
+    
+    public void setCustomerFullName() {
+        Customer customer = CustomerDAO.getInstance().readByID(customerId);
+        if (customer != null) {
+            customerName = customer.getFullName();
+        } else {
+            customerName = "";
+        }
+    }
 }

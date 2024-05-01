@@ -83,7 +83,9 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 
 	@Override
 	public boolean delete(int id) {
-		return false;
+		String sql = "update accounts set account_status = 'inactive' where id = ?";
+		int rowChanges = runUpdate(sql, id);
+		return rowChanges > 0;
 	}
 	
 	public Account getUserByUsername(String username) {
@@ -92,13 +94,13 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 		ResultSet rs = runQuery(sql);
 		try {
 			if (rs.next()) returnValue = new Account(
-					rs.getInt(1),
-					rs.getString(2),
-					rs.getString(3),
-					rs.getString(4),
-					rs.getString(5),
-					new java.util.Date(rs.getDate(6).getTime())
-				);
+				rs.getInt(1),
+				rs.getString(2),
+				rs.getString(3),
+				rs.getString(4),
+				rs.getString(5),
+				new java.util.Date(rs.getDate(6).getTime())
+			);
 			closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();

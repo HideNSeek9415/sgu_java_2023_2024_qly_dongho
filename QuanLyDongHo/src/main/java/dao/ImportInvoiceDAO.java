@@ -5,6 +5,8 @@ import java.util.List;
 
 import dto.ImportInvoiceDetail;
 import dto.ImportInvoice;
+import java.sql.ResultSet;
+import java.util.Date;
 
 public class ImportInvoiceDAO extends ObjectDAO implements ICrud<ImportInvoice> {
 	
@@ -25,12 +27,33 @@ public class ImportInvoiceDAO extends ObjectDAO implements ICrud<ImportInvoice> 
 	}
 
 	@Override
-	public ArrayList<ImportInvoice> readAllData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+        public ArrayList<ImportInvoice> readAllData() {
+        ArrayList<ImportInvoice> importInvoices = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM import_invoices";
+            ResultSet rs = runQuery(sql);
+            
+            while (rs.next()) {
+                int importInvoiceId = rs.getInt("import_invoice_id");
+                int employeeId = rs.getInt("employee_id");
+                int supplierId = rs.getInt("supplier_id");
+                Date invoiceDate = rs.getDate("invoice_date");
+                
+                ImportInvoice importInvoice = new ImportInvoice(importInvoiceId, employeeId, supplierId, (java.sql.Date) invoiceDate);
+                
+                
+                importInvoices.add(importInvoice);
+            }
+            
+            closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return importInvoices;
+    }
+	
+        @Override
 	public boolean update(int ID, ImportInvoice Obj) {
 		// TODO Auto-generated method stub
 		return false;

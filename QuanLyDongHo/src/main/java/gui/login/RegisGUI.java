@@ -10,11 +10,15 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -28,6 +32,13 @@ import org.kordamp.ikonli.materialdesign.MaterialDesign;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import com.toedter.calendar.JDateChooser;
+
+import bll.AccountBLL;
+import bll.CustomerBLL;
+import dao.CustomerDAO;
+import dto.Account;
+import dto.Customer;
+import system.ConfigPRJ;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.JRadioButton;
@@ -71,10 +82,14 @@ public class RegisGUI extends JFrame {
 	private ButtonGroup btnGr = new ButtonGroup();
 	private JButton btnRegis;
 	private JButton btnBack;
+	private JDateChooser dateBirthday;
+
 	
 	private final static int ACCOUNT = 1;
 	private final static int INFO = 2;
-
+	
+	private Account acc;
+	private Customer ctm;
 
 	/**
 	 * Launch the application.
@@ -99,7 +114,7 @@ public class RegisGUI extends JFrame {
 	public RegisGUI() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 500, 750);
+		setBounds(10, 10, 500, 634);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -132,21 +147,21 @@ public class RegisGUI extends JFrame {
 		this.lblUsername.setIconTextGap(10);
 		this.lblUsername.setForeground(Color.WHITE);
 		this.lblUsername.setFont(new Font("Tahoma", Font.BOLD, 18));
-		this.lblUsername.setBounds(63, 10, 350, 30);
+		this.lblUsername.setBounds(63, 80, 350, 30);
 		this.pnContent1.add(this.lblUsername);
 		
 		this.txtUsername = new JTextField();
 		this.txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		this.txtUsername.setColumns(10);
 		this.txtUsername.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		this.txtUsername.setBounds(63, 40, 350, 30);
+		this.txtUsername.setBounds(63, 110, 350, 30);
 		this.pnContent1.add(this.txtUsername);
 		
 		this.lblPasswd = new JLabel("Mật khẩu");
 		this.lblPasswd.setIconTextGap(10);
 		this.lblPasswd.setForeground(Color.WHITE);
 		this.lblPasswd.setFont(new Font("Tahoma", Font.BOLD, 18));
-		this.lblPasswd.setBounds(63, 80, 350, 30);
+		this.lblPasswd.setBounds(63, 150, 350, 30);
 		this.pnContent1.add(this.lblPasswd);
 		
 		this.btnShowPasswd = new JRadioButton("");
@@ -155,7 +170,7 @@ public class RegisGUI extends JFrame {
 		this.btnShowPasswd.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnShowPasswd.setForeground(Color.BLACK);
 		this.btnShowPasswd.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		this.btnShowPasswd.setBounds(373, 110, 30, 30);
+		this.btnShowPasswd.setBounds(373, 180, 30, 30);
 		this.pnContent1.add(this.btnShowPasswd);
 		
 		this.btnNext = new JButton("Tiếp theo");
@@ -165,14 +180,14 @@ public class RegisGUI extends JFrame {
 		this.btnNext.setBorderPainted(false);
 		this.btnNext.setBorder(null);
 		this.btnNext.setBackground(new Color(64, 128, 128));
-		this.btnNext.setBounds(63, 220, 350, 30);
+		this.btnNext.setBounds(63, 333, 350, 30);
 		this.pnContent1.add(this.btnNext);
 		
 		this.txtPasswd = new JPasswordField();
 		this.txtPasswd.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		this.txtPasswd.setColumns(10);
 		this.txtPasswd.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		this.txtPasswd.setBounds(63, 110, 350, 30);
+		this.txtPasswd.setBounds(63, 180, 350, 30);
 		this.pnContent1.add(this.txtPasswd);
 		
 		this.btnExit = new JButton("Thoát");
@@ -182,7 +197,7 @@ public class RegisGUI extends JFrame {
 		this.btnExit.setBorderPainted(false);
 		this.btnExit.setBorder(null);
 		this.btnExit.setBackground(new Color(64, 128, 128));
-		this.btnExit.setBounds(63, 260, 350, 30);
+		this.btnExit.setBounds(63, 373, 350, 30);
 		this.pnContent1.add(this.btnExit);
 		
 		this.btnShowConfirm = new JRadioButton("");
@@ -191,21 +206,21 @@ public class RegisGUI extends JFrame {
 		this.btnShowConfirm.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnShowConfirm.setForeground(Color.BLACK);
 		this.btnShowConfirm.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		this.btnShowConfirm.setBounds(373, 180, 30, 30);
+		this.btnShowConfirm.setBounds(373, 250, 30, 30);
 		this.pnContent1.add(this.btnShowConfirm);
 		
 		this.txtConfirm = new JPasswordField();
 		this.txtConfirm.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		this.txtConfirm.setColumns(10);
 		this.txtConfirm.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		this.txtConfirm.setBounds(63, 180, 350, 30);
+		this.txtConfirm.setBounds(63, 250, 350, 30);
 		this.pnContent1.add(this.txtConfirm);
 		
 		this.lblConfirm = new JLabel("Xác nhận mật khẩu");
 		this.lblConfirm.setIconTextGap(10);
 		this.lblConfirm.setForeground(Color.WHITE);
 		this.lblConfirm.setFont(new Font("Tahoma", Font.BOLD, 18));
-		this.lblConfirm.setBounds(63, 150, 350, 30);
+		this.lblConfirm.setBounds(63, 220, 350, 30);
 		this.pnContent1.add(this.lblConfirm);
 		
 		this.pnContent2 = new JPanel();
@@ -275,7 +290,7 @@ public class RegisGUI extends JFrame {
 		this.txtAddress.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		this.txtAddress.setColumns(10);
 		this.txtAddress.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		this.txtAddress.setBounds(63, 340, 350, 135);
+		this.txtAddress.setBounds(63, 340, 350, 54);
 		this.pnContent2.add(this.txtAddress);
 		
 		this.pnGender = new JPanel();
@@ -307,7 +322,7 @@ public class RegisGUI extends JFrame {
 		this.btnRegis.setBorderPainted(false);
 		this.btnRegis.setBorder(null);
 		this.btnRegis.setBackground(new Color(64, 128, 128));
-		this.btnRegis.setBounds(63, 510, 350, 30);
+		this.btnRegis.setBounds(63, 420, 350, 30);
 		this.pnContent2.add(this.btnRegis);
 		
 		this.btnBack = new JButton("Trở lại");
@@ -317,7 +332,7 @@ public class RegisGUI extends JFrame {
 		this.btnBack.setBorderPainted(false);
 		this.btnBack.setBorder(null);
 		this.btnBack.setBackground(new Color(64, 128, 128));
-		this.btnBack.setBounds(63, 550, 350, 30);
+		this.btnBack.setBounds(63, 460, 350, 30);
 		this.pnContent2.add(this.btnBack);
 		
 		changeFormEff();
@@ -331,13 +346,71 @@ public class RegisGUI extends JFrame {
 		makeButtonEffect(btnExit);
 		togglePasswordVisible(txtPasswd, btnShowPasswd);
 		togglePasswordVisible(txtConfirm, btnShowConfirm);
+		
+		signin();
 
 	}
 
-	private void changeFormEff() {
-		this.btnNext.addActionListener(e -> {
-			changeForm(INFO);
+	private void signin() {
+		btnNext.addActionListener(e -> {
+			Account a = new Account();
+			a.setUsername(txtUsername.getText());
+			a.setPassword(String.valueOf(txtPasswd.getPassword()));
+			String confirm = String.valueOf(txtConfirm.getPassword());
+			switch (AccountBLL.signin(a, confirm)) {
+			case AccountBLL.EMPTY_FIELD:
+				JOptionPane.showMessageDialog(null, "Các trường không được trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.INVALID_USERNAME:
+				String fm = String.format("Tên người dùng yêu cầu tối thiểu 6 ký tự\nchỉ chứa ký tự thường và số");
+				JOptionPane.showMessageDialog(null, fm, "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.USERNAME_EXISTED:
+				JOptionPane.showMessageDialog(null, "Tên người dùng đã được sử dụng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.INVALID_PASSWORD:
+				JOptionPane.showMessageDialog(null, "Mật khẩu yêu cầu tối thiểu 8 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.CONFIRM_PASSWD_MISMATCHED:
+				JOptionPane.showMessageDialog(null, "Mật khẩu xác nhận không đúng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case AccountBLL.VALID:
+				acc = a;
+				changeForm(INFO);
+				break;
+			}
 		});
+		btnRegis.addActionListener(e -> {
+			ctm = new Customer();
+			ctm.setAccount(acc);
+			ctm.setFullName(txtName.getText());
+			ctm.setDateOfBirth(dateBirthday.getDate());
+			ctm.setAddress(txtAddress.getText());
+			ctm.setGender(rdnMale.isSelected() ? "Nam" : "Nữ");
+			ctm.setPhoneNumber(txtPhone.getValue() != null ? txtPhone.getValue().toString() : "");
+			
+			switch (CustomerBLL.checkInfo(ctm)) {
+			case CustomerBLL.EMPTY_FIELD:
+				System.out.println(ctm);
+				JOptionPane.showMessageDialog(null, "Các trường không được trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case CustomerBLL.INVALID_PHONE_NUMBER:
+				System.out.println(ctm);
+				JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case CustomerBLL.USED_PHONE_NUMBER:
+				System.out.println(ctm);
+				JOptionPane.showMessageDialog(null, "Số điện thoại đã được sử dụng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				break;
+			case CustomerBLL.VALID:
+				CustomerBLL.addCustomer(ctm);
+				JOptionPane.showMessageDialog(null, ConfigPRJ.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
+				break;
+			}
+		});
+	}
+
+	private void changeFormEff() {
 		this.btnBack.addActionListener(e -> {
 			changeForm(ACCOUNT);
 		});
@@ -352,7 +425,7 @@ public class RegisGUI extends JFrame {
 	}
 
 	private void addDatePicker() {
-		JDateChooser dateBirthday = new JDateChooser();
+		dateBirthday = new JDateChooser();
 		dateBirthday.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		dateBirthday.setBounds(63, 200, 350, 30);
 		dateBirthday.setDateFormatString("dd/MM/yyyy");
@@ -382,7 +455,6 @@ public class RegisGUI extends JFrame {
 			private final static int maxWidth = 476;
 			private final static int step = 10;
 			private final static int delayPerStep = 12;
-
 
 			@Override
 			public void run() {
@@ -446,6 +518,7 @@ public class RegisGUI extends JFrame {
 	}
 
 	private void togglePasswordVisible(JPasswordField passwdField, AbstractButton tglBtn) {
+		passwdField.setEchoChar('\u25CF');
 		tglBtn.addItemListener(e -> {
 			if (tglBtn.isSelected()) {
 				passwdField.setEchoChar((char) 0);
