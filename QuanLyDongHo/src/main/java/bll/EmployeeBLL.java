@@ -36,7 +36,7 @@ public class EmployeeBLL {
 		Account acc = emp.getAccount();
 		AccountDAO.getInstance().create(acc);
 		Account updateAc = AccountDAO.getInstance().getUserByUsername(acc.getUsername());
-		emp.setAccount(updateAc);
+		emp.setAccountId(updateAc.getId());
 		return EmployeeDAO.getInstance().create(emp);
 	}
 	

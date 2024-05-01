@@ -26,6 +26,8 @@ import com.toedter.calendar.JDateChooser;
 import bll.AccountBLL;
 import bll.CustomerBLL;
 import bll.EmployeeBLL;
+import dao.AccountDAO;
+import dao.EmployeeDAO;
 import dto.Account;
 import dto.Customer;
 import dto.Employee;
@@ -34,6 +36,8 @@ import system.ConfigPRJ;
 import java.awt.CardLayout;
 import javax.swing.JButton;
 import java.awt.Insets;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JToggleButton;
 import java.awt.GridBagLayout;
 import javax.swing.SwingConstants;
@@ -45,21 +49,45 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author User
  */
-public class ThemNVGUI extends javax.swing.JFrame {
+public class ThongTinNV extends javax.swing.JFrame {
 	
 	
 	private CardLayout clayout = new CardLayout(0, 0);
+	private Employee nv;
+	private Account acc;
+
 
     /**
      * Creates new form them_nv
      */
-    public ThemNVGUI() {
+    public ThongTinNV(int d) {
+    	this.nv = EmployeeDAO.getInstance().readByID(d);
+    	this.acc = AccountDAO.getInstance().readByID(nv.getAccountId());
     	getContentPane().setBackground(new Color(240, 247, 250));
         initComponents();
         setEvent();
+        loadInfo();
     }
 
-    private void setEvent() {
+    private void loadInfo() {
+    	txtName.setText(nv.getFullName());
+    	txtDOB.setText((new SimpleDateFormat("dd/MM/yyyy")).format(nv.getDateOfBirth()));
+    	txtPhone.setText(nv.getPhoneNumber());
+    	txtGender.setText(nv.getGender());
+    	txtAdress.setText(nv.getAddress());
+    	txtUsername.setText(acc.getUsername());
+    	txtPasswd.setText(acc.getPassword());
+    	if (!acc.getRoleId().equals("ADM")) {
+    		cbbRole.setSelectedItem(acc.getRoleId());
+    	}
+    	if (acc.getAccountStatus().equals("active")) {
+    		cbbStatus.setSelectedIndex(0);
+    	} else {
+    		cbbStatus.setSelectedIndex(1);
+    	}
+	}
+
+	private void setEvent() {
 		// TODO Auto-generated method stub
 		btnTK.addActionListener(e -> {
 			clayout.show(jPanel5, "account");
@@ -69,60 +97,19 @@ public class ThemNVGUI extends javax.swing.JFrame {
 		});
 		btnTK.doClick();
 		btnAddE.addActionListener(e -> {
-			
-			
-			
-			Account a = new Account();
-			a.setUsername(txtUsername.getText());
-			a.setPassword(txtPasswd.getText());
-			
-			int rslt = AccountBLL.signin(a, a.getPassword());
-			switch (rslt) {
-			case AccountBLL.EMPTY_FIELD:
-				JOptionPane.showMessageDialog(null, "Tài khoản/mật khẩu không được trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-				break;
-			case AccountBLL.INVALID_USERNAME:
-				String fm = String.format("Tên người dùng yêu cầu tối thiểu 6 ký tự\nchỉ chứa ký tự thường và số");
-				JOptionPane.showMessageDialog(null, fm, "Lỗi", JOptionPane.ERROR_MESSAGE);
-				break;
-			case AccountBLL.USERNAME_EXISTED:
-				JOptionPane.showMessageDialog(null, "Tên người dùng đã được sử dụng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-				break;
-			case AccountBLL.INVALID_PASSWORD:
-				JOptionPane.showMessageDialog(null, "Mật khẩu yêu cầu tối thiểu 8 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
-				break;
+			if (acc.getRoleId().equals("ADM")) {
+				JOptionPane.showMessageDialog(null, "Không thể đổi thông của người quản trị", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			} else {
+				AccountBLL.changeRole(nv, (String) cbbRole.getSelectedItem());
+	    		if (cbbStatus.getSelectedIndex() == 0) {
+	    			AccountDAO.getInstance().recovery(acc.getId());
+	    		} else {
+	    			AccountDAO.getInstance().delete(acc.getId());
+	    		}
+				((EmployeesGUI) ConfigPRJ.menu.get("EMPLOYEES")).reloadTable();
+				dispose();
 			}
-			if (rslt == AccountBLL.VALID) {
-				Employee emp = new Employee();
-				a.setRoleId((String) cbbRole.getSelectedItem());
-				emp.setAccount(a);
-				emp.setFullName(txtName.getText());
-				emp.setDateOfBirth(dateChooserStaffDOB.getDate());
-				emp.setAddress(txtAdress.getText());
-				emp.setGender(rdnMale.isSelected() ? "Nam" : "Nữ");
-				emp.setPhoneNumber(txtPhone.getText());
-				
-				switch (EmployeeBLL.checkInfo(emp)) {
-				case EmployeeBLL.EMPTY_FIELD:
-					System.out.println(emp);
-					JOptionPane.showMessageDialog(null, "Các trường không được phép trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-					break;
-				case EmployeeBLL.INVALID_PHONE_NUMBER:
-					System.out.println(emp);
-					JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-					break;
-				case EmployeeBLL.USED_PHONE_NUMBER:
-					System.out.println(emp);
-					JOptionPane.showMessageDialog(null, "Số điện thoại đã được sử dụng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-					break;
-				case EmployeeBLL.VALID:
-					EmployeeBLL.addEmployee(emp);
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên mới thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-					((EmployeesGUI) ConfigPRJ.menu.get("EMPLOYEES")).reloadTable();
-					dispose();
-					break;
-				}
-			}
+			
 		});
 	}
 
@@ -161,7 +148,7 @@ public class ThemNVGUI extends javax.swing.JFrame {
         jLabel1.setFont(new Font("Segoe UI", Font.BOLD, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("THÊM NHÂN VIÊN MỚI");
+        jLabel1.setText("THÔNG TIN NHÂN VIÊN");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
@@ -192,7 +179,7 @@ public class ThemNVGUI extends javax.swing.JFrame {
 
         btnAddE.setBackground(new java.awt.Color(219, 88, 96));
         btnAddE.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddE.setText("Thêm NV");
+        btnAddE.setText("Thay đổi");
         btnAddE.setPreferredSize(new java.awt.Dimension(124, 23));
 
         
@@ -232,7 +219,7 @@ public class ThemNVGUI extends javax.swing.JFrame {
         jLabel2.setFont(new Font("SansSerif", Font.BOLD, 12));
         jPanel2.add(jLabel2);
         
-        txtName = new JTextField();
+        txtName = new JLabel();
         jPanel2.add(txtName);
         
         jPanel6 = new JPanel();
@@ -245,7 +232,7 @@ public class ThemNVGUI extends javax.swing.JFrame {
         jLabel5.setFont(new Font("SansSerif", Font.BOLD, 12));
         jPanel6.add(jLabel5);
         
-        txtPhone = new JTextField();
+        txtPhone = new JLabel();
         jPanel6.add(txtPhone);
         
         jPanel7 = new JPanel();
@@ -278,18 +265,8 @@ public class ThemNVGUI extends javax.swing.JFrame {
         jPanel7.add(jPanel10);
         jPanel10.setLayout(new GridLayout(1, 2));
         
-        rdnMale = new JRadioButton();
-        rdnMale.setSelected(true);
-        buttonGroup1.add(rdnMale);
-        rdnMale.setText("Nam");
-        rdnMale.setOpaque(false);
-        jPanel10.add(rdnMale);
-        
-        rdnFemale = new JRadioButton();
-        buttonGroup1.add(rdnFemale);
-        rdnFemale.setText("Nữ");
-        rdnFemale.setOpaque(false);
-        jPanel10.add(rdnFemale);
+        txtGender = new JLabel();
+        jPanel10.add(txtGender);
         
         jPanel8 = new JPanel();
         jPanel8.setOpaque(false);
@@ -306,13 +283,8 @@ public class ThemNVGUI extends javax.swing.JFrame {
         jPanel8.add(jPanel11);
         jPanel11.setLayout(new GridLayout());
         
-        dateChooserStaffDOB = new JDateChooser();
-        dateChooserStaffDOB.getCalendarButton().setBackground(new Color(240, 247, 250));
-        dateChooserStaffDOB.setOpaque(false);
-        dateChooserStaffDOB.setDateFormatString("dd/MM/yyyy");
-        dateChooserStaffDOB.setBackground(new Color(240, 247, 250));
-        dateChooserStaffDOB.setDate(new Date());
-        jPanel11.add(dateChooserStaffDOB);
+        txtDOB = new JLabel();
+        jPanel11.add(txtDOB);
         
         jPanel3 = new JPanel();
         jPanel3.setOpaque(false);
@@ -324,7 +296,7 @@ public class ThemNVGUI extends javax.swing.JFrame {
         lblaCh.setFont(new Font("SansSerif", Font.BOLD, 12));
         jPanel3.add(lblaCh);
         
-        txtAdress = new JTextField();
+        txtAdress = new JLabel();
         jPanel3.add(txtAdress);
         
         panel_1 = new JPanel();
@@ -350,9 +322,8 @@ public class ThemNVGUI extends javax.swing.JFrame {
         panel_3.add(panel_4);
         panel_4.setLayout(new GridLayout(0, 1, 0, 0));
         
-        txtUsername = new JTextField();
+        txtUsername = new JLabel();
         panel_4.add(txtUsername);
-        txtUsername.setColumns(10);
         
         panel_2 = new JPanel();
         panel_2.setOpaque(false);
@@ -372,8 +343,7 @@ public class ThemNVGUI extends javax.swing.JFrame {
         panel_2.add(panel_7);
         panel_7.setLayout(new GridLayout(0, 1, 0, 0));
         
-        txtPasswd = new JTextField();
-        txtPasswd.setColumns(10);
+        txtPasswd = new JLabel();
         panel_7.add(txtPasswd);
         
         panel_5 = new JPanel();
@@ -398,6 +368,29 @@ public class ThemNVGUI extends javax.swing.JFrame {
         cbbRole.setModel(new DefaultComboBoxModel<String>(new String[] {"WHM", "SLR"}));
         cbbRole.setBackground(new Color(255, 255, 255));
         panel_6.add(cbbRole);
+        
+        panel_8 = new JPanel();
+        panel_8.setOpaque(false);
+        panel_8.setBorder(new EmptyBorder(0, 15, 0, 15));
+        panel_1.add(panel_8);
+        panel_8.setLayout(new GridLayout(2, 0, 0, 0));
+        
+        jLabel2_4 = new JLabel();
+        jLabel2_4.setVerticalAlignment(SwingConstants.BOTTOM);
+        jLabel2_4.setText("Trạng thái");
+        jLabel2_4.setFont(new Font("SansSerif", Font.BOLD, 12));
+        panel_8.add(jLabel2_4);
+        
+        panel_9 = new JPanel();
+        panel_9.setOpaque(false);
+        panel_9.setBorder(new EmptyBorder(0, 0, 15, 0));
+        panel_8.add(panel_9);
+        panel_9.setLayout(new GridLayout(0, 1, 0, 0));
+        
+        cbbStatus = new JComboBox<String>();
+        cbbStatus.setModel(new DefaultComboBoxModel(new String[] {"Đang hoạt động", "Ngưng hoạt động"}));
+        cbbStatus.setBackground(Color.WHITE);
+        panel_9.add(cbbStatus);
 
         pack();
         
@@ -420,20 +413,20 @@ public class ThemNVGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongTinNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongTinNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongTinNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ThemNVGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongTinNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ThemNVGUI().setVisible(true);
+                new ThongTinNV(2).setVisible(true);
             }
         });
     }
@@ -451,35 +444,38 @@ public class ThemNVGUI extends javax.swing.JFrame {
     private JPanel jPanel5_1;
     private JPanel jPanel2;
     private JLabel jLabel2;
-    private JTextField txtName;
+    private JLabel txtName;
     private JPanel jPanel6;
     private JLabel jLabel5;
-    private JTextField txtPhone;
+    private JLabel txtPhone;
     private JPanel jPanel7;
     private JPanel jPanel9;
     private JLabel jLabel3;
     private JPanel jPanel10;
-    private JRadioButton rdnMale;
-    private JRadioButton rdnFemale;
     private JPanel jPanel8;
     private JLabel jLabel6;
     private JPanel jPanel11;
-    private JDateChooser dateChooserStaffDOB;
     private JToggleButton btnTT;
     private JPanel panel_3;
     private JLabel jLabel2_1;
     private JPanel panel_4;
-    private JTextField txtUsername;
+    private JLabel txtUsername;
     private JPanel panel_5;
     private JLabel jLabel2_3;
     private JPanel panel_6;
     private JPanel panel_2;
     private JLabel jLabel2_2;
     private JPanel panel_7;
-    private JTextField txtPasswd;
+    private JLabel txtPasswd;
     private JComboBox<String> cbbRole;
     private final ButtonGroup buttonGroup = new ButtonGroup();
     private JPanel jPanel3;
     private JLabel lblaCh;
-    private JTextField txtAdress;
+    private JLabel txtAdress;
+    private JLabel txtGender;
+    private JLabel txtDOB;
+    private JPanel panel_8;
+    private JLabel jLabel2_4;
+    private JPanel panel_9;
+    private JComboBox<String> cbbStatus;
 }

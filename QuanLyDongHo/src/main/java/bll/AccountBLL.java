@@ -6,6 +6,7 @@ import dao.AccountDAO;
 import dao.CustomerDAO;
 import dao.EmployeeDAO;
 import dto.Account;
+import dto.Employee;
 import system.ConfigPRJ;
 
 public class AccountBLL { 
@@ -58,4 +59,7 @@ public class AccountBLL {
 		return VALID;
 	}
 	
+	public static boolean changeRole(Employee emp, String role) {
+		return AccountDAO.getInstance().changeRole(emp.getAccountId(), role);
+	}
 }

@@ -149,6 +149,20 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 		return returnValue;
 	}
 	
+	public boolean changeRole(int id, String role) {
+		int rowChanges = 0;
+		String sql = "UPDATE accounts SET role_id = ? WHERE id = ?";
+		try {
+			rowChanges = runUpdate(sql, 
+				role,
+				id
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rowChanges > 0;
+	}
+	
 	@Override
 	public boolean recovery(int Id) {
 		String sql = "update accounts set account_status = 'active' where id = ?";

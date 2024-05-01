@@ -98,7 +98,7 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 	public boolean isActive(int id) {
 		boolean returnValue = false;
 		try {
-			String sql = String.format("select a.account_status from accounts as a join employees as e on e.account_id = a.id where id = '%d'", id);
+			String sql = String.format("select a.account_status from accounts as a join employees as e on e.account_id = a.id where e.id = '%d'", id);
 			rs = runQuery(sql);
 			if (rs.next() && rs.getString(1).equals("active")) {
 				returnValue = true;

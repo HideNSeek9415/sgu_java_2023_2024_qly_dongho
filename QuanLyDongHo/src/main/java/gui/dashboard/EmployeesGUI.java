@@ -30,12 +30,9 @@ public class EmployeesGUI extends NewJPanel {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"NV001", "Nh\u00E2n Vi\u00EAn 1", "Nam", "4/4/2003", "020232251", "Smaw, KDW, Freadk", null},
-				{"NV002", "Nh\u00E2n Vi\u00EAn 2", "N\u1EEF", "5/5/2000", "012515648", "Ndif, Fpekf, Kofiesnf", null},
-				{"NV003", "Nh\u00E2n Vi\u00EAn 3", "Nam", "3/3/1999", "039481274", "JFIe, Ifiejos, JFIe", null},
 			},
 			new String[] {
-				"M\u00E3 NV", "T\u00EAn NV", "Gi\u1EDBi t\u00EDnh", "Ng\u00E0y sinh", "S\u0110T", "\u0110\u1ECBa ch\u1EC9", "Vai tr\u00F2"
+				"M\u00E3 NV", "T\u00EAn NV", "Gi\u1EDBi t\u00EDnh", "Ng\u00E0y sinh", "S\u0110T", "\u0110\u1ECBa ch\u1EC9", "Vai tr\u00F2", "Trạng thái"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -47,7 +44,7 @@ public class EmployeesGUI extends NewJPanel {
 
 	}
 	
-	private void reloadTable() {
+	public void reloadTable() {
 		// TODO Auto-generated method stub
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
@@ -60,7 +57,8 @@ public class EmployeesGUI extends NewJPanel {
 				(new SimpleDateFormat("dd/MM/yyyy")).format(employee.getDateOfBirth()),
 				employee.getPhoneNumber(),
 				employee.getAddress(),
-				EmployeeDAO.getInstance().getRole(employee.getId())
+				EmployeeDAO.getInstance().getRoleName(employee.getAccountId()),
+				EmployeeDAO.getInstance().isActive(employee.getId()) ? "Đang hoạt động" : "Ngưng hoạt động"
 			};
 			model.addRow(data);
 		}
@@ -69,6 +67,15 @@ public class EmployeesGUI extends NewJPanel {
 	@Override
 	protected void setAddEvent() {
 		JFrame fr = new ThemNVGUI();
+		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		fr.setLocationRelativeTo(null);
+		fr.setVisible(true);
+
+	}
+	
+	@Override
+	protected void setDetailEvent() {
+		JFrame fr = new ThongTinNV((int) table.getValueAt(table.getSelectedRow(), 0));
 		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		fr.setLocationRelativeTo(null);
 		fr.setVisible(true);
