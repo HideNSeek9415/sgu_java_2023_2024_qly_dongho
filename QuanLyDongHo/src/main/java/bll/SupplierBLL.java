@@ -1,15 +1,13 @@
 package bll;
 
-<<<<<<< HEAD
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 
-import dao.DataConnection;
 import dao.SupplierDAO;
 import dto.Supplier;
+import dao.ProductDAO;import dto.Product;
+
+
 
 public class SupplierBLL {
 	public static SupplierBLL getInstance() {
@@ -42,15 +40,7 @@ public class SupplierBLL {
 	
 	public boolean editSupplier(int id, Supplier object) {
 		return SupplierDAO.getInstance().update(id, object);
-=======
-import java.util.ArrayList;
-
-import dao.ProductDAO;
-import dao.SupplierDAO;
-import dto.Product;
-import dto.Supplier;
-
-public class SupplierBLL {
+	}
 		
 	public static ArrayList<Supplier> getSupplierList() {
 		ArrayList<Supplier> suppliers = new ArrayList<>();
@@ -79,6 +69,5 @@ public class SupplierBLL {
 		ProductDAO.getInstance().create(np);
 		int pid = ProductDAO.getInstance().size();
 		SupplierDAO.getInstance().addNewProvidablePrd(sid, pid);
->>>>>>> c70bf685ade918b55237da08f39bf58d9f86323d
 	}
 }

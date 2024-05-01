@@ -71,7 +71,7 @@ public class SuaNhaCungCap extends ThemNhaCungCap{
 		selectedRow = table.getSelectedRow();
 		nhapTenNCC.setText(table.getValueAt(selectedRow, 1).toString());
 		nhapEmail.setText(table.getValueAt(selectedRow, 2).toString());
-		nhapSDT.setText(table.getValueAt(selectedRow, 4).toString());
+		nhapSDT.setText(table.getValueAt(selectedRow, 3).toString());
 		
 		btnThem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {

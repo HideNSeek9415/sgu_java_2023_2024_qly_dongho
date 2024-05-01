@@ -184,7 +184,6 @@ public class SupplierDetails extends JFrame {
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
 		tabbedPane.setOpaque(true);
-		tabbedPane.setPreferredSize(new Dimension(330, 0));
 		contentPane.add(tabbedPane, BorderLayout.EAST);
 		
 		pnAvailable = new JPanel();

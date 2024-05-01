@@ -24,36 +24,6 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 	}
 	
 	@Override
-<<<<<<< HEAD
-	public boolean create(Supplier obj) {
-		try {
-            String query = "insert into mywatchstore.suppliers values (?, ?, ?, ?, ?)";
-            conn = DataConnection.connect();
-            prest = conn.prepareStatement(query);
-            prest.setInt(1, obj.getSupplierId());
-            prest.setString(2, obj.getSupplierName());
-            prest.setString(3, obj.getEmail());
-            prest.setString(4, obj.getSupplierStatus());
-            prest.setString(5, obj.getPhoneNumber());
-            int rowAffected = prest.executeUpdate();
-            if(rowAffected > 0) return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (prest != null) {
-                	prest.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-		return false;
-=======
 	public boolean create(Supplier Obj) {
 		String sql = "INSERT INTO suppliers (supplier_name, email, phone_number) VALUES (?, ?, ?)";
 		int affectedRowCount = runUpdate(sql,
@@ -63,7 +33,6 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 		);
 		closeConnection();
 		return affectedRowCount > 0;
->>>>>>> c70bf685ade918b55237da08f39bf58d9f86323d
 	}
 
 	@Override

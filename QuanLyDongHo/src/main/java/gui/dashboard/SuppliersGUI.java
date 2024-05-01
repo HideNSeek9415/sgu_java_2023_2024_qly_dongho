@@ -13,7 +13,6 @@ import java.awt.Dimension;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-<<<<<<< HEAD
 import dao.SupplierDAO;
 import dto.Supplier;
 import bll.SupplierBLL;
@@ -27,13 +26,11 @@ import javax.swing.event.DocumentListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-=======
 import bll.SupplierBLL;
 import dto.Supplier;
 
 import java.awt.Font;
 import java.util.ArrayList;
->>>>>>> c70bf685ade918b55237da08f39bf58d9f86323d
 
 public class SuppliersGUI extends NewJPanel {
 
@@ -60,19 +57,11 @@ public class SuppliersGUI extends NewJPanel {
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-<<<<<<< HEAD
-				{"NCC01", "Trường ĐH Sài Gòn", "sgu@edu.com.vn", "active", "0695912684"},
-				{"NCC02", "CTTNHH MTV Bán Cái Đồng Hồ", "bdha@ko.ko", "active", "0188923543"},
-			},
-			new String[] {
-				"Mã NCC", "Tên nhà cung cấp", "E-mail", "Trạng thái", "Số điện thoại"
-=======
 				{"NCC01", "Trường ĐH Sài Gòn", "sgu@edu.com.vn", "0695912684"},
 				{"NCC02", "CTTNHH MTV Bán Cái Đồng Hồ", "bdha@ko.ko", "0188923543"},
 			},
 			new String[] {
 				"Mã NCC", "Tên nhà cung cấp", "E-mail", "Số điện thoại"
->>>>>>> c70bf685ade918b55237da08f39bf58d9f86323d
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -82,7 +71,6 @@ public class SuppliersGUI extends NewJPanel {
 		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 		scrollPane.setViewportView(table);
 		designTitle();
-<<<<<<< HEAD
 		reloadTable();
 		
 		txtSearch.addFocusListener(new FocusListener() {
@@ -96,9 +84,7 @@ public class SuppliersGUI extends NewJPanel {
 
 		    @Override
 		    public void focusLost(FocusEvent e) {
-//		        if (txtSearch.getText().isEmpty()) {
-//		            txtSearch.setText(placeholderText);
-//		        }
+
 		    }
 		});
 		
@@ -118,15 +104,13 @@ public class SuppliersGUI extends NewJPanel {
             	reloadTableAfterSearch();
             }
         });
-=======
 		model = (DefaultTableModel) table.getModel();
 		reloadTable();
->>>>>>> c70bf685ade918b55237da08f39bf58d9f86323d
 	}
 	
 	private void reloadTable() {
-		// TODO Auto-generated method stub
 		ArrayList<Supplier> suppliers = SupplierBLL.getSupplierList();
+		model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		for (Supplier supplier : suppliers) {
 			Object[] data = {
@@ -193,21 +177,8 @@ public class SuppliersGUI extends NewJPanel {
 		SupplierDetails.selectedSupplier = SupplierBLL.getByID(Sid);
 		JFrame fr = new SupplierDetails();
 		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		fr.setSize(761, 318);
 		fr.setLocationRelativeTo(null);
 		fr.setVisible(true);
-	}
-	
-	private void reloadTable() {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		ArrayList<Supplier> datas = SupplierDAO.getInstance().readAllData();
-		for (Supplier data: datas) {
-			if(data.getSupplierStatus().equals("active")) {
-				Object[] rowData = {data.getSupplierId(), data.getSupplierName(), data.getEmail(), data.getSupplierStatus(), data.getPhoneNumber()};
-				model.addRow(rowData);
-			}
-		}
 	}
 	
 	private boolean searchResult(String parentString) {
