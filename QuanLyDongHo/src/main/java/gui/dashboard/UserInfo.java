@@ -9,14 +9,25 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.text.MaskFormatter;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import org.kordamp.ikonli.swing.FontIcon;
+
+import dto.Account;
+import dto.Customer;
+import dto.Employee;
+import dto.Person;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -24,6 +35,16 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Cursor;
+import com.toedter.calendar.JDateChooser;
+
+import bll.CustomerBLL;
+import bll.EmployeeBLL;
+import dao.AccountDAO;
+import dao.EmployeeDAO;
+
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
 
 public class UserInfo extends JFrame {
 
@@ -35,41 +56,43 @@ public class UserInfo extends JFrame {
 	private JPanel panel_3;
 	private JLabel lblNewLabel;
 	private JPanel panel_4;
-	private JLabel txtNguynVnA;
+	private JTextField txtName;
 	private JPanel panel_5;
 	private JLabel lblGiiTnh;
 	private JPanel panel_6;
-	private JLabel textField;
 	private JPanel panel_7;
 	private JPanel panel_8;
 	private JLabel lblNewLabel_2;
 	private JPanel panel_9;
-	private JTextField txtEmialkdsdlkdowesko;
 	private JPanel panel_10;
 	private JPanel panel_11;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_3;
 	private JPanel panel_12;
 	private JPanel panel_13;
-	private JTextField textField_1;
-	private JTextField txtPhPhng;
+	private JFormattedTextField txtPhone;
+	private JTextField txtAdress;
 	private JPanel panel_14;
-	private JButton btnNewButton;
+	private JButton btnSave;
 	private JButton btnHyThayi;
 	private JPanel panel_15;
 	private JPanel panel_16;
 	private JLabel lblNewLabel_4;
-	private JTextField lblNewLabel_5;
+	private JTextField txtUsername;
 	private JPanel panel_17;
 	private JLabel lblNewLabel_6;
-	private JTextField lblNewLabel_7;
-	private JLabel lblNewLabel_8;
+	private JTextField txtPasswd;
+	private JLabel lblRole;
 	private JPanel panel_18;
-	private JLabel lblNewLabel_9;
+	private JLabel lblR;
 	private JLabel lblNewLabel_10;
 	private JPanel panel_19;
 	private JLabel lblNewLabel_11;
-	private JTextField textField_2;
+	private JLabel lblJoin;
+	
+	private Person user;
+	private JDateChooser dateChooser;
+	private JComboBox<String> cbGender;
 
 	/**
 	 * Launch the application.
@@ -78,7 +101,7 @@ public class UserInfo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserInfo frame = new UserInfo();
+					UserInfo frame = new UserInfo(EmployeeBLL.getEmployee(1));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,7 +113,8 @@ public class UserInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserInfo() {
+	public UserInfo(Person user) {
+		this.user = user;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 654, 647);
 		contentPane = new JPanel();
@@ -125,12 +149,12 @@ public class UserInfo extends JFrame {
 		panel_3.add(panel_4, BorderLayout.CENTER);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		txtNguynVnA = new JLabel();
-		txtNguynVnA.setForeground(new Color(0, 0, 0));
-		txtNguynVnA.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtNguynVnA.setBorder(null);
-		txtNguynVnA.setText("Nguyễn Văn A");
-		panel_4.add(txtNguynVnA, BorderLayout.CENTER);
+		txtName = new JTextField();
+		txtName.setForeground(new Color(0, 0, 0));
+		txtName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtName.setBorder(null);
+		txtName.setText("Nguyễn Văn A");
+		panel_4.add(txtName, BorderLayout.CENTER);
 		
 		panel_5 = new JPanel();
 		panel_5.setOpaque(false);
@@ -150,12 +174,10 @@ public class UserInfo extends JFrame {
 		panel_5.add(panel_6, BorderLayout.CENTER);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		textField = new JLabel();
-		textField.setForeground(new Color(0, 0, 0));
-		textField.setText("Nam");
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setBorder(null);
-		panel_6.add(textField, BorderLayout.CENTER);
+		cbGender = new JComboBox<String>();
+		cbGender.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
+		cbGender.setBackground(new Color(255, 255, 255));
+		panel_6.add(cbGender, BorderLayout.CENTER);
 		
 		panel_7 = new JPanel();
 		panel_7.setOpaque(false);
@@ -163,7 +185,7 @@ public class UserInfo extends JFrame {
 		panel.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		lblNewLabel_2 = new JLabel("Email:");
+		lblNewLabel_2 = new JLabel("Ngày sinh");
 		lblNewLabel_2.setForeground(new Color(0, 0, 0));
 		lblNewLabel_2.setPreferredSize(new Dimension(200, 16));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -175,15 +197,9 @@ public class UserInfo extends JFrame {
 		panel_7.add(panel_9, BorderLayout.CENTER);
 		panel_9.setLayout(new BorderLayout(0, 0));
 		
-		txtEmialkdsdlkdowesko = new JTextField();
-		txtEmialkdsdlkdowesko.setForeground(new Color(0, 0, 0));
-		txtEmialkdsdlkdowesko.setSelectedTextColor(new Color(255, 255, 255));
-		txtEmialkdsdlkdowesko.setBackground(new Color(255, 255, 255));
-		txtEmialkdsdlkdowesko.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtEmialkdsdlkdowesko.setText("emialkd.sdl@kdowe.sko");
-		txtEmialkdsdlkdowesko.setBorder(null);
-		panel_9.add(txtEmialkdsdlkdowesko, BorderLayout.CENTER);
-		txtEmialkdsdlkdowesko.setColumns(10);
+		dateChooser = new JDateChooser();
+		dateChooser.setBackground(new Color(255, 255, 255));
+		panel_9.add(dateChooser, BorderLayout.CENTER);
 		
 		panel_10 = new JPanel();
 		panel_10.setOpaque(false);
@@ -203,15 +219,19 @@ public class UserInfo extends JFrame {
 		panel_10.add(panel_13, BorderLayout.CENTER);
 		panel_13.setLayout(new BorderLayout(0, 0));
 		
-		textField_1 = new JTextField();
-		textField_1.setForeground(new Color(0, 0, 0));
-		textField_1.setSelectedTextColor(new Color(255, 255, 255));
-		textField_1.setBackground(new Color(255, 255, 255));
-		textField_1.setText("0322569884");
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_1.setColumns(10);
-		textField_1.setBorder(null);
-		panel_13.add(textField_1, BorderLayout.CENTER);
+		try {
+			txtPhone = new JFormattedTextField(new MaskFormatter("0## ### ## ##"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		txtPhone.setForeground(new Color(0, 0, 0));
+		txtPhone.setSelectedTextColor(new Color(255, 255, 255));
+		txtPhone.setBackground(new Color(255, 255, 255));
+		txtPhone.setText("0322569884");
+		txtPhone.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtPhone.setColumns(10);
+		txtPhone.setBorder(null);
+		panel_13.add(txtPhone, BorderLayout.CENTER);
 		
 		panel_11 = new JPanel();
 		panel_11.setOpaque(false);
@@ -231,15 +251,15 @@ public class UserInfo extends JFrame {
 		panel_11.add(panel_12, BorderLayout.CENTER);
 		panel_12.setLayout(new BorderLayout(0, 0));
 		
-		txtPhPhng = new JTextField();
-		txtPhPhng.setForeground(new Color(0, 0, 0));
-		txtPhPhng.setSelectedTextColor(new Color(255, 255, 255));
-		txtPhPhng.setBackground(new Color(255, 255, 255));
-		txtPhPhng.setText("34 Phố Phường, P. 3, Q. Ba Chỉ, TP. Abc Def");
-		txtPhPhng.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtPhPhng.setColumns(10);
-		txtPhPhng.setBorder(null);
-		panel_12.add(txtPhPhng, BorderLayout.CENTER);
+		txtAdress = new JTextField();
+		txtAdress.setForeground(new Color(0, 0, 0));
+		txtAdress.setSelectedTextColor(new Color(255, 255, 255));
+		txtAdress.setBackground(new Color(255, 255, 255));
+		txtAdress.setText("34 Phố Phường, P. 3, Q. Ba Chỉ, TP. Abc Def");
+		txtAdress.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtAdress.setColumns(10);
+		txtAdress.setBorder(null);
+		panel_12.add(txtAdress, BorderLayout.CENTER);
 		
 		panel_8 = new JPanel();
 		panel_8.setOpaque(false);
@@ -254,13 +274,13 @@ public class UserInfo extends JFrame {
 		contentPane.add(panel_1, BorderLayout.EAST);
 		panel_1.setLayout(new GridLayout(5, 0, 0, 20));
 		
-		btnNewButton = new JButton("Lưu thay đổi");
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setBackground(new Color(0, 128, 64));
-		panel_1.add(btnNewButton);
+		btnSave = new JButton("Lưu thay đổi");
+		btnSave.setFocusPainted(false);
+		btnSave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSave.setForeground(new Color(255, 255, 255));
+		btnSave.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnSave.setBackground(new Color(0, 128, 64));
+		panel_1.add(btnSave);
 		
 		btnHyThayi = new JButton("Hủy thay đổi");
 		btnHyThayi.setFocusPainted(false);
@@ -283,27 +303,27 @@ public class UserInfo extends JFrame {
 		panel_2.add(panel_14, BorderLayout.NORTH);
 		panel_14.setLayout(new BorderLayout(0, 0));
 		
-		lblNewLabel_8 = new JLabel("Warehouse Manager");
-		lblNewLabel_8.setForeground(new Color(0, 0, 0));
-		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_8.setVerticalTextPosition(SwingConstants.BOTTOM);
-		lblNewLabel_8.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setIcon(FontIcon.of(MaterialDesignA.ACCOUNT_CIRCLE, 70, lblNewLabel_8.getForeground()));
-		lblNewLabel_8.setPreferredSize(new Dimension(150, 16));
-		panel_14.add(lblNewLabel_8, BorderLayout.WEST);
+		lblRole = new JLabel("Warehouse Manager");
+		lblRole.setForeground(new Color(0, 0, 0));
+		lblRole.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblRole.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblRole.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblRole.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRole.setIcon(FontIcon.of(MaterialDesignA.ACCOUNT_CIRCLE, 70, lblRole.getForeground()));
+		lblRole.setPreferredSize(new Dimension(150, 16));
+		panel_14.add(lblRole, BorderLayout.WEST);
 		
 		panel_18 = new JPanel();
 		panel_18.setOpaque(false);
 		panel_14.add(panel_18, BorderLayout.CENTER);
 		panel_18.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		lblNewLabel_9 = new JLabel("Khách hàng");
-		lblNewLabel_9.setForeground(new Color(0, 0, 0));
-		lblNewLabel_9.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_18.add(lblNewLabel_9);
+		lblR = new JLabel("Khách hàng");
+		lblR.setForeground(new Color(0, 0, 0));
+		lblR.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblR.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblR.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_18.add(lblR);
 		
 		lblNewLabel_10 = new JLabel("tiềm năng");
 		lblNewLabel_10.setForeground(new Color(0, 0, 0));
@@ -330,13 +350,13 @@ public class UserInfo extends JFrame {
 		lblNewLabel_4.setPreferredSize(new Dimension(150, 16));
 		panel_16.add(lblNewLabel_4, BorderLayout.WEST);
 		
-		lblNewLabel_5 = new JTextField("nguoidungfacebook");
-		lblNewLabel_5.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5.setBackground(new Color(255, 255, 255));
-		lblNewLabel_5.setSelectedTextColor(new Color(255, 255, 255));
-		lblNewLabel_5.setBorder(null);
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_16.add(lblNewLabel_5, BorderLayout.CENTER);
+		txtUsername = new JTextField("nguoidungfacebook");
+		txtUsername.setForeground(new Color(0, 0, 0));
+		txtUsername.setBackground(new Color(255, 255, 255));
+		txtUsername.setSelectedTextColor(new Color(255, 255, 255));
+		txtUsername.setBorder(null);
+		txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_16.add(txtUsername, BorderLayout.CENTER);
 		
 		panel_17 = new JPanel();
 		panel_17.setOpaque(false);
@@ -350,13 +370,13 @@ public class UserInfo extends JFrame {
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_17.add(lblNewLabel_6, BorderLayout.WEST);
 		
-		lblNewLabel_7 = new JTextField("nguoidungfacebook");
-		lblNewLabel_7.setForeground(new Color(0, 0, 0));
-		lblNewLabel_7.setBackground(new Color(255, 255, 255));
-		lblNewLabel_7.setSelectedTextColor(new Color(255, 255, 255));
-		lblNewLabel_7.setBorder(null);
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_17.add(lblNewLabel_7, BorderLayout.CENTER);
+		txtPasswd = new JTextField("nguoidungfacebook");
+		txtPasswd.setForeground(new Color(0, 0, 0));
+		txtPasswd.setBackground(new Color(255, 255, 255));
+		txtPasswd.setSelectedTextColor(new Color(255, 255, 255));
+		txtPasswd.setBorder(null);
+		txtPasswd.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_17.add(txtPasswd, BorderLayout.CENTER);
 		
 		panel_19 = new JPanel();
 		panel_19.setOpaque(false);
@@ -370,13 +390,78 @@ public class UserInfo extends JFrame {
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_19.add(lblNewLabel_11, BorderLayout.WEST);
 		
-		textField_2 = new JTextField("24/6/2024");
-		textField_2.setForeground(new Color(0, 0, 0));
-		textField_2.setBackground(new Color(255, 255, 255));
-		textField_2.setSelectedTextColor(new Color(255, 255, 255));
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_2.setBorder(null);
-		panel_19.add(textField_2, BorderLayout.CENTER);
+		lblJoin = new JLabel("24/6/2024");
+		lblJoin.setForeground(new Color(0, 0, 0));
+		lblJoin.setBackground(new Color(255, 255, 255));
+		lblJoin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblJoin.setBorder(null);
+		panel_19.add(lblJoin, BorderLayout.CENTER);
+		
+		setInfo();
+		addEvent();
+	}
+
+	private void addEvent() {
+		btnSave.addActionListener(e -> {
+			Account a = new Account();
+			Person u = null;
+			if (user instanceof Customer) {
+				u = new Customer();
+			} else if (user instanceof Employee) {
+				u = new Employee();
+				a.setRoleId(user.getAccount().getRoleId());
+			}
+			
+			u.setId(user.getId());
+			u.setFullName(txtName.getText());
+			u.setGender((String) cbGender.getSelectedItem());
+			u.setDateOfBirth(dateChooser.getDate());
+			u.setAddress(txtAdress.getText());
+			u.setPhoneNumber(txtPhone.getText().replaceAll("\\s+", ""));
+			a.setUsername(txtUsername.getText());
+			a.setPassword(txtPasswd.getText());
+			a.setId(user.getAccountId());
+			u.setAccountId(a.getId());
+			u.setAccount(a);
+			if (u instanceof Customer) {
+				int check = CustomerBLL.checkInfo((Customer) u);
+				if (check == CustomerBLL.VALID || check == 2) {
+					CustomerBLL.updateUser((Customer) u);
+				} else {
+					JOptionPane.showMessageDialog(null, "Thông tin không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			} else if (u instanceof Employee) {
+				int check = EmployeeBLL.checkInfo((Employee) u);
+				if (check == EmployeeBLL.VALID || check == 2) {
+					EmployeeBLL.updateUser((Employee) u);
+				} else {
+					JOptionPane.showMessageDialog(null, "Thông tin không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
+		}
+
+	private void setInfo() {
+		txtName.setText(user.getFullName());
+		cbGender.setSelectedItem(user.getGender());
+		dateChooser.setDate(user.getDateOfBirth());
+		txtAdress.setText(user.getAddress());
+		txtPhone.setText(user.getPhoneNumber());
+		
+		Account userAccount = user.getAccount();
+		if (user instanceof Customer) {
+			lblRole.setText("Khách hàng");
+			lblR.setText("Khách hàng");
+		} else if (user instanceof Employee) {
+			lblRole.setText(userAccount.getRoleName());
+			lblR.setText("Nhân viên");
+		}
+		
+		txtUsername.setText(userAccount.getUsername());
+		txtPasswd.setText(userAccount.getPassword());
+		lblJoin.setText((new SimpleDateFormat("dd/MM/yyyy")).format(userAccount.getCreatedDate()));
 	}
 
 }

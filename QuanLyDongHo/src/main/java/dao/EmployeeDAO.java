@@ -78,9 +78,21 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 
 	@Override
 	public boolean update(int ID, Employee Obj) {
-		// TODO Auto-generated method stub
-		closeConnection();
-		return false;
+		int rowChanges = 0;
+		String sql = "UPDATE employees SET full_name = ?, gender = ?, date_of_birth = ?, phone_number = ?, address = ? WHERE id = ?";
+		try {
+			rowChanges = runUpdate(sql, 
+				Obj.getFullName(),
+				Obj.getGender(),
+				Obj.getDateOfBirth(),
+				Obj.getPhoneNumber(),
+				Obj.getAddress(),
+				Obj.getId()
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return rowChanges > 0;
 	}
 	
 	public boolean isActive(int id) {
@@ -163,5 +175,21 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 		}
 		return ret;
 	}
+	
+	public boolean isUsedPhoneNum(String phoneNum) {
+		boolean ret = false;
+		try {
+			String sql = "select phone_number from employees where phone_number = ?";
+			rs = runQuery2(sql, phoneNum);
+			if (rs.next()) ret = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret; 
+	}
+	
+//	public boolean changeRole(int id, String role) {
+//		
+//	}
 
 }

@@ -22,6 +22,10 @@ import javax.swing.plaf.metal.MetalToggleButtonUI;
 
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.swing.FontIcon;
+
+import dto.Person;
+import system.ConfigPRJ;
+
 import javax.swing.JLabel;
 import java.awt.Rectangle;
 import java.awt.Font;
@@ -214,7 +218,7 @@ public class DashboardFrame extends JFrame {
 		    }
 			@Override
 		    public void mouseClicked(MouseEvent e) {
-				JFrame fr = new UserInfo();
+				JFrame fr = new UserInfo(ConfigPRJ.currentUser);
 				fr.setLocationRelativeTo(null);
 				fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				fr.setVisible(true);

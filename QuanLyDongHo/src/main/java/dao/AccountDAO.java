@@ -78,7 +78,19 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 
 	@Override
 	public boolean update(int ID, Account Obj) {
-		return false;
+		int rowChanges = 0;
+		String sql = "UPDATE accounts SET username = ?, passwd = ?, role_id =? WHERE id = ?";
+		try {
+			rowChanges = runUpdate(sql, 
+				Obj.getUsername(),
+				Obj.getPassword(),
+				Obj.getRoleId(),
+				Obj.getId()
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rowChanges > 0;
 	}
 
 	@Override
@@ -123,10 +135,10 @@ public class AccountDAO extends ObjectDAO implements ICrud<Account> {
 		return returnValue;
 	}
 	
-	public String getRoleId(int accountId) {
+	public String getRole(int accountId) {
 		String returnValue = null;
 		try {
-			String sql = String.format("select role_id from accounts where id = '%d'", accountId);
+			String sql = String.format("select r.role_name from accounts as a join roles as r on r.role_id = a.role_id where a.id = '%d'", accountId);
 			rs = runQuery(sql);
 			if (rs.next()) returnValue = rs.getString(1);
 			closeConnection();

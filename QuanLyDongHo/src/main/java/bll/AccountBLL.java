@@ -31,7 +31,7 @@ public class AccountBLL {
 			return PASSWORD_INCORRECT;
 		}
 		account = AccountDAO.getInstance().getUserByUsername(account.getUsername());
-		if (AccountDAO.getInstance().getRoleId(account.getId()).equals("CTM")) {
+		if (account.getRoleId().equals("CTM")) {
 			ConfigPRJ.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(account.getId());
 		} else {
 			ConfigPRJ.currentUser = EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId());

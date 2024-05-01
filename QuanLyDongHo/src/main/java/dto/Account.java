@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Account {
-    private int id;
+    @Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", accountStatus="
+				+ accountStatus + ", roleId=" + roleId + ", createdDate=" + createdDate + ", roleName=" + roleName
+				+ ", permission=" + permission + "]";
+	}
+	private int id;
     private String username;
     private String password;
     private String accountStatus;

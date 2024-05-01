@@ -4,8 +4,10 @@ import java.util.Date;
 
 import dao.AccountDAO;
 import dao.CustomerDAO;
+import dao.EmployeeDAO;
 import dto.Account;
 import dto.Customer;
+import dto.Employee;
 import system.ConfigPRJ;
 
 public class CustomerBLL {
@@ -15,8 +17,6 @@ public class CustomerBLL {
 	public static final int USED_PHONE_NUMBER = 2;
 	public static final int INVALID_PHONE_NUMBER = 3;
 
-
-	
 	public static int checkInfo(Customer ctm) {
 		
 		String fname = ctm.getFullName();
@@ -42,5 +42,18 @@ public class CustomerBLL {
 		ctm.setAccount(updateAc);
 		CustomerDAO.getInstance().create(ctm);
 		ConfigPRJ.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(updateAc.getId());
+	}
+	
+	public static Customer getCustomer(int id) {
+		return CustomerDAO.getInstance().readByID(id);
+	}
+	
+	public static Account getAccount(Customer cus) {
+		return AccountDAO.getInstance().readByID(cus.getAccountId());
+	}
+	
+	public static void updateUser(Customer ctm) {
+		CustomerDAO.getInstance().update(0, ctm);
+		AccountDAO.getInstance().update(0, ctm.getAccount());
 	}
 }
