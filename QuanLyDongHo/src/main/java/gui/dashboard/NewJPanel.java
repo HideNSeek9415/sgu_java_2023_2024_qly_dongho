@@ -294,8 +294,6 @@ public class NewJPanel extends javax.swing.JPanel {
         txtSearch.setText("");
         return searchContent;
     }
-
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDel;
@@ -305,13 +303,13 @@ public class NewJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnReload;
-    private javax.swing.JButton btnSearch;
+    protected javax.swing.JButton btnSearch;
     private javax.swing.JPanel headPanel;
     private javax.swing.JPanel panel;
     protected javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnSearch;
     private javax.swing.JPanel pnTools;
-    private javax.swing.JTextField txtSearch;
-    private JComboBox comboBox;
+    protected javax.swing.JTextField txtSearch;
+    protected JComboBox comboBox;
     // End of variables declaration//GEN-END:variables
 }
