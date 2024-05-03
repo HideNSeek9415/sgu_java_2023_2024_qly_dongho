@@ -1,5 +1,7 @@
 package dto;
 
+import dao.ProductDAO;
+
 public class ImportInvoiceDetail {
     private int detailsId;
     private int importInvoiceId;
@@ -7,23 +9,15 @@ public class ImportInvoiceDetail {
     private int quantity;
     private int importPrice;
     
-    private String productName;
-
-    public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-
+    public Product prd;
+    
     public ImportInvoiceDetail(int detailsId, int importInvoiceId, int productId, int quantity, int importPrice) {
         this.detailsId = detailsId;
         this.importInvoiceId = importInvoiceId;
         this.productId = productId;
         this.quantity = quantity;
         this.importPrice = importPrice;
+        prd = ProductDAO.getInstance().readByID(productId);
     }
 
     public int getDetailsId() {

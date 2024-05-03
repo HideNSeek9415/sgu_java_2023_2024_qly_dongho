@@ -32,7 +32,7 @@ public class EmployeesGUI extends NewJPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"M\u00E3 NV", "T\u00EAn NV", "Gi\u1EDBi t\u00EDnh", "Ng\u00E0y sinh", "S\u0110T", "\u0110\u1ECBa ch\u1EC9", "Vai tr\u00F2", "Trạng thái"
+				"Mã NV", "Tên NV", "Giới tính", "Ngày sinh", "SĐT", "Địa chỉ", "Vai trò", "Trạng thái"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);

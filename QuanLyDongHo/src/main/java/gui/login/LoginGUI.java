@@ -16,6 +16,8 @@ import javax.swing.UIManager;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -54,6 +56,8 @@ public class LoginGUI extends JFrame {
 	private JButton btnRegis;
 	private JLabel lblForgotPasswd;
 	private JLabel lblNewLabel_1;
+	
+	private JFrame regis = new RegisGUI(this);
 
 	/**
 	 * Launch the application.
@@ -203,6 +207,38 @@ public class LoginGUI extends JFrame {
 				JOptionPane.showMessageDialog(null, ConfigPRJ.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
 				break;
 			}
+		});
+		btnRegis.addActionListener(e -> {
+			regis.setLocation(getLocation());
+			regis.setVisible(true);
+			regis.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+			setVisible(false);
+		});
+		regis.addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				setLocation(regis.getLocation());
+				setVisible(true);
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {}
 		});
 	}
 

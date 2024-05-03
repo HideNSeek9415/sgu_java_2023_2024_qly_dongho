@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JComboBox;
 import java.awt.Font;
@@ -34,6 +35,9 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import com.toedter.calendar.JDateChooser;
+
+import bll.ImportInvoiceBLL;
+import dao.EmployeeDAO;
 import dao.ImportInvoiceDAO;
 import dto.ImportInvoice;
 import java.awt.event.ActionListener;
@@ -70,13 +74,13 @@ public class PhieuNhapGUI extends JPanel {
 	private JPanel panel_11;
 	private JButton btnthem;
 	private JButton btnchitiet;
-	private JButton btnhuy;
 	private JButton btnxuat;
 	private JComboBox comboBox_6;
 	private JTextField txtTmKim;
 	private JButton btnlammoi;
 	private JDateChooser dateChooser;
 	private JDateChooser dateChooser_1;
+	DefaultTableModel model;
 
 	/**
 	 * Create the panel.
@@ -127,17 +131,7 @@ public class PhieuNhapGUI extends JPanel {
 		btnchitiet.setPreferredSize(new Dimension(90, 85));
 		panel_10.add(btnchitiet);
 		
-		btnhuy = new JButton("Hủy PN");
-		btnhuy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnhuy.setBackground(new Color(255, 255, 255));
-		btnhuy.setFocusPainted(false);
-		btnhuy.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnhuy.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnhuy.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnhuy.setPreferredSize(new Dimension(90, 85));
-		panel_10.add(btnhuy);
-		
-		btnxuat = new JButton("Excel");
+		btnxuat = new JButton("PDF");
 		btnxuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnxuat.setBackground(new Color(255, 255, 255));
 		btnxuat.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -286,15 +280,10 @@ public class PhieuNhapGUI extends JPanel {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"1", "001", "ho chi minh", "a", "1/1/2023", "1000"},
-				{"2", "002", "binh thuan", "b", "2/2/2023", "2000"},
-				{"3", "003", "go vap", "c", "3/3/2023", "3000"},
-				{"4", "004", "ko", "d", "15/1/2023", "4000"},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
+				{"1", "001", "ho chi minh", "a"},
 			},
 			new String[] {
-				"M\u00E3 phi\u1EBFu nh\u1EADp", "Nh\u00E0 cung c\u1EA5p", "Nh\u00E2n vi\u00EAn nh\u1EADp", "Th\u1EDDi gian", "T\u1ED5ng ti\u1EC1n"
+				"M\u00E3 phi\u1EBFu nh\u1EADp", "Nh\u00E0 cung c\u1EA5p", "Nh\u00E2n vi\u00EAn nh\u1EADp", "Ng\u00E0y nh\u1EADp"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(51);
@@ -303,33 +292,32 @@ public class PhieuNhapGUI extends JPanel {
 		table.getColumnModel().getColumn(3).setPreferredWidth(85);
 		scrollPane.setViewportView(table);
 		
+		model = (DefaultTableModel) table.getModel();
+		
 		addIcon();
 		makeHoverEff(btnchitiet);
-		makeHoverEff(btnhuy);
 		makeHoverEff(btnxuat);
 		makeHoverEff(btnthem);
 		makeHoverEff(btnlammoi);
 		addStuff();
-                reloadTable();
+        reloadTable();
 	}
 
-private void reloadTable() {
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-    model.setRowCount(0);
-    ArrayList<ImportInvoice> importInvoices = ImportInvoiceDAO.getInstance().readAllData();
-
-    for (ImportInvoice importInvoice : importInvoices) {
-        importInvoice.setEmployeeFullName(); // Cập nhật fullNameEmployee
-        importInvoice.setSupplierFullName();
-        Object[] data = {
-            importInvoice.getImportInvoiceId(),
-            importInvoice.getSupplierName(),
-            importInvoice.getFullNameEmployee(), // Sử dụng fullNameEmployee
-            importInvoice.getInvoiceDate(),
-        };
-        model.addRow(data);
-    }
-}
+	public void reloadTable() {
+	    DefaultTableModel model = (DefaultTableModel) table.getModel();
+	    model.setRowCount(0);
+	    ArrayList<ImportInvoice> importInvoices = ImportInvoiceDAO.getInstance().readAllData();
+	
+	    for (ImportInvoice importInvoice : importInvoices) {
+	        Object[] data = {
+	            importInvoice.getImportInvoiceId(),
+	            importInvoice.supplier.getSupplierName(),
+	            importInvoice.employee.getFullName(),
+	            (new SimpleDateFormat("dd/MM/yyyy")).format(importInvoice.getInvoiceDate())
+	        };
+	        model.addRow(data);
+	    }
+	}
 	private void addStuff() {
 		btnthem.addActionListener(e -> {
 			JFrame fr = new ThemPhieuNhap();
@@ -338,7 +326,8 @@ private void reloadTable() {
 			fr.setVisible(true);
 		});
 		btnchitiet.addActionListener(e -> {
-			JFrame fr = new ChiTietPhieuNhap();
+			int id = (Integer) table.getValueAt(table.getSelectedRow(), 0);
+			JFrame fr = new ChiTietPhieuNhap(ImportInvoiceBLL.getImportInvoiceById(id));
 			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			fr.setLocationRelativeTo(null);
 			fr.setVisible(true);
@@ -349,8 +338,7 @@ private void reloadTable() {
 		// TODO Auto-generated method stub
 		btnthem.setIcon(FontIcon.of(MaterialDesignP.PLUS_CIRCLE, 50, Color.decode("#2ecc71")));
 		btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION,50,Color.decode("#2196f3")));
-		btnhuy.setIcon(FontIcon.of(MaterialDesignC.CLOSE_CIRCLE_OUTLINE,50,Color.red));
-		btnxuat.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL,50,Color.decode("#147943")));
+		btnxuat.setIcon(FontIcon.of(MaterialDesignP.PDF_BOX,50,Color.decode("#fe231b")));
 		btnlammoi.setIcon(FontIcon.of(MaterialDesignR.RELOAD,20,Color.white));
 		
 	}

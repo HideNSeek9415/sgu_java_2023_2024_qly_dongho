@@ -315,9 +315,9 @@ join suppliers as s on s.supplier_id = ps.supplier_id;
 
 -- select * from products
 
-select * from decentralization
+select * from decentralization;
 
---QUERY PHIẾU XUẤT
+-- QUERY PHIẾU XUẤT
 SELECT export_invoices.export_invoice_id, employees.full_name as employee_name, customers.full_name as customer_name, export_invoices.invoice_date
 FROM export_invoices
 JOIN customers ON export_invoices.customer_id = customers.id
@@ -327,7 +327,7 @@ SELECT export_invoice_details.details_id, export_invoice_details.export_invoice_
 FROM export_invoice_details
 JOIN products ON export_invoice_details.product_id = products.id;
 
---QUERY PHIẾU NHẬP
+-- QUERY PHIẾU NHẬP
 SELECT import_invoices.import_invoice_id, employees.full_name, suppliers.supplier_name, import_invoices.supplier_id, import_invoices.invoice_date 
 FROM import_invoices 
 JOIN employees ON import_invoices.employee_id = employees.id 

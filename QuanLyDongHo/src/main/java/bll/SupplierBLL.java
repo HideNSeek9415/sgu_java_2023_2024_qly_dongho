@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import dao.SupplierDAO;
 import dto.Supplier;
-import dao.ProductDAO;import dto.Product;
-
+import dao.ProductDAO;
+import dto.Product;
 
 
 public class SupplierBLL {

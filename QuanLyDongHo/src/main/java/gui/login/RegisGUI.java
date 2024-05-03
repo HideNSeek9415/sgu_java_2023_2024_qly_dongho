@@ -91,6 +91,7 @@ public class RegisGUI extends JFrame {
 	private Account acc;
 	private Customer ctm;
 
+	private LoginGUI parentComponent = null;
 	/**
 	 * Launch the application.
 	 */
@@ -99,7 +100,7 @@ public class RegisGUI extends JFrame {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-					RegisGUI frame = new RegisGUI();
+					RegisGUI frame = new RegisGUI(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -111,7 +112,8 @@ public class RegisGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegisGUI() {
+	public RegisGUI(LoginGUI parentComponent) {
+		this.parentComponent = parentComponent;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(10, 10, 500, 634);
@@ -514,6 +516,11 @@ public class RegisGUI extends JFrame {
 		    protected Color getFocusColor() {
 				return btn.getBackground();
 		    }
+		});
+		btnExit.addActionListener(e -> {
+			setVisible(false);
+			parentComponent.setLocation(getLocation());
+			parentComponent.setVisible(true);
 		});
 	}
 

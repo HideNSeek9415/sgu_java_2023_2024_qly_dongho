@@ -4,11 +4,12 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import dao.EmployeeDAO;
 import dao.PermissionDAO;
 import dto.Person;
 
 public class ConfigPRJ {
-	public static Person currentUser = null;
+	public static Person currentUser = EmployeeDAO.getInstance().readByID(1);
 	
 	public static HashMap<String, Boolean> product = new HashMap<>();
 	public static HashMap<String, Boolean> order = new HashMap<>();

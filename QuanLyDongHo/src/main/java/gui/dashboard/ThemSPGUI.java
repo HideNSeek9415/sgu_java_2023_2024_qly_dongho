@@ -183,7 +183,8 @@ public class ThemSPGUI extends javax.swing.JFrame {
 		this.table = table;
 	}
 
-    private void initComponents() {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel11 = new javax.swing.JPanel();

@@ -109,9 +109,9 @@ public class TmpHomePanel extends JPanel {
 		panel_5.add(textField);
 		
 		cbbType = new JComboBox<String>();
+		cbbType.setModel(new DefaultComboBoxModel<>(new String[] {"Loại đồng hồ", "Đồng hồ cơ", "Đồng hồ điện tử", "Đồng hồ thông minh"}));
 		cbbType.setBackground(new Color(255, 255, 255));
 		cbbType.setPreferredSize(new Dimension(120, 26));
-		cbbType.setModel(new DefaultComboBoxModel<>(new String[] {"Loại đồng hồ", "Đồng hồ cơ", "Đồng hồ điện tử", "Đồng hồ thông minh"}));
 		panel_5.add(cbbType);
 		
 		cbbBrand = new JComboBox<String>();

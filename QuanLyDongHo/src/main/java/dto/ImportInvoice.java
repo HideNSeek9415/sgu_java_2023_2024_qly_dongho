@@ -2,7 +2,7 @@ package dto;
 
 import dao.EmployeeDAO;
 import dao.SupplierDAO;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class ImportInvoice {
@@ -10,28 +10,9 @@ public class ImportInvoice {
     private int employeeId;
     private int supplierId;
     private Date invoiceDate;
-    private String fullNameEmployee;
-    private String supplierName;
+    public Employee employee;
+    public Supplier supplier;
     private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
-
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
-    }
-
-
-    
-    
-public String getFullNameEmployee() {
-        return fullNameEmployee;
-    }
-
-    public void setFullNameEmployee(String fullNameEmployee) {
-        this.fullNameEmployee = fullNameEmployee;
-    }
     
     public ArrayList<ImportInvoiceDetail> getDetails() {
 		return details;
@@ -41,11 +22,13 @@ public String getFullNameEmployee() {
 		this.details = details;
 	}
 
-	public ImportInvoice(int importInvoiceId, int employeeId, int supplierId, Date invoiceDate) {
+	public ImportInvoice(int importInvoiceId, int employeeId, int supplierId, Date date) {
         this.importInvoiceId = importInvoiceId;
         this.employeeId = employeeId;
         this.supplierId = supplierId;
-        this.invoiceDate = invoiceDate;
+        this.invoiceDate = date;
+        employee = EmployeeDAO.getInstance().readByID(employeeId);
+        supplier = SupplierDAO.getInstance().readByID(supplierId);
     }
 
     // Getters and setters
@@ -81,22 +64,13 @@ public String getFullNameEmployee() {
         this.invoiceDate = invoiceDate;
     }
     
-    public void setEmployeeFullName() {
-        Employee employee = EmployeeDAO.getInstance().readByID(employeeId);
-        if (employee != null) {
-            fullNameEmployee = employee.getFullName();
-        } else {
-            fullNameEmployee = "";
-        }
+    public int getTotal() {
+    	int total = 0;
+    	for (ImportInvoiceDetail iid : details) {
+    		total += iid.getQuantity() * iid.getImportPrice();
+    	}
+    	return total;
     }
-    
-    public void setSupplierFullName() {
-    Supplier supplier = SupplierDAO.getInstance().readByID(supplierId);
-    if (supplier != null) {
-        supplierName = supplier.getSupplierName();
-    } else {
-        supplierName = "";
-    }
-}
+
 }
 
