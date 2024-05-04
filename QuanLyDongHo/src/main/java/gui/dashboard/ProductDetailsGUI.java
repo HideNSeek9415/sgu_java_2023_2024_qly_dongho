@@ -81,6 +81,7 @@ public class ProductDetailsGUI extends JFrame {
 	private JLabel lblAmount;
 	private JButton btnAdd;
 	private int numOfPrd = 1;
+	int sellPrice;
 
     /**
      * Launch the application.
@@ -108,7 +109,7 @@ public class ProductDetailsGUI extends JFrame {
         String productName = product.getProductName();
         String category = product.getCategory();
         String brand = product.getBrand();
-        double sellPrice = product.getSellPrice();
+        sellPrice = product.isDiscount() ? product.getDiscountPrice() : product.getSellPrice();
         double discountPrice = product.getDiscountPrice();
         int quantity = product.getQuantity();
         String productStatus = product.getStatus();
@@ -372,7 +373,7 @@ public class ProductDetailsGUI extends JFrame {
         	numOfPrd++;
         	btnSub.setEnabled(true);
         	lblAmount.setText(String.valueOf(numOfPrd));
-        	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+        	double totalPrice = numOfPrd*sellPrice;
         	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
         	lblPaid.setText(formatTotalPrice);
         });

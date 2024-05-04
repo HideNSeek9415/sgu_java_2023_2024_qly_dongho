@@ -208,12 +208,11 @@ public class TmpHomePanel extends JPanel {
 		int maxV = (int) cpMax.getValue();
 		boolean isdiscountselected = chkDiscount.isSelected();
 
- 		
+		products = filter(products, product -> maxV == 0 || (product.isDiscount() ? product.getDiscountPrice() <= maxV : product.getSellPrice() <= maxV));		
+		products = filter(products, product -> minV == 0 || product.isDiscount() ? product.getDiscountPrice() >= minV : product.getSellPrice() >= minV);
 		products = filter(products, product -> searchText.isBlank() || product.getProductName().toLowerCase().contains(searchText));
 		products = filter(products, product -> selectedCategory.equals("Loại đồng hồ") || product.getCategory().equalsIgnoreCase(selectedCategory));
 		products = filter(products, product -> selectedBrand.equals("Thương hiệu") || product.getBrand().equalsIgnoreCase(selectedBrand));
-		products = filter(products, product -> minV == 0 || product.isDiscount() ? product.getDiscountPrice() >= minV : product.getSellPrice() >= minV);
-		products = filter(products, product -> maxV == 0 || product.isDiscount() ? product.getDiscountPrice() <= maxV : product.getSellPrice() <= maxV);
 		products = filter(products, product -> !isdiscountselected || product.isDiscount());
 		
 		
