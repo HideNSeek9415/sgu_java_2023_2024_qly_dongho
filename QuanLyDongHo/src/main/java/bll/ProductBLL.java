@@ -22,4 +22,12 @@ public class ProductBLL {
 	public static boolean updateProduct(Product p) {
 		return ProductDAO.getInstance().update(0, p);
 	}
+	
+	public static boolean decreaseQuantity(int ID) {
+		return ProductDAO.getInstance().decreaseQuantity(ID);
+	}
+	
+	public static int getQuantityNumber(int ID) {
+		return ProductDAO.getInstance().getQuantityNumber(ID);
+	}
 }

@@ -185,8 +185,9 @@ public class ProductDisplay extends JPanel {
         lblSale.setVisible(selectedProduct.isDiscount());
         addImageProduct();
         btnSell.addActionListener(e -> {
-        	zShoppingCartFrame.addProduct(selectedProduct.getId());
-        	JOptionPane.showMessageDialog(null, "Đã thêm sản phẩm vào giỏ hàng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        	if (zShoppingCartFrame.addProduct(selectedProduct.getId()))
+        		JOptionPane.showMessageDialog(null, "Đã thêm sản phẩm vào giỏ hàng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        	else JOptionPane.showMessageDialog(getRootPane(), "Sản phẩm đã hết hàng");
 
         });
     }

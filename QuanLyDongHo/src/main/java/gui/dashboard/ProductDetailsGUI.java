@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -25,6 +27,8 @@ import javax.swing.border.MatteBorder;
 
 import org.kordamp.ikonli.swing.FontIcon;
 
+import bll.ProductBLL;
+import dao.ProductDAO;
 import dto.Product;
 
 import javax.swing.JSpinner;
@@ -110,7 +114,7 @@ public class ProductDetailsGUI extends JFrame {
         String brand = product.getBrand();
         double sellPrice = product.getSellPrice();
         double discountPrice = product.getDiscountPrice();
-        int quantity = product.getQuantity();
+        int quantity = ProductBLL.getQuantityNumber(product.getId()) == -1 ? product.getQuantity() : ProductBLL.getQuantityNumber(product.getId());
         String productStatus = product.getStatus();
         String imageURL = product.getImageUrl();
         
@@ -343,6 +347,20 @@ public class ProductDetailsGUI extends JFrame {
         btnSell.setForeground(new Color(255, 255, 255));
         btnSell.setBackground(new Color(46, 139, 87));
         pnBtn.add(btnSell);
+        btnSell.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	if (Integer.parseInt(lblQuantity.getText()) != 0) {
+	            	JFrame fr = new ConfirmPayment(selectedProduct.getId(), Integer.parseInt(lblAmount.getText()));
+	        		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        		fr.setSize(761, 500);
+	        		fr.setLocationRelativeTo(null);
+	        		fr.setVisible(true);
+            	}
+            	else {
+            		JOptionPane.showMessageDialog(getRootPane(), "Sản phẩm đã hết hàng");
+            	}
+            }
+        });
         
         btnAddToCart = new JButton("Thêm vào giỏ");
         btnAddToCart.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -357,12 +375,16 @@ public class ProductDetailsGUI extends JFrame {
     }
         
     private void updateAmount() {
+    	if (numOfPrd >= Integer.parseInt(lblQuantity.getText()) ) {
+    		btnAdd.setEnabled(false);
+    	}
     	btnSub.setEnabled(false);
         btnSub.addActionListener(e -> {
         	numOfPrd--;
         	if (numOfPrd == 1) {
         		btnSub.setEnabled(false);
         	}
+        	btnAdd.setEnabled(true);
         	lblAmount.setText(String.valueOf(numOfPrd));
         	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
         	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
@@ -370,11 +392,14 @@ public class ProductDetailsGUI extends JFrame {
         });
         btnAdd.addActionListener(e -> {
         	numOfPrd++;
-        	btnSub.setEnabled(true);
-        	lblAmount.setText(String.valueOf(numOfPrd));
-        	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
-        	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
-        	lblPaid.setText(formatTotalPrice);
+	    	btnSub.setEnabled(true);
+	    	lblAmount.setText(String.valueOf(numOfPrd));
+	    	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+	    	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
+	    	lblPaid.setText(formatTotalPrice);
+        	if (numOfPrd >= Integer.parseInt(lblQuantity.getText()) ) {
+        		btnAdd.setEnabled(false);
+        	}
         });
     }
 
@@ -383,11 +408,18 @@ public class ProductDetailsGUI extends JFrame {
         makeHoverEff(btnSell);
         makeHoverEff(btnAddToCart);
         addImageProduct();
+        
         btnAddToCart.addActionListener(e -> {
-        	for (int i = 0; i < numOfPrd; i++) {        		
-        		zShoppingCartFrame.addProduct(selectedProduct.getId());
+        	boolean flag = true;
+        	for (int i = 0; i < numOfPrd; i++) {    
+        		if (zShoppingCartFrame.addProduct(selectedProduct.getId()) == false) {
+        			JOptionPane.showMessageDialog(getRootPane(), "Sản phẩm đã hết hàng");
+        			flag = false;
+        			break;
+        		}
         	}
-        	JOptionPane.showMessageDialog(null, "Đã thêm " + numOfPrd + " sản phẩm vào giỏ hàng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        	if (flag) 
+        		JOptionPane.showMessageDialog(null, "Đã thêm " + numOfPrd + " sản phẩm vào giỏ hàng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         	this.dispose();
         });
     }
@@ -426,4 +458,5 @@ public class ProductDetailsGUI extends JFrame {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");
         return decimalFormat.format(amount);
     }
+    
 }

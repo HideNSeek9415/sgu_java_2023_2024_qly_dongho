@@ -4,8 +4,14 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import dto.Product;
+import dto.Supplier;
 
 public class ProductDAO extends ObjectDAO implements ICrud<Product> {
+    private Connection conn = null;
+    private PreparedStatement prest = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
+	
 	
 	public static ProductDAO getInstance() {
 		return new ProductDAO();
@@ -130,4 +136,47 @@ public class ProductDAO extends ObjectDAO implements ICrud<Product> {
 		return size;
 	}
 
+	public boolean decreaseQuantity(int ID) {
+	    String query = "UPDATE products SET quantity = quantity - 1 WHERE id = ?";
+	    try {
+	        conn = DataConnection.connect();
+	        prest = conn.prepareStatement(query);
+	        prest.setInt(1, ID);
+	        int rowsAffected = prest.executeUpdate();
+	        if (rowsAffected <= 0) {
+	            return false;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	        try {
+	            if (prest != null) {
+	                prest.close();
+	            }
+	            if (conn != null) {
+	                conn.close();
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return true;    
+	}
+	
+	public int getQuantityNumber(int ID) {
+		// TODO Auto-generated method stub
+		String sql = "select quantity from mywatchstore.products where id = ?";
+		try {
+			int quantity = -1;
+			rs = runQuery2(sql, ID);
+			if (rs.next()) {
+				quantity = rs.getInt("quantity");
+			}
+			return quantity;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

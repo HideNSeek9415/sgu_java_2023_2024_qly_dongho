@@ -8,6 +8,7 @@ import javax.swing.event.ChangeListener;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import org.kordamp.ikonli.swing.FontIcon;
 
+import bll.ProductBLL;
 import dao.ProductDAO;
 import dto.Product;
 
@@ -32,7 +33,7 @@ public class zShoppingCartFrame extends JFrame {
     private int totalPrice = 0;
     private JLabel totalLabel;
     private JScrollPane scrollPane;
-    
+    private JFrame storedFrame = null;
     public static ArrayList<Product> pInCart = new ArrayList<>();
 
 
@@ -76,11 +77,12 @@ public class zShoppingCartFrame extends JFrame {
         checkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(zShoppingCartFrame.this, "Đã thanh toán!");
-                pInCart.clear();
-                updateCartPanel();
+            	confirmPayment();
+            	cleanShoppingCart();
             }
         });
+        
+        
         buttonPanel.setLayout(new GridLayout(0, 1, 0, 0));
         buttonPanel.add(checkoutButton);
 
@@ -92,11 +94,20 @@ public class zShoppingCartFrame extends JFrame {
 
     }
     
-    public static void addProduct(int prdId) {
-    	
+    public static boolean addProduct(int prdId) {
     	Product product = ProductDAO.getInstance().readByID(prdId);
-    	pInCart.add(product);
+    	if (product.getQuantity() <= 0) 
+    		return false;
+    	else {
+    		pInCart.add(product);
+    		return true;
+    	}
+    	
       
+    }
+    
+    protected static ArrayList<Product> getShoppingCart(){
+    	return pInCart;
     }
     
     private int calculateTotalPrice() {
@@ -230,6 +241,27 @@ public class zShoppingCartFrame extends JFrame {
     private String formatCurrency(int amount) {
     	DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");
     	return decimalFormat.format(amount);
+    }
+    
+    private void cleanShoppingCart() {
+//    	if ( ((ConfirmPayment)storedFrame).isClickConfirmButton() ) { 
+//        	pInCart.clear();
+//        	updateCartPanel();
+//        }
+    }
+    
+    private void setStoredFrame() {
+    	
+    }
+    
+    private void confirmPayment() {
+    	JFrame fr = new ConfirmPayment(-1, 0);
+		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		fr.setSize(761, 500);
+//		((ThemNhaCungCap)fr).setTable(table);
+		fr.setLocationRelativeTo(null);
+		fr.setVisible(true);
+		setStoredFrame();
     }
 }
 
