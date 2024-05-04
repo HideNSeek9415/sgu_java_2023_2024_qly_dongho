@@ -10,6 +10,7 @@ public class ExportInvoice {
     private int employeeId;
     private int customerId;
     private Date invoiceDate;
+    private int exportinvoiceStatus;
     private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
     
     private String employeeName;
@@ -39,7 +40,7 @@ public class ExportInvoice {
 		this.details = details;
 	}
 
-	public ExportInvoice(int exportInvoiceId, int employeeId, int customerId, Date invoiceDate) {
+	public ExportInvoice(int exportInvoiceId, int employeeId, int customerId, Date invoiceDate, int exportinvoiceStatus) {
         this.exportInvoiceId = exportInvoiceId;
         this.employeeId = employeeId;
         this.customerId = customerId;
@@ -77,6 +78,15 @@ public class ExportInvoice {
 
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
+    }
+    
+    
+    public int getExportInvoiceStatus() {
+    	return exportinvoiceStatus;
+    }
+    
+    public void setExportInvoiceStatus(int exportinvoiceStatus) {
+    	this.exportinvoiceStatus=exportinvoiceStatus;
     }
     
     public void setEmployeeFullName() {
