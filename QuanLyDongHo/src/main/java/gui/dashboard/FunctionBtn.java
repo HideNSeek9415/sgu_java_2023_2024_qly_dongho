@@ -89,7 +89,7 @@ public class FunctionBtn {
 		case SUPPLIERS:
 			icon = FontIcon.of(FontAwesomeSolid.TRUCK);
 			toggleButton.setText("Nhà cung cấp");
-			panel = new SuppliersGUI();
+			panel = new zSuppliersGUI();
 			ConfigPRJ.menu.put("SUPPLIERS", panel);
 			break;
 		case EMPLOYEES:

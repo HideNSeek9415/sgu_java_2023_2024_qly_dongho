@@ -24,7 +24,6 @@ import javax.swing.UIManager;
 
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTabbedPane;
@@ -35,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignM;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignS;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import bll.ProductBLL;

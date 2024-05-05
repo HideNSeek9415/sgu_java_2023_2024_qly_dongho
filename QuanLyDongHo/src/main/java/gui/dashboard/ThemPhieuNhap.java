@@ -1,6 +1,5 @@
 package gui.dashboard;
 
-import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
@@ -8,20 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.GroupLayout;
-import javax.swing.JFrame;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
 
 import bll.ImportInvoiceBLL;
 import bll.SupplierBLL;
-import dto.ExportInvoiceDetail;
 import dto.ImportInvoice;
 import dto.ImportInvoiceDetail;
 import dto.Product;
@@ -29,12 +20,10 @@ import dto.Supplier;
 import system.ConfigPRJ;
 
 import javax.swing.JSpinner;
-import javax.swing.JComboBox;
 import javax.swing.border.EtchedBorder;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFormattedTextField;
 import javax.swing.SpinnerNumberModel;
 
+@SuppressWarnings("serial")
 public class ThemPhieuNhap extends javax.swing.JFrame {
 	
 	public ArrayList<Supplier> suppliers = SupplierBLL.getSupplierList();
@@ -163,9 +152,7 @@ public class ThemPhieuNhap extends javax.swing.JFrame {
 		lbltt.setText(priceVND);
 	}
 
-	@SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	private void initComponents() {
 
         phieuNhap = new javax.swing.JPanel();
         phieuNhap.setBackground(new Color(240, 247, 250));

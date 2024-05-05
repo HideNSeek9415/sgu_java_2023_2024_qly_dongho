@@ -2,6 +2,8 @@ package dto;
 
 import java.util.Date;
 
+import dao.AccountDAO;
+
 public class Person {
     private int id;
     private String fullName;
@@ -28,6 +30,7 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.accountId = accountId;
+		setAccount(AccountDAO.getInstance().readByID(accountId));
 	}
 	
 	public Person() {}

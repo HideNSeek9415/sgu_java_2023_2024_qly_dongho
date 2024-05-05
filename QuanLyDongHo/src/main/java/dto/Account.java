@@ -3,6 +3,8 @@ package dto;
 import java.util.ArrayList;
 import java.util.Date;
 
+import dao.AccountDAO;
+
 public class Account {
     @Override
 	public String toString() {
@@ -43,6 +45,7 @@ public class Account {
 		this.accountStatus = accountStatus;
 		this.roleId = roleId;
 		this.createdDate = createdDate;
+		setRoleName(AccountDAO.getInstance().getRole(id));
 	}
 	
 	public Account() {

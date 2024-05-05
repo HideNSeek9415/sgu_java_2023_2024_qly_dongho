@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.UIManager;
 
+import system.ConfigPRJ;
+
 public class ExtendTest extends DashboardFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +46,8 @@ public class ExtendTest extends DashboardFrame {
 		addFunction(new FunctionBtn(FunctionBtn.WARRANTY));
 		addFunction(new FunctionBtn(FunctionBtn.HISTORY));
 		addFunction(new FunctionBtn(""));
-		changeLabel("Bùi Trung Hiếu", "Admin");
+		changeLabel(ConfigPRJ.currentUser.getFullName(), ConfigPRJ.currentUser.getAccount().getRoleName());
+		ConfigPRJ.loadPermission("ADM");
 	}
 
 }

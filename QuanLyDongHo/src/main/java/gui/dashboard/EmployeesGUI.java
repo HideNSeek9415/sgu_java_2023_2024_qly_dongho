@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.EmployeeDAO;
 import dto.Employee;
+import system.ConfigPRJ;
 
 public class EmployeesGUI extends NewJPanel {
 
@@ -41,7 +42,12 @@ public class EmployeesGUI extends NewJPanel {
 		table.getColumnModel().getColumn(3).setPreferredWidth(40);
 		scrollPane.setViewportView(table);
 		reloadTable();
-
+		btnDel.setVisible(false);
+		btnEdit.setVisible(false);
+		btnRecovery.setVisible(false);
+		btnSearch.setVisible(false);
+		btnReload.setVisible(false);
+		txtSearch.setVisible(false);
 	}
 	
 	public void reloadTable() {
@@ -66,6 +72,7 @@ public class EmployeesGUI extends NewJPanel {
 
 	@Override
 	protected void setAddEvent() {
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.employee.get("add"))) return; 
 		JFrame fr = new ThemNVGUI();
 		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		fr.setLocationRelativeTo(null);
@@ -75,6 +82,7 @@ public class EmployeesGUI extends NewJPanel {
 	
 	@Override
 	protected void setDetailEvent() {
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.employee.get("edit"))) return; 
 		JFrame fr = new ThongTinNV((int) table.getValueAt(table.getSelectedRow(), 0));
 		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		fr.setLocationRelativeTo(null);

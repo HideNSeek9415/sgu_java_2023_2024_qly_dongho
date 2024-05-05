@@ -270,12 +270,7 @@ public class ProductDetailsGUI extends JFrame {
         lblPaid.setFont(new Font("Segoe UI", Font.BOLD, 21));
         pnAmount.add(lblPaid);
 
-        lblCross = new JLabel() {
-            @Override
-            public void setText(String text) {
-                super.setText("<html><strike>" + text + "</strike></html>");
-            }
-        };
+        lblCross = new JLabel();
         lblCross.setHorizontalAlignment(SwingConstants.CENTER);
         lblCross.setText("");
         lblCross.setForeground(new Color(128, 128, 128));
@@ -387,7 +382,7 @@ public class ProductDetailsGUI extends JFrame {
         	}
         	btnAdd.setEnabled(true);
         	lblAmount.setText(String.valueOf(numOfPrd));
-        	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+        	int totalPrice = numOfPrd*sellPrice;
         	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
         	lblPaid.setText(formatTotalPrice);
         });
@@ -395,7 +390,7 @@ public class ProductDetailsGUI extends JFrame {
         	numOfPrd++;
 	    	btnSub.setEnabled(true);
 	    	lblAmount.setText(String.valueOf(numOfPrd));
-	    	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+	    	double totalPrice = numOfPrd*sellPrice;
 	    	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
 	    	lblPaid.setText(formatTotalPrice);
         	if (numOfPrd >= Integer.parseInt(lblQuantity.getText()) ) {

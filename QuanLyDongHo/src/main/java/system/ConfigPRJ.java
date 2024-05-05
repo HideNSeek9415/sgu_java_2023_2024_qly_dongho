@@ -1,12 +1,18 @@
 package system;
 
+import java.awt.Color;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
+import org.kordamp.ikonli.swing.FontIcon;
 
 import dao.EmployeeDAO;
 import dao.PermissionDAO;
 import dto.Person;
+import gui.menu.UserMenu;
 
 public class ConfigPRJ {
 	public static Person currentUser = EmployeeDAO.getInstance().readByID(1);
@@ -21,11 +27,17 @@ public class ConfigPRJ {
 	
 	public static HashMap<String, JPanel> menu = new HashMap<>();
 	
+	public static UserMenu umenu = null;
+	
 	public static void loadUser(Person user) {
 		currentUser = user;
+		loadPermission(user.getAccount().getRoleId());
+		UserMenu fr = new UserMenu();
+		umenu = fr;
+		fr.setVisible(true);
 	}
 	
-	public void loadPermission(String role_id) {
+	public static void loadPermission(String role_id) {
 		switch (role_id) {
 		case "ADM":
 			product.put("add", true);
@@ -52,6 +64,22 @@ public class ConfigPRJ {
 		case "SLR":
 			PermissionDAO.instance.loadPermission("SLR");
 			break;
+		case "CTM":
+			break;
+		default:
+			System.err.println("INVALID ROLE");
 		}
+	}
+	
+	public static boolean shwMsg(boolean v) {
+		if (!v) {			
+			JOptionPane.showMessageDialog(null,
+				"Bạn không có quyền thực hiện thao tác này!!!",
+				"Không đủ quyền",
+				JOptionPane.PLAIN_MESSAGE,
+				FontIcon.of(MaterialDesignA.ALERT_CIRCLE_OUTLINE, 70, Color.decode("#9e3838"))
+			);
+		}
+		return v;
 	}
 }

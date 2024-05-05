@@ -71,7 +71,8 @@ public class SuaNhaCungCap extends ThemNhaCungCap{
 		selectedRow = table.getSelectedRow();
 		nhapTenNCC.setText(table.getValueAt(selectedRow, 1).toString());
 		nhapEmail.setText(table.getValueAt(selectedRow, 2).toString());
-		nhapSDT.setText(table.getValueAt(selectedRow, 3).toString());
+		
+		nhapSDT.setText(table.getValueAt(selectedRow, 4).toString());
 		
 		btnThem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +141,7 @@ public class SuaNhaCungCap extends ThemNhaCungCap{
 		}
 		else if(!CheckValid.isValidPhoneNumber(nhapSDT.getText())) {
 			checkValid=false;
-			supPhoneErrorMsg.setText("Số điện thoại phải đủ 10 chữ số và bắt đầu bằng số 0");
+			supPhoneErrorMsg.setText("Số điện thoại phải đủ 10");
 		}
 		else if(SupplierBLL.getInstance().isDuplicate(id, "phone_number", nhapSDT.getText())) {
 			supPhoneErrorMsg.setText("Số điện thoại đã tồn tại");

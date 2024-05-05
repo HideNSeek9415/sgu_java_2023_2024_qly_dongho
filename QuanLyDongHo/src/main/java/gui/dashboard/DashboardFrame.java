@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -24,9 +25,12 @@ import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import dto.Person;
+import gui.login.LoginGUI;
 import system.ConfigPRJ;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Rectangle;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -159,7 +163,7 @@ public class DashboardFrame extends JFrame {
 	}
 	
 	private void addLogoutBtn() {
-		JToggleButton toggleButton = new JToggleButton();
+		JButton toggleButton = new JButton();
 		toggleButton.setBackground(new Color(42, 62, 80));
 		toggleButton.setHorizontalAlignment(SwingConstants.LEFT);
 		toggleButton.setBorder(new EmptyBorder(0, 15, 0, 0));
@@ -199,6 +203,15 @@ public class DashboardFrame extends JFrame {
 		    		toggleButton.setBackground(new Color(42, 62, 80));
 		    		toggleButton.setForeground(Color.white);
 		    		((FontIcon) toggleButton.getIcon()).setIconColor(Color.white);
+		    	}
+		    }
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		    	int c = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất?");
+		    	if (c == JOptionPane.OK_OPTION) {
+		    		dispose();
+		    		JFrame fr = new LoginGUI();
+		    		fr.setVisible(true);		    		
 		    	}
 		    }
 		});

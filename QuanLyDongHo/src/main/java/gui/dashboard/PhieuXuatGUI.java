@@ -294,24 +294,24 @@ public class PhieuXuatGUI extends JPanel {
                 addStuff();
                 reloadTable();
 	}
-        private void reloadTable() {
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-    model.setRowCount(0);
-    ArrayList<ExportInvoice> exportInvoices = ExportInvoiceDAO.getInstance().readAllData();
-
-    for (ExportInvoice exportInvoice : exportInvoices) {
-        exportInvoice.setEmployeeFullName(); // Cập nhật fullNameEmployee
-        exportInvoice.setCustomerFullName();
-        Object[] data = {
-            exportInvoice.getExportInvoiceId(),
-            exportInvoice.getCustomerName(),
-            exportInvoice.getEmployeeName(), // Sử dụng fullNameEmployee
-            exportInvoice.getInvoiceDate(),
-        };
-        model.addRow(data);
-    }
-}
-        private void addStuff() {
+	public void reloadTable() {
+	    DefaultTableModel model = (DefaultTableModel) table.getModel();
+	    model.setRowCount(0);
+	    ArrayList<ExportInvoice> exportInvoices = ExportInvoiceDAO.getInstance().readAllData();
+	
+	    for (ExportInvoice exportInvoice : exportInvoices) {
+	        exportInvoice.setEmployeeFullName(); // Cập nhật fullNameEmployee
+	        exportInvoice.setCustomerFullName();
+	        Object[] data = {
+	            exportInvoice.getExportInvoiceId(),
+	            exportInvoice.getCustomerName(),
+	            exportInvoice.getEmployeeName(), // Sử dụng fullNameEmployee
+	            exportInvoice.getInvoiceDate(),
+	        };
+	        model.addRow(data);
+	    }
+	}
+	private void addStuff() {
 		btnchitiet.addActionListener(e -> {
 			JFrame fr = new ChiTietPhieuXuat();
 			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

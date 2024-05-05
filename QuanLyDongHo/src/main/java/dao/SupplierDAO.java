@@ -194,8 +194,32 @@ public class SupplierDAO extends ObjectDAO implements ICrud<Supplier> {
 
 	@Override
 	public boolean recovery(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		String query = "Update mywatchstore.suppliers"
+				+ "	set supplier_status = 'active'"
+				+ "where supplier_id = " + id;
+		try {
+	        conn = DataConnection.connect();
+	        prest = conn.prepareStatement(query);
+	        int rowsAffected = prest.executeUpdate(query);
+	        if (rowsAffected <= 0) {
+	            return false;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	        try {
+	            if (prest != null) {
+	                prest.close();
+	            }
+	            if (conn != null) {
+	                conn.close();
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+		return true;
 	}
 	
 	public boolean isDuplicate(String property, String value) {

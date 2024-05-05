@@ -144,7 +144,7 @@ public class ConfirmPayment extends JFrame{
 
 				//Tạo phiếu xuất mới vào database				
 //				Mặc định để system.ConfigPRJ.currentUser.getId() là 1
-				ExportInvoice exportInvoice = new ExportInvoice(ConfigPRJ.currentUser.getId(), -1, 1, sqlDate);
+				ExportInvoice exportInvoice = new ExportInvoice(ExportInvoiceBLL.getInstance().getNextId() + 1, -1, 1, currentDate, 0);
     			if (ExportInvoiceBLL.getInstance().createExportInvoice(exportInvoice) == false) {
     				JOptionPane.showMessageDialog(rootPane, "Lỗi khi thêm vào database phiếu xuất");
     				errorEI = false;
