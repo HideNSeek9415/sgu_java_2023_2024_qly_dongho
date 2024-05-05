@@ -3,17 +3,34 @@ package dao;
 import java.util.ArrayList;
 
 import dto.Warranty;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class WarrantyDAO extends ObjectDAO implements ICrud<Warranty> {
-	
+	private PreparedStatement prest = null;
+        private Connection conn = null;
+        
 	public static WarrantyDAO getInstance() {
 		return new WarrantyDAO();
 	}
 
 	@Override
 	public boolean create(Warranty Obj) {
-		// TODO Auto-generated method stub
-		return false;
+            boolean flag = true;
+                try{
+		String sql = "insert into warranty (detail_id, reason) values (?, ?)";		
+		int affectedRow = runUpdate(sql,
+			Obj.getDetailId(),
+			Obj.getReason()
+		);
+                closeConnection();
+		if(affectedRow > 0) return true;
+	}
+              catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+                return false;
 	}
 
 	@Override
@@ -45,5 +62,5 @@ public class WarrantyDAO extends ObjectDAO implements ICrud<Warranty> {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+        
 }

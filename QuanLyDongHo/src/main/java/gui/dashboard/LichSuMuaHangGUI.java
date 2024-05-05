@@ -82,6 +82,7 @@ public class LichSuMuaHangGUI extends JPanel {
     private JPanel panel_10;
     private JPanel panel_11;
     private JButton btnchitiet;
+    private JButton btnbaohanh;
     private JButton btnhuy;
     private JButton btnxuat;
     private JComboBox comboBox_6;
@@ -122,7 +123,17 @@ public class LichSuMuaHangGUI extends JPanel {
         panel_10.setPreferredSize(new Dimension(500, 10));
         panel_1.add(panel_10, BorderLayout.WEST);
         panel_10.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 8));
-
+        
+        btnbaohanh = new JButton("Bảo hành");
+        btnbaohanh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnbaohanh.setBackground(new Color(255, 255, 255));
+        btnbaohanh.setFocusPainted(false);
+        btnbaohanh.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnbaohanh.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnbaohanh.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnbaohanh.setPreferredSize(new Dimension(90, 85));
+        panel_10.add(btnbaohanh);
+        
         btnchitiet = new JButton("Chi tiết");
         btnchitiet.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnchitiet.setBackground(new Color(255, 255, 255));
@@ -348,10 +359,12 @@ public class LichSuMuaHangGUI extends JPanel {
         displayHistory(historylist);
 
         addIcon();
+//        makeHoverEff(btnbaohanh);
         makeHoverEff(btnchitiet);
         makeHoverEff(btnxuat);
         makeHoverEff(btnlammoi);
         addStuff();
+        addStuff2();
     }
 
     private void addStuff() {
@@ -364,7 +377,16 @@ public class LichSuMuaHangGUI extends JPanel {
 			fr.setVisible(true);
 		});
 	}
-
+    private void addStuff2() {
+                btnbaohanh.addActionListener(e -> {
+                        int Sid = (Integer) table.getValueAt(table.getSelectedRow(), 0);
+                        TaoPhieuBaoHanhGUI.selectedExport = ExportInvoiceBLL.getByID(Sid);
+                        JFrame fr = new TaoPhieuBaoHanhGUI(); 
+                        fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        fr.setLocationRelativeTo(null);
+                        fr.setVisible(true);
+    });
+}
     private void displayHistory(ArrayList<ExportInvoice> invoiceList) {
         DefaultTableModel model = new DefaultTableModel(
             new Object[][]{},
