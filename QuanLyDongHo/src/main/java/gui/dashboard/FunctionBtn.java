@@ -124,6 +124,7 @@ public class FunctionBtn {
 		case HISTORY:
 			icon = FontIcon.of(MaterialDesignC.CLIPBOARD_TEXT_SEARCH_OUTLINE);
 			toggleButton.setText("Lịch sử mua hàng");
+			panel = new LichSuMuaHangGUI();
 			ConfigPRJ.menu.put("HISTORY", panel);
 			break;
 		default:

@@ -1,5 +1,7 @@
 package gui.dashboard;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -10,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.EmployeeDAO;
 import dto.Employee;
+import system.ExportManager;
 
 public class EmployeesGUI extends NewJPanel {
 
@@ -41,6 +44,12 @@ public class EmployeesGUI extends NewJPanel {
 		table.getColumnModel().getColumn(3).setPreferredWidth(40);
 		scrollPane.setViewportView(table);
 		reloadTable();
+		
+		btnImport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExportManager.exportToExcel(table);
+            }
+        });
 
 	}
 	

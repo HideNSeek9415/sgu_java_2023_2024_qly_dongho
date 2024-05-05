@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.SupplierDAO;
 import dto.Supplier;
+import system.ExportManager;
 import bll.SupplierBLL;
 
 import java.awt.Font;
@@ -106,6 +107,11 @@ public class SuppliersGUI extends NewJPanel {
         });
 		model = (DefaultTableModel) table.getModel();
 		reloadTable();
+		btnImport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExportManager.exportToExcel(table);
+            }
+        });
 	}
 	
 	private void reloadTable() {

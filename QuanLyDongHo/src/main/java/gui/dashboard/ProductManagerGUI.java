@@ -5,10 +5,13 @@ import java.awt.Color;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import dao.ProductDAO;
 import dto.Product;
+import system.ExportManager;
 
 public class ProductManagerGUI extends NewJPanel {
 
@@ -68,6 +71,12 @@ public class ProductManagerGUI extends NewJPanel {
         
         scrollPane.setViewportView(table);
         designTitle();
+        
+        btnImport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExportManager.exportToExcel(table);
+            }
+        });
     }
 
     public void displayProducts() {

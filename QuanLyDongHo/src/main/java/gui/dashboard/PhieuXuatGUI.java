@@ -1,8 +1,10 @@
 package gui.dashboard;
 
+import bll.ExportInvoiceBLL;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +13,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.JComboBox;
 import java.awt.Font;
@@ -32,12 +35,24 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
+import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
+
+import dao.CustomerDAO;
+import dao.EmployeeDAO;
 import dao.ExportInvoiceDAO;
+import de.ExportPDF;
 import dto.ExportInvoice;
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.swing.JFrame;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class PhieuXuatGUI extends JPanel {
 
@@ -46,34 +61,26 @@ public class PhieuXuatGUI extends JPanel {
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JPanel panel_3;
-	private JPanel panel_4;
-	private JLabel lblNewLabel;
-	private JComboBox comboBox;
-	private JPanel panel_5;
-	private JLabel lblNewLabel_1;
-	private JComboBox comboBox_1;
 	private JPanel panel_6;
-	private JLabel lblNewLabel_2;
-	private JSpinner comboBox_2;
 	private JPanel panel_7;
 	private JLabel lblNewLabel_3;
 	private JPanel panel_8;
 	private JLabel lblNewLabel_4;
-	private JPanel panel_9;
-	private JLabel lblNewLabel_5;
-	private JSpinner comboBox_5;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JPanel panel_10;
 	private JPanel panel_11;
 	private JButton btnchitiet;
-	private JButton btnhuy;
 	private JButton btnxuat;
-	private JComboBox comboBox_6;
 	private JTextField txtTmKim;
 	private JButton btnlammoi;
 	private JDateChooser dateChooser;
 	private JDateChooser dateChooser_1;
+	private JButton btnxuat_1;
+	private JPanel panel_4;
+	private JLabel lblNewLabel;
+	private JComboBox comboBoxStatus;
+	private JButton btnTimKiem;
 
 	/**
 	 * Create the panel.
@@ -114,17 +121,7 @@ public class PhieuXuatGUI extends JPanel {
 		btnchitiet.setPreferredSize(new Dimension(90, 85));
 		panel_10.add(btnchitiet);
 		
-		btnhuy = new JButton("Hủy PN");
-		btnhuy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnhuy.setBackground(new Color(255, 255, 255));
-		btnhuy.setFocusPainted(false);
-		btnhuy.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnhuy.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnhuy.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnhuy.setPreferredSize(new Dimension(90, 85));
-		panel_10.add(btnhuy);
-		
-		btnxuat = new JButton("Excel");
+		btnxuat = new JButton("PDF");
 		btnxuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnxuat.setBackground(new Color(255, 255, 255));
 		btnxuat.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -134,6 +131,51 @@ public class PhieuXuatGUI extends JPanel {
 		btnxuat.setPreferredSize(new Dimension(90, 85));
 		panel_10.add(btnxuat);
 		
+		btnxuat.addActionListener(e -> {
+            try {
+                // Lấy chỉ mục hàng được chọn từ table
+                int selectedRow = table.getSelectedRow();
+
+                // Kiểm tra xem có hàng được chọn không
+                if (selectedRow != -1) {
+                    // Lấy số lượng dòng trong bảng ChiTietLichSuMuaHang.reloadTable()
+                    int rowCount = ChiTietPhieuXuat.reloadTable().getRowCount();
+
+                    // Tạo danh sách để lưu các hàng từ ChiTietLichSuMuaHang.reloadTable()
+                    List<List<Object>> allRows = new ArrayList<>();
+
+                    // Lặp qua tất cả các hàng trong ChiTietLichSuMuaHang.reloadTable()
+                    for (int row = 0; row < rowCount; row++) {
+                        // Lấy dữ liệu từ bảng cho mỗi dòng
+                        Integer detailsId = (Integer) ChiTietPhieuXuat.reloadTable().getValueAt(row, 0);
+                        String exportInvoiceId = ChiTietPhieuXuat.reloadTable().getValueAt(row, 1).toString();
+                        String productName = (String) ChiTietPhieuXuat.reloadTable().getValueAt(row, 2);
+                        String sellPrice = ChiTietPhieuXuat.reloadTable().getValueAt(row, 3).toString();
+                        int columnIndex = 1;
+                        String fullName = table.getValueAt(selectedRow, columnIndex).toString();
+                        Date date = (Date) table.getValueAt(selectedRow, 3);
+
+                        List<Object> rowData = new ArrayList<>();
+                        rowData.add(detailsId.toString());
+                        rowData.add(exportInvoiceId);
+                        rowData.add(productName);
+                        rowData.add(sellPrice);
+                        rowData.add(fullName);
+                        rowData.add(date);
+                        allRows.add(rowData);
+                    }
+                    ExportPDF.exportRowsToPDF1(allRows);
+                    JOptionPane.showMessageDialog(this, "Xuất PDF thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để xuất PDF!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (IOException | DocumentException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xuất file PDF!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+		
 		panel_11 = new JPanel();
 		panel_11.setOpaque(false);
 		panel_11.setBackground(new Color(255, 255, 255));
@@ -141,14 +183,34 @@ public class PhieuXuatGUI extends JPanel {
 		panel_1.add(panel_11, BorderLayout.CENTER);
 		panel_11.setLayout(new GridLayout(1, 3, 10, 0));
 		
-		comboBox_6 = new JComboBox();
-		comboBox_6.setBackground(new Color(255, 255, 255));
-		comboBox_6.setPreferredSize(new Dimension(120, 30));
-		panel_11.add(comboBox_6);
+		btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem.addActionListener(e -> {
+            performSearch();
+        });
+		btnTimKiem.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnTimKiem.setPreferredSize(new Dimension(90, 85));
+		btnTimKiem.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnTimKiem.setFocusPainted(false);
+		btnTimKiem.setBackground(Color.WHITE);
+		panel_11.add(btnTimKiem);
+		
+		btnxuat_1 = new JButton("Duyệt đơn ");
+		panel_11.add(btnxuat_1);
+		btnxuat_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		btnxuat_1.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnxuat_1.setPreferredSize(new Dimension(90, 85));
+		btnxuat_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnxuat_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnxuat_1.setFocusPainted(false);
+		btnxuat_1.setBackground(Color.WHITE);
 		
 		txtTmKim = new JTextField();
 		txtTmKim.setForeground(new Color(0, 0, 0));
-		txtTmKim.setText("tìm kiếm ...");
 		txtTmKim.setSize(new Dimension(200, 0));
 		txtTmKim.setPreferredSize(new Dimension(250, 30));
 		panel_11.add(txtTmKim);
@@ -161,6 +223,10 @@ public class PhieuXuatGUI extends JPanel {
 		btnlammoi.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnlammoi.setPreferredSize(new Dimension(100, 30));
 		panel_11.add(btnlammoi);
+		btnlammoi.addActionListener(e -> {
+            // Gọi phương thức làm mới
+            refresh();
+        });
 		
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
@@ -168,34 +234,6 @@ public class PhieuXuatGUI extends JPanel {
 		panel_2.setPreferredSize(new Dimension(250, 10));
 		panel.add(panel_2, BorderLayout.WEST);
 		panel_2.setLayout(new GridLayout(8, 0, 0, 0));
-		
-		panel_4 = new JPanel();
-		panel_4.setOpaque(false);
-		panel_4.setBorder(new EmptyBorder(5, 20, 5, 20));
-		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel = new JLabel("Khách hàng");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_4.add(lblNewLabel);
-		
-		comboBox = new JComboBox();
-		comboBox.setBackground(new Color(255, 255, 255));
-		panel_4.add(comboBox);
-		
-		panel_5 = new JPanel();
-		panel_5.setOpaque(false);
-		panel_5.setBorder(new EmptyBorder(5, 20, 5, 20));
-		panel_2.add(panel_5);
-		panel_5.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel_1 = new JLabel("Nhân viên xuất");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_5.add(lblNewLabel_1);
-		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBackground(new Color(255, 255, 255));
-		panel_5.add(comboBox_1);
 		
 		panel_7 = new JPanel();
 		panel_7.setOpaque(false);
@@ -227,33 +265,26 @@ public class PhieuXuatGUI extends JPanel {
 		dateChooser_1.setOpaque(false);
 		panel_8.add(dateChooser_1);
 		
-		panel_9 = new JPanel();
-		panel_9.setOpaque(false);
-		panel_9.setBorder(new EmptyBorder(5, 20, 5, 20));
-		panel_2.add(panel_9);
-		panel_9.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel_5 = new JLabel("Từ số tiền (VND)");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_9.add(lblNewLabel_5);
-		
-		comboBox_5 = new JSpinner();
-		comboBox_5.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100000)));
-		panel_9.add(comboBox_5);
-		
 		panel_6 = new JPanel();
 		panel_6.setOpaque(false);
 		panel_6.setBorder(new EmptyBorder(5, 20, 5, 20));
 		panel_2.add(panel_6);
 		panel_6.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		lblNewLabel_2 = new JLabel("Đến số tiền (VND)");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_6.add(lblNewLabel_2);
+		lblNewLabel = new JLabel("Trạng thái");
+		panel_6.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		comboBox_2 = new JSpinner();
-		comboBox_2.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100000)));
-		panel_6.add(comboBox_2);
+		comboBoxStatus = new JComboBox();
+		comboBoxStatus.setModel(new DefaultComboBoxModel(new String[] {"Chưa duyệt ⚠️", "Đã duyệt ✅"}));
+		panel_6.add(comboBoxStatus);
+		comboBoxStatus.setBackground(Color.WHITE);
+		
+		panel_4 = new JPanel();
+		panel_4.setOpaque(false);
+		panel_4.setBorder(new EmptyBorder(5, 20, 5, 20));
+		panel_2.add(panel_4);
+		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
 		
 		panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 255, 255));
@@ -265,64 +296,184 @@ public class PhieuXuatGUI extends JPanel {
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
-		table.setRowHeight(20);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"1", "001", "nhu", "a", "1/1/2023", "1000"},
-				{"2", "002", "nhu", "b", "2/2/2023", "2000"},
-				{"3", "003", "nhu", "c", "3/3/2023", "3000"},
-				{"4", "004", "ko", "d", "15/1/2023", "4000"},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"M\u00E3 phi\u1EBFu xu\u1EA5t", "Kh\u00E1ch h\u00E0ng", "Nh\u00E2n vi\u00EAn nh\u1EADp", "Th\u1EDDi gian", "T\u1ED5ng ti\u1EC1n"
-			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(51);
-		table.getColumnModel().getColumn(1).setPreferredWidth(81);
-		table.getColumnModel().getColumn(2).setPreferredWidth(164);
-		table.getColumnModel().getColumn(3).setPreferredWidth(85);
-		scrollPane.setViewportView(table);
+        table.setRowHeight(20);
+        table.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        table.setModel(new DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Mã phiếu xuất", "Khách hàng", "Nhân viên nhập", "Thời gian", "Trạng thái"}
+        ) {
+            boolean[] columnEditables = new boolean[]{
+                false, true, true, true
+            };
+
+            public boolean isCellEditable(int row, int column) {
+                return columnEditables[column];
+            }
+        });
+
+        table.getColumnModel().getColumn(0).setResizable(false);
+        table.getColumnModel().getColumn(0).setPreferredWidth(51);
+        table.getColumnModel().getColumn(1).setPreferredWidth(81);
+        table.getColumnModel().getColumn(2).setPreferredWidth(164);
+        table.getColumnModel().getColumn(3).setPreferredWidth(85);
+        scrollPane.setViewportView(table);
+		
+		ExportInvoiceDAO historyDAO = ExportInvoiceDAO.getInstance();
+        ArrayList<ExportInvoice> historylist = historyDAO.readAllData();
+
+        displayHistory(historylist);
 		
 		addIcon();
 		makeHoverEff(btnchitiet);
-		makeHoverEff(btnhuy);
 		makeHoverEff(btnxuat);
 		makeHoverEff(btnlammoi);
                 addStuff();
-                reloadTable();
 	}
-        private void reloadTable() {
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-    model.setRowCount(0);
-    ArrayList<ExportInvoice> exportInvoices = ExportInvoiceDAO.getInstance().readAllData();
+	private void displayHistory(ArrayList<ExportInvoice> invoiceList) {
+	    DefaultTableModel model = new DefaultTableModel(
+	        new Object[][]{},
+	        new String[]{"Mã hóa đơn", "Tên nhân viên", "Tên khách hàng", "Ngày mua hàng", "Trạng thái"}
+	    );
 
-    for (ExportInvoice exportInvoice : exportInvoices) {
-        exportInvoice.setEmployeeFullName(); // Cập nhật fullNameEmployee
-        exportInvoice.setCustomerFullName();
-        Object[] data = {
-            exportInvoice.getExportInvoiceId(),
-            exportInvoice.getCustomerName(),
-            exportInvoice.getEmployeeName(), // Sử dụng fullNameEmployee
-            exportInvoice.getInvoiceDate(),
-        };
-        model.addRow(data);
-    }
-}
-        private void addStuff() {
+	    EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
+	    CustomerDAO customerDAO = CustomerDAO.getInstance();
+
+	    for (ExportInvoice invoice : invoiceList) {
+	        int employeeId = invoice.getEmployeeId();
+	        int customerId = invoice.getCustomerId();
+
+	        String fullNameCus = customerDAO.getFullNameByCustomerId(customerId);
+	        String fullName = employeeDAO.getFullNameByEmployeeId(employeeId);
+
+	        String status = "";
+	        if (invoice.getExportInvoiceStatus() == 1) {
+	            status = "Đã duyệt";
+	        } else if (invoice.getExportInvoiceStatus() == 0) {
+	            status = "Chưa duyệt";
+	        }
+
+	        Object[] rowData = {
+	            invoice.getExportInvoiceId(),
+	            fullName,
+	            fullNameCus,
+	            invoice.getInvoiceDate(),
+	            status 
+	        };
+	        model.addRow(rowData);
+	    }
+
+	    // Set the model to the table
+	    table.setModel(model);
+	}
+
+	private void addStuff() {
 		btnchitiet.addActionListener(e -> {
-			JFrame fr = new ChiTietPhieuXuat();
-			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			fr.setLocationRelativeTo(null);
-			fr.setVisible(true);
+		    int selectedRow = table.getSelectedRow();
+		    if (selectedRow != -1) {
+		        Object value = table.getValueAt(selectedRow, 0);
+		        if (value != null) {
+		            int Sid = (Integer) value;
+		            ChiTietPhieuXuat.selectedExport = ExportInvoiceBLL.getByID(Sid);
+		            JFrame fr = new ChiTietPhieuXuat();
+		            fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		            fr.setLocationRelativeTo(null);
+		            fr.setVisible(true);
+		        } else {
+		            // Handle the case where the value is null
+		        }
+		    } else {
+		        // Handle the case where no row is selected
+		    }
 		});
+
+
+	    btnxuat_1.addActionListener(e -> {
+	        int row = table.getSelectedRow();
+	        if (row != -1) { 
+	            int exportInvoiceId = (Integer) table.getValueAt(row, 0); 
+	            boolean success = ExportInvoiceBLL.getInstance().updateStatusForEmployee(exportInvoiceId, 1);
+	            if (success) {
+	                JOptionPane.showMessageDialog(null, "Đã duyệt đơn hàng");
+	              
+	            } else {
+	                JOptionPane.showMessageDialog(null, "Lỗi!");
+	            }
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Vui lòng chọn đơn hàng cần duyệt");
+	        }
+	    });
 	}
 
+        
+        private void performSearch() {
+            String searchKeyword = txtTmKim.getText().trim().toLowerCase();
+
+            if (dateChooser.getDate() == null || dateChooser_1.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn cả ngày bắt đầu và ngày kết thúc!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Get start date from dateChooser
+            Date startDateUtil = dateChooser.getDate();
+            java.sql.Date startDateSql = new java.sql.Date(startDateUtil.getTime());
+            Date endDateUtil = dateChooser_1.getDate();
+            java.sql.Date endDateSql = new java.sql.Date(endDateUtil.getTime());
+            int status = comboBoxStatus.getSelectedIndex();
+
+            // Call the search method from the BLL class and pass the converted dates, status, and search keyword
+            ArrayList<ExportInvoice> resultList = ExportInvoiceBLL.getInstance().search2(startDateSql, endDateSql, status, searchKeyword);
+
+            // Create a table model with column names
+            DefaultTableModel model = new DefaultTableModel(
+                    new Object[][]{},
+                    new String[]{"Mã hóa đơn", "Tên nhân viên", "Tên khách hàng", "Ngày mua hàng", "Trạng thái"}
+            );
+
+            // Initialize DAO objects
+            EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
+            CustomerDAO customerDAO = CustomerDAO.getInstance();
+
+            // Fill the table model with search results
+            for (ExportInvoice invoice : resultList) {
+                // Lấy employee_id từ ExportInvoice
+                int employeeId = invoice.getEmployeeId();
+                int customerId = invoice.getCustomerId();
+
+                String fullNameCus = customerDAO.getFullNameByCustomerId(customerId);
+                String fullName = employeeDAO.getFullNameByEmployeeId(employeeId);
+
+                String statusStr = "";
+                if (invoice.getExportInvoiceStatus() == 1) {
+                    statusStr = "Đã duyệt";
+                } else if (invoice.getExportInvoiceStatus() == 0) {
+                    statusStr = "Chưa duyệt";
+                }
+
+                Object[] rowData = {
+                    invoice.getExportInvoiceId(),
+                    fullName, 
+                    fullNameCus,
+                    invoice.getInvoiceDate(),
+                    statusStr 
+                };
+                model.addRow(rowData);
+            }
+
+            table.setModel(model);
+        }
+
+        
+        private void refresh() {
+            // Lấy lại toàn bộ dữ liệu lịch sử mua hàng
+            ArrayList<ExportInvoice> historyList = ExportInvoiceDAO.getInstance().readAllData();      
+            displayHistory(historyList);
+            dateChooser.setDate(null);
+            dateChooser_1.setDate(null);
+            txtTmKim.setText("");
+        }
+            
 	private void addIcon() {
 		btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION,50,Color.decode("#2196f3")));
-		btnhuy.setIcon(FontIcon.of(MaterialDesignC.CLOSE_CIRCLE_OUTLINE,50,Color.red));
 		btnxuat.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL,50,Color.decode("#147943")));
 		btnlammoi.setIcon(FontIcon.of(MaterialDesignR.RELOAD,20,Color.white));
 		

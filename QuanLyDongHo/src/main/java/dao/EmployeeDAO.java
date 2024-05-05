@@ -1,5 +1,7 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -131,6 +133,24 @@ public class EmployeeDAO extends ObjectDAO implements ICrud<Employee> {
 			e.printStackTrace();
 		}
 		return employee;
+	}
+	
+	public String getFullNameByEmployeeId(int accountId) {
+	    String fullName = null;
+	    try {
+	        String sql = "SELECT full_name FROM employees WHERE id = ?";
+	        Connection conn = DataConnection.connect();
+	        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+	        preparedStatement.setInt(1, accountId);
+	        ResultSet rs = preparedStatement.executeQuery();
+	        if (rs.next()) {
+	            fullName = rs.getString("full_name");
+	        }
+	        closeConnection(); // Assuming this method handles closing the connection properly
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return fullName;
 	}
 
 	@Override

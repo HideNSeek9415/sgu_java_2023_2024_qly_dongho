@@ -11,6 +11,7 @@ public class ExportInvoice {
     private int customerId;
     private Date invoiceDate;
     private int exportinvoiceStatus;
+    private int totalSellPrice;
     private ArrayList<ImportInvoiceDetail> details = new ArrayList<>();
     
     private String employeeName;
@@ -45,7 +46,14 @@ public class ExportInvoice {
         this.employeeId = employeeId;
         this.customerId = customerId;
         this.invoiceDate = invoiceDate;
+        this.exportinvoiceStatus = exportinvoiceStatus;
     }
+	
+
+	
+	public ExportInvoice() {
+		
+	}
 
     // Getters and setters
     public int getExportInvoiceId() {

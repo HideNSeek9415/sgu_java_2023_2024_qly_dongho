@@ -301,7 +301,7 @@ public class NewJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnFilter;
-    private javax.swing.JButton btnImport;
+    protected javax.swing.JButton btnImport;
     private javax.swing.JButton btnReload;
     protected javax.swing.JButton btnSearch;
     private javax.swing.JPanel headPanel;
