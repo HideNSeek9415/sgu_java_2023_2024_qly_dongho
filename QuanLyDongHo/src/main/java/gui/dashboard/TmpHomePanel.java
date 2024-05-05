@@ -1,6 +1,7 @@
 package gui.dashboard;
 
 import javax.swing.JPanel;
+
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +12,7 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignM;
 import org.kordamp.ikonli.swing.FontIcon;
 
+import bll.ProductBLL;
 import dao.ProductDAO;
 import dto.Product;
 
@@ -41,6 +43,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JCheckBox;
 
 public class TmpHomePanel extends JPanel {
+	private ProductBLL productBLL;
 
 	private static final long serialVersionUID = 1L;
 	
@@ -70,6 +73,7 @@ public class TmpHomePanel extends JPanel {
 	 * Create the panel.
 	 */
 	public TmpHomePanel() {
+		productBLL = new ProductBLL();
 		setBorder(new EmptyBorder(25, 25, 10, 25));
 		setBackground(new Color(255, 255, 255));
 		setPreferredSize(new Dimension(1150, 800));
@@ -199,7 +203,7 @@ public class TmpHomePanel extends JPanel {
 	}
 	
 	private void searchEvent() {
-		ArrayList<Product> products = ProductDAO.getInstance().readAllData();
+		ArrayList<Product> products = productBLL.getAllProduct();
 		
 		String searchText = textField.getText().trim().toLowerCase();
 		String selectedCategory = (String) cbbType.getSelectedItem();
@@ -247,7 +251,6 @@ public class TmpHomePanel extends JPanel {
 		}
 	}
 
-	
 	private void addEvent() {
 		btnReload.addActionListener(e -> {
 			reloadPanel();
@@ -271,7 +274,7 @@ public class TmpHomePanel extends JPanel {
 
 	public void reloadPanel() {
 		// TODO Auto-generated method stub
-		ArrayList<Product> products = ProductDAO.getInstance().readAllData();
+		ArrayList<Product> products = productBLL.getAllProduct();
 		int productPerPage = 10;
 		tabbedPane.removeAll();
 		int numberOfPage = products.size()/productPerPage + 1;
