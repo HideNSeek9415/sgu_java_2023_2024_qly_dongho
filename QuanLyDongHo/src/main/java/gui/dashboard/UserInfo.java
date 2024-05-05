@@ -28,6 +28,7 @@ import dto.Account;
 import dto.Customer;
 import dto.Employee;
 import dto.Person;
+import system.ConfigPRJ;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -37,6 +38,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Cursor;
 import com.toedter.calendar.JDateChooser;
 
+import bll.AccountBLL;
 import bll.CustomerBLL;
 import bll.EmployeeBLL;
 import dao.AccountDAO;
@@ -421,12 +423,16 @@ public class UserInfo extends JFrame {
 			a.setUsername(txtUsername.getText());
 			a.setPassword(txtPasswd.getText());
 			a.setId(user.getAccountId());
+			a.setRoleId(user.getAccount().getRoleId());
 			u.setAccountId(a.getId());
 			u.setAccount(a);
 			if (u instanceof Customer) {
 				int check = CustomerBLL.checkInfo((Customer) u);
 				if (check == CustomerBLL.VALID || check == 2) {
 					CustomerBLL.updateUser((Customer) u);
+					JOptionPane.showMessageDialog(null, "Thông tin đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					ConfigPRJ.umenu.updateName();
+					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Thông tin không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
 				}
@@ -435,6 +441,9 @@ public class UserInfo extends JFrame {
 				int check = EmployeeBLL.checkInfo((Employee) u);
 				if (check == EmployeeBLL.VALID || check == 2) {
 					EmployeeBLL.updateUser((Employee) u);
+					JOptionPane.showMessageDialog(null, "Thông tin đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+					ConfigPRJ.umenu.updateName();
+					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Thông tin không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
 				}

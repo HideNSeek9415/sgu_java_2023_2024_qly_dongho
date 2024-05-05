@@ -89,7 +89,7 @@ public class FunctionBtn {
 		case SUPPLIERS:
 			icon = FontIcon.of(FontAwesomeSolid.TRUCK);
 			toggleButton.setText("Nhà cung cấp");
-			panel = new SuppliersGUI();
+			panel = new zSuppliersGUI();
 			ConfigPRJ.menu.put("SUPPLIERS", panel);
 			break;
 		case EMPLOYEES:
@@ -97,12 +97,6 @@ public class FunctionBtn {
 			toggleButton.setText("Nhân viên");
 			panel = new EmployeesGUI();
 			ConfigPRJ.menu.put("EMPLOYEES", panel);
-			break;
-		case ACCOUNTS:
-			icon = FontIcon.of(FontAwesomeSolid.KEY);
-			toggleButton.setText("Tài khoản");
-			panel = new TmpHomePanel();
-			ConfigPRJ.menu.put("ACCOUNTS", panel);
 			break;
 		case STATISTICAL:
 			icon = FontIcon.of(FontAwesomeSolid.CHART_LINE);

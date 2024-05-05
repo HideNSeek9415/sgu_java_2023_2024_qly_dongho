@@ -8,7 +8,7 @@ public class CheckValid {
 	private static final String EMAIL_REGEX =
 			 "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 	private static final String PHONE_NUMBER_REGEX =
-            "^0[0-9]{9}$";
+            "^[0-9]{10}$";
 	private static Pattern emailPattern = null;
 	private static Pattern phonePattern = null;
     

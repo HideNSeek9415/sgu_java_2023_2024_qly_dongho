@@ -24,6 +24,7 @@ import dto.ImportInvoiceDetail;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Cursor;
+import javax.swing.border.EtchedBorder;
 
 /**
  *
@@ -50,8 +51,8 @@ public class ChiTietPhieuNhap extends javax.swing.JFrame {
 			Object[] data = {
 				iid.getProductId(),
 				iid.prd.getProductName(),
-				iid.getImportPrice(),
-				iid.getQuantity()
+				iid.getQuantity(),
+				iid.getImportPrice()
 			};
 			model.addRow(data);
 		}
@@ -84,6 +85,9 @@ public class ChiTietPhieuNhap extends javax.swing.JFrame {
         jLabel2.setBounds(6, 6, 149, 17);
         jLabel2.setFont(new Font("Tahoma", Font.BOLD, 14));
         lblMP = new JLabel(String.valueOf(ii.getImportInvoiceId()));
+        lblMP.setOpaque(true);
+        lblMP.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        lblMP.setFont(new Font("Tahoma", Font.BOLD, 11));
         lblMP.setBounds(6, 35, 149, 28);
         lblMP.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         lblMP.setHorizontalAlignment(SwingConstants.CENTER);
@@ -94,6 +98,9 @@ public class ChiTietPhieuNhap extends javax.swing.JFrame {
         jLabel3.setBounds(6, 6, 149, 17);
         jLabel3.setFont(new Font("Tahoma", Font.BOLD, 14));
         lblNVN = new JLabel(ii.employee.getFullName());
+        lblNVN.setOpaque(true);
+        lblNVN.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        lblNVN.setFont(new Font("Tahoma", Font.BOLD, 11));
         lblNVN.setBounds(6, 35, 149, 28);
         lblNVN.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         lblNVN.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,6 +111,9 @@ public class ChiTietPhieuNhap extends javax.swing.JFrame {
         jLabel4.setBounds(6, 6, 149, 17);
         jLabel4.setFont(new Font("Tahoma", Font.BOLD, 14));
         lblNCC = new JLabel(ii.supplier.getSupplierName());
+        lblNCC.setOpaque(true);
+        lblNCC.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        lblNCC.setFont(new Font("Tahoma", Font.BOLD, 11));
         lblNCC.setBounds(6, 35, 149, 28);
         lblNCC.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         lblNCC.setHorizontalAlignment(SwingConstants.CENTER);
@@ -114,6 +124,9 @@ public class ChiTietPhieuNhap extends javax.swing.JFrame {
         jLabel5.setBounds(6, 6, 149, 17);
         jLabel5.setFont(new Font("Tahoma", Font.BOLD, 14));
         lblNT = new JLabel((new SimpleDateFormat("dd/MM/yyyy")).format(ii.getInvoiceDate()));
+        lblNT.setOpaque(true);
+        lblNT.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        lblNT.setFont(new Font("Tahoma", Font.BOLD, 11));
         lblNT.setBounds(6, 35, 149, 28);
         lblNT.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         lblNT.setHorizontalAlignment(SwingConstants.CENTER);
@@ -208,12 +221,25 @@ public class ChiTietPhieuNhap extends javax.swing.JFrame {
         jPanel7.add(lblNT);
 
         table.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {
-                "Mã SP", "Tên SP", "Số lượng", "Đơn giá"
-            }
-        ));
+        table.setModel(new DefaultTableModel(
+        	new Object[][] {
+        	},
+        	new String[] {
+        		"M\u00E3 SP", "T\u00EAn SP", "S\u1ED1 l\u01B0\u1EE3ng", "\u0110\u01A1n gi\u00E1"
+        	}
+        ) {
+        	boolean[] columnEditables = new boolean[] {
+        		false, false, false, false
+        	};
+        	public boolean isCellEditable(int row, int column) {
+        		return columnEditables[column];
+        	}
+        });
+        table.getColumnModel().getColumn(0).setPreferredWidth(15);
+        table.getColumnModel().getColumn(1).setResizable(false);
+        table.getColumnModel().getColumn(1).setPreferredWidth(260);
+        table.getColumnModel().getColumn(2).setResizable(false);
+        table.getColumnModel().getColumn(3).setResizable(false);
         table.setToolTipText("");
         table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(table);

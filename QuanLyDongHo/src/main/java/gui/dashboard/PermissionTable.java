@@ -10,7 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.Insets;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.border.MatteBorder;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignR;
@@ -24,10 +23,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EtchedBorder;
 import java.awt.Cursor;
 
 public class PermissionTable extends JPanel {
@@ -51,8 +47,6 @@ public class PermissionTable extends JPanel {
 	private JLabel lblNewLabel_4;
 	private JCheckBox cbNVS;
 	private JPanel panel_12;
-	private JLabel lblNewLabel_9;
-	private JCheckBox cbNVX;
 	private JPanel panel_14;
 	private JPanel panel_15;
 	private JLabel lblNewLabel_11;
@@ -72,8 +66,6 @@ public class PermissionTable extends JPanel {
 	private JLabel lblNewLabel_17;
 	private JCheckBox cbPNT;
 	private JPanel panel_24;
-	private JLabel lblNewLabel_18;
-	private JCheckBox cbPNS;
 	private JPanel panel_26;
 	private JPanel panel_30;
 	private JLabel lblNewLabel_23;
@@ -108,14 +100,10 @@ public class PermissionTable extends JPanel {
 	private JLabel lblNewLabel_20;
 	private JCheckBox cbNCCO;
 	private JPanel panel_4;
-	private JLabel lblNewLabel_21;
-	private JCheckBox cbSPT;
 	private JPanel panel_2;
 	private JLabel lblNewLabel_1;
 	private JCheckBox cbSPS;
 	private JPanel panel_3;
-	private JLabel lblNewLabel_2;
-	private JCheckBox cbSPX;
 
 	/**
 	 * Create the panel.
@@ -159,16 +147,6 @@ public class PermissionTable extends JPanel {
 		panel_1.add(panel_4);
 		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		lblNewLabel_21 = new JLabel("Thêm mới (NCC)");
-		lblNewLabel_21.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_21.setForeground(new Color(77, 77, 77));
-		lblNewLabel_21.setFont(new Font("Tahoma", Font.BOLD, 17));
-		panel_4.add(lblNewLabel_21);
-		
-		cbSPT = new JCheckBox("");
-		cbSPT.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_4.add(cbSPT);
-		
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		panel_1.add(panel_2);
@@ -188,16 +166,6 @@ public class PermissionTable extends JPanel {
 		panel_3.setOpaque(false);
 		panel_1.add(panel_3);
 		panel_3.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel_2 = new JLabel("Xóa/Khôi phục");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setForeground(new Color(77, 77, 77));
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 17));
-		panel_3.add(lblNewLabel_2);
-		
-		cbSPX = new JCheckBox("");
-		cbSPX.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(cbSPX);
 		
 		panel_5 = new JPanel();
 		panel_5.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -256,16 +224,6 @@ public class PermissionTable extends JPanel {
 		panel_12.setOpaque(false);
 		panel_10.add(panel_12);
 		panel_12.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel_9 = new JLabel("Xóa/Khôi phục");
-		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_9.setForeground(new Color(77, 77, 77));
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 17));
-		panel_12.add(lblNewLabel_9);
-		
-		cbNVX = new JCheckBox("");
-		cbNVX.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_12.add(cbNVX);
 		
 		panel_6 = new JPanel();
 		panel_6.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -419,16 +377,6 @@ public class PermissionTable extends JPanel {
 		panel_24.setOpaque(false);
 		panel_22.add(panel_24);
 		panel_24.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel_18 = new JLabel("Chỉnh sửa");
-		lblNewLabel_18.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_18.setForeground(new Color(77, 77, 77));
-		lblNewLabel_18.setFont(new Font("Tahoma", Font.BOLD, 17));
-		panel_24.add(lblNewLabel_18);
-		
-		cbPNS = new JCheckBox("");
-		cbPNS.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_24.add(cbPNS);
 		
 		panel_9 = new JPanel();
 		panel_9.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -602,19 +550,15 @@ public class PermissionTable extends JPanel {
 
 	private void loadEvent() {
 		btnSave.addActionListener(e -> {			
-			ConfigPRJ.product.put("add", cbSPT.isSelected());
-			ConfigPRJ.product.put("delete", cbSPX.isSelected());
 			ConfigPRJ.product.put("edit", cbSPS.isSelected());
 						
 			ConfigPRJ.employee.put("add", cbNVT.isSelected());
-			ConfigPRJ.employee.put("delete", cbNVX.isSelected());
 			ConfigPRJ.employee.put("edit", cbNVS.isSelected());
 						
 			ConfigPRJ.customer.put("delete", cbKHX.isSelected());
 			ConfigPRJ.customer.put("edit", cbKHS.isSelected());
 						
 			ConfigPRJ.order.put("add", cbPNT.isSelected());
-			ConfigPRJ.order.put("edit", cbPNS.isSelected());
 						
 			ConfigPRJ.receipt.put("add", cbPXT.isSelected());
 			ConfigPRJ.receipt.put("edit", cbPXS.isSelected());
@@ -629,19 +573,15 @@ public class PermissionTable extends JPanel {
 		});
 		btnReload.addActionListener(e -> {
 			PermissionDAO.instance.loadPermission(role);
-			cbSPT.setSelected(ConfigPRJ.product.get("add"));
-			cbSPX.setSelected(ConfigPRJ.product.get("delete"));
 			cbSPS.setSelected(ConfigPRJ.product.get("edit"));
 			
 			cbNVT.setSelected(ConfigPRJ.employee.get("add"));
-			cbNVX.setSelected(ConfigPRJ.employee.get("delete"));
 			cbNVS.setSelected(ConfigPRJ.employee.get("edit"));
 			
 			cbKHX.setSelected(ConfigPRJ.customer.get("delete"));
 			cbKHS.setSelected(ConfigPRJ.customer.get("edit"));
 			
 			cbPNT.setSelected(ConfigPRJ.order.get("add"));
-			cbPNS.setSelected(ConfigPRJ.order.get("edit"));
 			
 			cbPXT.setSelected(ConfigPRJ.receipt.get("add"));
 			cbPXS.setSelected(ConfigPRJ.receipt.get("edit"));

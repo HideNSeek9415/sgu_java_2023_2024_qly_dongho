@@ -108,9 +108,6 @@ public class ThemNhaCungCap extends javax.swing.JFrame {
         		supNameErrorMsg.setText("");
         		supPhoneErrorMsg.setText("");
         		supEmailErrorMsg.setText("");
-        		nhapTenNCC.setText("");
-        		nhapEmail.setText("");
-        		nhapSDT.setText("");
         		
         		boolean emptyInput = false;
         		boolean checkValid = true;
@@ -142,7 +139,7 @@ public class ThemNhaCungCap extends javax.swing.JFrame {
         		}
         		else if(!CheckValid.isValidPhoneNumber(nhapSDT.getText())) {
         			checkValid=false;
-        			supPhoneErrorMsg.setText("Số điện thoại phải đủ 10 chữ số và bắt đầu bằng số 0");
+        			supPhoneErrorMsg.setText("Số điện thoại phải đủ 10 chữ số");
         		}
         		else if(SupplierBLL.getInstance().isDuplicate("phone_number", nhapSDT.getText())) {
         			supPhoneErrorMsg.setText("Số điện thoại đã tồn tại");
@@ -164,6 +161,9 @@ public class ThemNhaCungCap extends javax.swing.JFrame {
 		        			JOptionPane.showMessageDialog(getRootPane(), "Thêm nhà cung cấp thành công");
 	        			}
         			}
+        			nhapTenNCC.setText("");
+            		nhapEmail.setText("");
+            		nhapSDT.setText("");
         		}
         		
         	}

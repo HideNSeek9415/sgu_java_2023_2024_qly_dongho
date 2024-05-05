@@ -54,9 +54,8 @@ public class NewJPanel extends javax.swing.JPanel {
         btnDel = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnImport = new javax.swing.JButton();
-        btnExport = new javax.swing.JButton();
         btnDetail = new javax.swing.JButton();
-        btnFilter = new javax.swing.JButton();
+        btnRecovery = new javax.swing.JButton();
         pnSearch = new javax.swing.JPanel();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
@@ -125,7 +124,7 @@ public class NewJPanel extends javax.swing.JPanel {
         btnImport.setBackground(new java.awt.Color(255, 255, 255));
         btnImport.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnImport.setForeground(new java.awt.Color(0, 0, 0));
-        btnImport.setText("Excel");
+        btnImport.setText("Xuất file");
         btnImport.setBorder(null);
         btnImport.setBorderPainted(false);
         btnImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -133,18 +132,6 @@ public class NewJPanel extends javax.swing.JPanel {
         btnImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnImport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         pnTools.add(btnImport);
-
-        btnExport.setBackground(new java.awt.Color(255, 255, 255));
-        btnExport.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnExport.setForeground(new java.awt.Color(0, 0, 0));
-        btnExport.setText("Xuất file");
-        btnExport.setBorder(null);
-        btnExport.setBorderPainted(false);
-        btnExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExport.setFocusPainted(false);
-        btnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        pnTools.add(btnExport);
 
         btnDetail.setBackground(new java.awt.Color(255, 255, 255));
         btnDetail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -158,17 +145,17 @@ public class NewJPanel extends javax.swing.JPanel {
         btnDetail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         pnTools.add(btnDetail);
 
-        btnFilter.setBackground(new java.awt.Color(255, 255, 255));
-        btnFilter.setFont(new Font("Tahoma", Font.BOLD, 14)); // NOI18N
-        btnFilter.setForeground(new java.awt.Color(0, 0, 0));
-        btnFilter.setText("Bộ lọc");
-        btnFilter.setBorder(null);
-        btnFilter.setBorderPainted(false);
-        btnFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnFilter.setFocusPainted(false);
-        btnFilter.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnFilter.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        pnTools.add(btnFilter);
+        btnRecovery.setBackground(new java.awt.Color(255, 255, 255));
+        btnRecovery.setFont(new Font("Tahoma", Font.BOLD, 14)); // NOI18N
+        btnRecovery.setForeground(new java.awt.Color(0, 0, 0));
+        btnRecovery.setText("Khôi phục");
+        btnRecovery.setBorder(null);
+        btnRecovery.setBorderPainted(false);
+        btnRecovery.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRecovery.setFocusPainted(false);
+        btnRecovery.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRecovery.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        pnTools.add(btnRecovery);
 
         headPanel.add(pnTools);
 
@@ -210,10 +197,9 @@ public class NewJPanel extends javax.swing.JPanel {
             btnAdd.setIcon(FontIcon.of(MaterialDesignP.PLUS_CIRCLE, 40, Color.decode("#2ecc71")));
             btnDel.setIcon(FontIcon.of(MaterialDesignT.TRASH_CAN, 40, Color.decode("#f2b70b")));
             btnEdit.setIcon(FontIcon.of(MaterialDesignP.PEN, 40, Color.decode("#d75a4a")));
-            btnImport.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL, 40, Color.decode("#0e532e")));
-            btnExport.setIcon(FontIcon.of(MaterialDesignE.EXPORT, 40, Color.decode("#147943")));
+            btnImport.setIcon(FontIcon.of(MaterialDesignE.EXPORT, 40, Color.decode("#147943")));
             btnDetail.setIcon(FontIcon.of(MaterialDesignI.INFORMATION_OUTLINE, 40, Color.decode("#2196f3")));
-            btnFilter.setIcon(FontIcon.of(MaterialDesignF.FILTER, 40, Color.decode("#58646c")));
+            btnRecovery.setIcon(FontIcon.of(MaterialDesignR.RESTORE, 40, Color.decode("#1c8351")));
             btnReload.setIcon(FontIcon.of(MaterialDesignR.RELOAD, 18, btnReload.getForeground()));
             btnSearch.setIcon(FontIcon.of(MaterialDesignM.MAGNIFY, 25, Color.black));
     }
@@ -248,6 +234,7 @@ public class NewJPanel extends javax.swing.JPanel {
         });
     }
     private void defineBtnEvent() {
+<<<<<<< HEAD
         btnAdd.addActionListener(e -> { setAddEvent(); });
         btnDel.addActionListener(e -> { setDelEvent(); });
         btnEdit.addActionListener(e -> { setEditEvent(); });
@@ -256,6 +243,14 @@ public class NewJPanel extends javax.swing.JPanel {
         btnDetail.addActionListener(e -> { setDetailEvent(); });
         btnFilter.addActionListener(e -> { setFilterEvent(); });
         btnReload.addActionListener(e -> { setReloadEvent(); });
+=======
+        btnAdd.addActionListener(e -> setAddEvent());
+        btnDel.addActionListener(e -> setDelEvent());
+        btnEdit.addActionListener(e -> setEditEvent());
+        btnImport.addActionListener(e -> setExportEvent());
+        btnDetail.addActionListener(e -> setDetailEvent());
+        btnRecovery.addActionListener(e -> setRecoveryEvent());
+>>>>>>> fb9914f1de6df6034ee045ca71a658ae1cdb4668
     }
 
     //ĐỊNH NGHĨA CÁC SỰ KIỆN BẰNG CÁCH OVERRIDE NHỮNG HÀM NÀY
@@ -265,26 +260,24 @@ public class NewJPanel extends javax.swing.JPanel {
     protected void setImportEvent() {}
     protected void setExportEvent() {}
     protected void setDetailEvent() {}
-    protected void setFilterEvent() {}
+    protected void setRecoveryEvent() {}
     protected void setSearchEvent() {}
     protected void setReloadEvent() {}
 
 
-    protected void setToolsEnabled(boolean add, boolean delete, boolean edit, boolean importExcel, boolean exportExcel, boolean detail, boolean filter) {
+    protected void setToolsEnabled(boolean add, boolean delete, boolean edit, boolean importExcel, boolean exportExcel, boolean detail, boolean recovery) {
         btnAdd.setEnabled(add);
         btnDel.setEnabled(delete);
         btnEdit.setEnabled(edit);
-        btnImport.setEnabled(importExcel);
-        btnExport.setEnabled(exportExcel);
+        btnImport.setEnabled(exportExcel);
         btnDetail.setEnabled(detail);
-        btnFilter.setEnabled(filter);
+        btnRecovery.setEnabled(recovery);
         makeHoverEff(btnAdd);
         makeHoverEff(btnDel);
         makeHoverEff(btnEdit);
         makeHoverEff(btnImport);
-        makeHoverEff(btnExport);
         makeHoverEff(btnDetail);
-        makeHoverEff(btnFilter);
+        makeHoverEff(btnRecovery);
     }
     
     protected void setFilterVisible(boolean status) {
@@ -321,14 +314,14 @@ public class NewJPanel extends javax.swing.JPanel {
         return searchContent;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnDel;
-    private javax.swing.JButton btnDetail;
-    private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnExport;
-    private javax.swing.JButton btnFilter;
+    protected javax.swing.JButton btnAdd;
+    protected javax.swing.JButton btnDel;
+    protected javax.swing.JButton btnDetail;
+    protected javax.swing.JButton btnEdit;
     protected javax.swing.JButton btnImport;
-    private javax.swing.JButton btnReload;
+    protected javax.swing.JButton btnRecovery;
+    protected javax.swing.JButton btnReload;
+
     protected javax.swing.JButton btnSearch;
     private javax.swing.JPanel headPanel;
     private javax.swing.JPanel panel;

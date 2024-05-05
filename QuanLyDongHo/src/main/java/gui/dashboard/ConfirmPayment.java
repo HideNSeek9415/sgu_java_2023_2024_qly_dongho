@@ -19,6 +19,7 @@ import dto.ExportInvoice;
 import dto.ExportInvoiceDetail;
 import dto.Product;
 import dto.Supplier;
+import system.ConfigPRJ;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -143,8 +144,7 @@ public class ConfirmPayment extends JFrame{
 
 				//Tạo phiếu xuất mới vào database				
 //				Mặc định để system.ConfigPRJ.currentUser.getId() là 1
-				ExportInvoice exportInvoice = new ExportInvoice(next_id, -1, 1, 
-						sqlDate, 0);
+				ExportInvoice exportInvoice = new ExportInvoice(ExportInvoiceBLL.getInstance().getNextId() + 1, -1, 1, currentDate, 0);
     			if (ExportInvoiceBLL.getInstance().createExportInvoice(exportInvoice) == false) {
     				JOptionPane.showMessageDialog(rootPane, "Lỗi khi thêm vào database phiếu xuất");
     				errorEI = false;
@@ -191,6 +191,7 @@ public class ConfirmPayment extends JFrame{
     			}
 			}
 		}
+		((TmpHomePanel) ConfigPRJ.menu.get("HOME")).reloadPanel();
 	}
 
 	private void discardBtnActionPerformed(){

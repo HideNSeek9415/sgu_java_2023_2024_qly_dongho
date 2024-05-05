@@ -203,7 +203,7 @@ public class TmpHomePanel extends JPanel {
 	}
 	
 	private void searchEvent() {
-		ArrayList<Product> products = productBLL.getAllProduct();
+		ArrayList<Product> products = ProductBLL.getAllProduct();
 		
 		String searchText = textField.getText().trim().toLowerCase();
 		String selectedCategory = (String) cbbType.getSelectedItem();
@@ -212,12 +212,12 @@ public class TmpHomePanel extends JPanel {
 		int maxV = (int) cpMax.getValue();
 		boolean isdiscountselected = chkDiscount.isSelected();
 
- 		
+		products = filter(products, product -> product.getProductStatus() && product.getQuantity() > 0);
+		products = filter(products, product -> maxV == 0 || (product.isDiscount() ? product.getDiscountPrice() <= maxV : product.getSellPrice() <= maxV));		
+		products = filter(products, product -> minV == 0 || product.isDiscount() ? product.getDiscountPrice() >= minV : product.getSellPrice() >= minV);
 		products = filter(products, product -> searchText.isBlank() || product.getProductName().toLowerCase().contains(searchText));
 		products = filter(products, product -> selectedCategory.equals("Loại đồng hồ") || product.getCategory().equalsIgnoreCase(selectedCategory));
 		products = filter(products, product -> selectedBrand.equals("Thương hiệu") || product.getBrand().equalsIgnoreCase(selectedBrand));
-		products = filter(products, product -> minV == 0 || product.isDiscount() ? product.getDiscountPrice() >= minV : product.getSellPrice() >= minV);
-		products = filter(products, product -> maxV == 0 || product.isDiscount() ? product.getDiscountPrice() <= maxV : product.getSellPrice() <= maxV);
 		products = filter(products, product -> !isdiscountselected || product.isDiscount());
 		
 		
@@ -274,7 +274,9 @@ public class TmpHomePanel extends JPanel {
 
 	public void reloadPanel() {
 		// TODO Auto-generated method stub
-		ArrayList<Product> products = productBLL.getAllProduct();
+		ArrayList<Product> products = ProductBLL.getAllProduct();
+		products = filter(products, product -> product.getProductStatus() && product.getQuantity() > 0);
+
 		int productPerPage = 10;
 		tabbedPane.removeAll();
 		int numberOfPage = products.size()/productPerPage + 1;

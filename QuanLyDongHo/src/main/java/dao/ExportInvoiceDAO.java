@@ -75,11 +75,11 @@ public class ExportInvoiceDAO extends ObjectDAO implements ICrud<ExportInvoice> 
                 int exportInvoiceId = rs.getInt("export_invoice_id");
                 int employeeId = rs.getInt("employee_id");
                 int customerId = rs.getInt("customer_id");
-                Date invoiceDate = rs.getDate("invoice_date");
+                java.sql.Date invoiceDate = rs.getDate("invoice_date");
                 int exportinvoiceStatus = rs.getInt("export_invoice_status");
 
                 ExportInvoice exportInvoice = new ExportInvoice(exportInvoiceId, employeeId, customerId,
-                        (java.sql.Date) invoiceDate, exportinvoiceStatus);
+                        (java.util.Date) invoiceDate, exportinvoiceStatus);
 
                 exportInvoices.add(exportInvoice);
             }
@@ -250,7 +250,7 @@ public class ExportInvoiceDAO extends ObjectDAO implements ICrud<ExportInvoice> 
     }
 
     public int getNextId() {
-		String query = "select max(export_invoice_id) as max_id from mywatchstore.export_invoices";
+		String query = "select count(1) as max_id from mywatchstore.export_invoices";
 	    try {
 	        conn = DataConnection.connect();
 	        prest = conn.prepareStatement(query);

@@ -21,20 +21,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignH;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignI;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignR;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
@@ -44,6 +38,8 @@ import dao.EmployeeDAO;
 import dao.ExportInvoiceDAO;
 import de.ExportPDF;
 import dto.ExportInvoice;
+import system.ConfigPRJ;
+
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,49 +127,7 @@ public class PhieuXuatGUI extends JPanel {
 		btnxuat.setPreferredSize(new Dimension(90, 85));
 		panel_10.add(btnxuat);
 		
-		btnxuat.addActionListener(e -> {
-            try {
-                // Lấy chỉ mục hàng được chọn từ table
-                int selectedRow = table.getSelectedRow();
-
-                // Kiểm tra xem có hàng được chọn không
-                if (selectedRow != -1) {
-                    // Lấy số lượng dòng trong bảng ChiTietLichSuMuaHang.reloadTable()
-                    int rowCount = ChiTietPhieuXuat.reloadTable().getRowCount();
-
-                    // Tạo danh sách để lưu các hàng từ ChiTietLichSuMuaHang.reloadTable()
-                    List<List<Object>> allRows = new ArrayList<>();
-
-                    // Lặp qua tất cả các hàng trong ChiTietLichSuMuaHang.reloadTable()
-                    for (int row = 0; row < rowCount; row++) {
-                        // Lấy dữ liệu từ bảng cho mỗi dòng
-                        Integer detailsId = (Integer) ChiTietPhieuXuat.reloadTable().getValueAt(row, 0);
-                        String exportInvoiceId = ChiTietPhieuXuat.reloadTable().getValueAt(row, 1).toString();
-                        String productName = (String) ChiTietPhieuXuat.reloadTable().getValueAt(row, 2);
-                        String sellPrice = ChiTietPhieuXuat.reloadTable().getValueAt(row, 3).toString();
-                        int columnIndex = 1;
-                        String fullName = table.getValueAt(selectedRow, columnIndex).toString();
-                        Date date = (Date) table.getValueAt(selectedRow, 3);
-
-                        List<Object> rowData = new ArrayList<>();
-                        rowData.add(detailsId.toString());
-                        rowData.add(exportInvoiceId);
-                        rowData.add(productName);
-                        rowData.add(sellPrice);
-                        rowData.add(fullName);
-                        rowData.add(date);
-                        allRows.add(rowData);
-                    }
-                    ExportPDF.exportRowsToPDF1(allRows);
-                    JOptionPane.showMessageDialog(this, "Xuất PDF thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để xuất PDF!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                }
-            } catch (IOException | DocumentException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xuất file PDF!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+		
 
 		
 		panel_11 = new JPanel();
@@ -199,6 +153,7 @@ public class PhieuXuatGUI extends JPanel {
 		panel_11.add(btnxuat_1);
 		btnxuat_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (!ConfigPRJ.shwMsg(ConfigPRJ.order.get("edit"))) return; 
 				refresh();
 			}
 		});
@@ -310,6 +265,50 @@ public class PhieuXuatGUI extends JPanel {
                 return columnEditables[column];
             }
         });
+        
+        btnxuat.addActionListener(e -> {
+            try {
+                // Lấy chỉ mục hàng được chọn từ table
+                int selectedRow = table.getSelectedRow();
+
+                // Kiểm tra xem có hàng được chọn không
+                if (selectedRow != -1) {
+                    // Lấy số lượng dòng trong bảng ChiTietLichSuMuaHang.reloadTable()
+                    int rowCount = ChiTietPhieuXuat.reloadTable().getRowCount();
+
+                    // Tạo danh sách để lưu các hàng từ ChiTietLichSuMuaHang.reloadTable()
+                    List<List<Object>> allRows = new ArrayList<>();
+
+                    // Lặp qua tất cả các hàng trong ChiTietLichSuMuaHang.reloadTable()
+                    for (int row = 0; row < rowCount; row++) {
+                        // Lấy dữ liệu từ bảng cho mỗi dòng
+                        Integer detailsId = (Integer) ChiTietPhieuXuat.reloadTable().getValueAt(row, 0);
+                        String exportInvoiceId = ChiTietPhieuXuat.reloadTable().getValueAt(row, 1).toString();
+                        String productName = (String) ChiTietPhieuXuat.reloadTable().getValueAt(row, 2);
+                        String sellPrice = ChiTietPhieuXuat.reloadTable().getValueAt(row, 3).toString();
+                        int columnIndex = 1;
+                        String fullName = table.getValueAt(selectedRow, columnIndex).toString();
+                        Date date = (Date) table.getValueAt(selectedRow, 3);
+
+                        List<Object> rowData = new ArrayList<>();
+                        rowData.add(detailsId.toString());
+                        rowData.add(exportInvoiceId);
+                        rowData.add(productName);
+                        rowData.add(sellPrice);
+                        rowData.add(fullName);
+                        rowData.add(date);
+                        allRows.add(rowData);
+                    }
+                    ExportPDF.exportRowsToPDF1(allRows);
+                    JOptionPane.showMessageDialog(this, "Xuất PDF thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để xuất PDF!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (IOException | DocumentException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xuất file PDF!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         table.getColumnModel().getColumn(0).setResizable(false);
         table.getColumnModel().getColumn(0).setPreferredWidth(51);
@@ -321,7 +320,7 @@ public class PhieuXuatGUI extends JPanel {
 		ExportInvoiceDAO historyDAO = ExportInvoiceDAO.getInstance();
         ArrayList<ExportInvoice> historylist = historyDAO.readAllData();
 
-        displayHistory(historylist);
+        reloadTable(historylist);
 		
 		addIcon();
 		makeHoverEff(btnchitiet);
@@ -329,7 +328,24 @@ public class PhieuXuatGUI extends JPanel {
 		makeHoverEff(btnlammoi);
                 addStuff();
 	}
-	private void displayHistory(ArrayList<ExportInvoice> invoiceList) {
+	// public void reloadTable() {
+	//     DefaultTableModel model = (DefaultTableModel) table.getModel();
+	//     model.setRowCount(0);
+	//     ArrayList<ExportInvoice> exportInvoices = ExportInvoiceDAO.getInstance().readAllData();
+	
+	//     for (ExportInvoice exportInvoice : exportInvoices) {
+	//         exportInvoice.setEmployeeFullName(); // Cập nhật fullNameEmployee
+	//         exportInvoice.setCustomerFullName();
+	//         Object[] data = {
+	//             exportInvoice.getExportInvoiceId(),
+	//             exportInvoice.getCustomerName(),
+	//             exportInvoice.getEmployeeName(), // Sử dụng fullNameEmployee
+	//             exportInvoice.getInvoiceDate(),
+	//         };
+	//         model.addRow(data);
+	//     }
+	// }
+	private void reloadTable(ArrayList<ExportInvoice> invoiceList) {
 	    DefaultTableModel model = new DefaultTableModel(
 	        new Object[][]{},
 	        new String[]{"Mã hóa đơn", "Tên nhân viên", "Tên khách hàng", "Ngày mua hàng", "Trạng thái"}
@@ -391,7 +407,7 @@ public class PhieuXuatGUI extends JPanel {
 	        int row = table.getSelectedRow();
 	        if (row != -1) { 
 	            int exportInvoiceId = (Integer) table.getValueAt(row, 0); 
-	            boolean success = ExportInvoiceBLL.getInstance().updateStatusForEmployee(exportInvoiceId, 1);
+	            boolean success = ExportInvoiceBLL.getInstance().updateStatusForEmployee(exportInvoiceId, ConfigPRJ.currentUser.getId());
 	            if (success) {
 	                JOptionPane.showMessageDialog(null, "Đã duyệt đơn hàng");
 	              
@@ -466,7 +482,7 @@ public class PhieuXuatGUI extends JPanel {
         private void refresh() {
             // Lấy lại toàn bộ dữ liệu lịch sử mua hàng
             ArrayList<ExportInvoice> historyList = ExportInvoiceDAO.getInstance().readAllData();      
-            displayHistory(historyList);
+            reloadTable(historyList);
             dateChooser.setDate(null);
             dateChooser_1.setDate(null);
             txtTmKim.setText("");

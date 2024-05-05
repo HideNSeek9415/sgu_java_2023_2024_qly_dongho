@@ -33,9 +33,9 @@ public class AccountBLL {
 		}
 		account = AccountDAO.getInstance().getUserByUsername(account.getUsername());
 		if (account.getRoleId().equals("CTM")) {
-			ConfigPRJ.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(account.getId());
+			ConfigPRJ.loadUser(CustomerDAO.getInstance().getCustomerByAccountId(account.getId()));
 		} else {
-			ConfigPRJ.currentUser = EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId());
+			ConfigPRJ.loadUser(EmployeeDAO.getInstance().getEmployeeByAccountId(account.getId()));
 		}
 		return VALID;
 	}

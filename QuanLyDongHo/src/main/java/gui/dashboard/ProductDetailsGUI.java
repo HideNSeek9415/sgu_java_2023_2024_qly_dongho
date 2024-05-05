@@ -85,6 +85,7 @@ public class ProductDetailsGUI extends JFrame {
 	private JLabel lblAmount;
 	private JButton btnAdd;
 	private int numOfPrd = 1;
+	int sellPrice;
 
     /**
      * Launch the application.
@@ -112,7 +113,7 @@ public class ProductDetailsGUI extends JFrame {
         String productName = product.getProductName();
         String category = product.getCategory();
         String brand = product.getBrand();
-        double sellPrice = product.getSellPrice();
+        sellPrice = product.isDiscount() ? product.getDiscountPrice() : product.getSellPrice();
         double discountPrice = product.getDiscountPrice();
         int quantity = ProductBLL.getQuantityNumber(product.getId()) == -1 ? product.getQuantity() : ProductBLL.getQuantityNumber(product.getId());
         String productStatus = product.getStatus();
@@ -269,12 +270,7 @@ public class ProductDetailsGUI extends JFrame {
         lblPaid.setFont(new Font("Segoe UI", Font.BOLD, 21));
         pnAmount.add(lblPaid);
 
-        lblCross = new JLabel() {
-            @Override
-            public void setText(String text) {
-                super.setText("<html><strike>" + text + "</strike></html>");
-            }
-        };
+        lblCross = new JLabel();
         lblCross.setHorizontalAlignment(SwingConstants.CENTER);
         lblCross.setText("");
         lblCross.setForeground(new Color(128, 128, 128));
@@ -386,7 +382,7 @@ public class ProductDetailsGUI extends JFrame {
         	}
         	btnAdd.setEnabled(true);
         	lblAmount.setText(String.valueOf(numOfPrd));
-        	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+        	int totalPrice = numOfPrd*sellPrice;
         	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
         	lblPaid.setText(formatTotalPrice);
         });
@@ -394,7 +390,7 @@ public class ProductDetailsGUI extends JFrame {
         	numOfPrd++;
 	    	btnSub.setEnabled(true);
 	    	lblAmount.setText(String.valueOf(numOfPrd));
-	    	double totalPrice = numOfPrd*selectedProduct.getSellPrice();
+	    	double totalPrice = numOfPrd*sellPrice;
 	    	String formatTotalPrice = String.format("%,.0f VNĐ", totalPrice);
 	    	lblPaid.setText(formatTotalPrice);
         	if (numOfPrd >= Integer.parseInt(lblQuantity.getText()) ) {

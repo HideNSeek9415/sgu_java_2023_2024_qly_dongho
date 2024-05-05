@@ -1,8 +1,6 @@
 package gui.dashboard;
 import javax.swing.JFrame;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -14,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 
 import dto.Supplier;
 import system.ConfigPRJ;
-import system.ExportManager;
 import bll.SupplierBLL;
 
 import java.awt.Font;
@@ -24,7 +21,7 @@ import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class SuppliersGUI extends NewJPanel {
+public class zSuppliersGUI extends NewJPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
@@ -34,7 +31,7 @@ public class SuppliersGUI extends NewJPanel {
 	/**
 	 * Create the panel.
 	 */
-	public SuppliersGUI() {
+	public zSuppliersGUI() {
 		pnContent.setLayout(new BorderLayout(0, 0));
 		
 		comboBox.setVisible(false);
@@ -53,7 +50,7 @@ public class SuppliersGUI extends NewJPanel {
 				{"NCC02", "CTTNHH MTV Bán Cái Đồng Hồ", "bdha@ko.ko", "0188923543"},
 			},
 			new String[] {
-				"Mã NCC", "Tên nhà cung cấp", "E-mail", "Số điện thoại"
+				"Mã NCC", "Tên nhà cung cấp", "E-mail", "Trạng thái", "Số điện thoại"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -63,8 +60,8 @@ public class SuppliersGUI extends NewJPanel {
 		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 		scrollPane.setViewportView(table);
 		designTitle();
-		reloadTable();
-		
+		model = (DefaultTableModel) table.getModel();
+
 		txtSearch.addFocusListener(new FocusListener() {
 		    @Override
 		    public void focusGained(FocusEvent e) {
@@ -96,24 +93,18 @@ public class SuppliersGUI extends NewJPanel {
             	reloadTableAfterSearch();
             }
         });
-		model = (DefaultTableModel) table.getModel();
 		reloadTable();
-		btnImport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ExportManager.exportToExcel(table);
-            }
-        });
 	}
 	
 	private void reloadTable() {
 		ArrayList<Supplier> suppliers = SupplierBLL.getSupplierList();
-		model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		for (Supplier supplier : suppliers) {
 			Object[] data = {
 				supplier.getSupplierId(),
 				supplier.getSupplierName(),
 				supplier.getEmail(),
+				supplier.getSupplierStatus(),
 				supplier.getPhoneNumber()
 			};
 			model.addRow(data);
@@ -128,6 +119,7 @@ public class SuppliersGUI extends NewJPanel {
 	
 	@Override
 	protected void setAddEvent() {
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.supplier.get("add"))) return; 
 		JFrame fr = new ThemNhaCungCap();
 		fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		fr.setSize(761, 500);
@@ -138,35 +130,42 @@ public class SuppliersGUI extends NewJPanel {
 	
 	@Override
 	protected void setEditEvent() {
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.supplier.get("edit"))) return; 
 		if (table.getSelectedRows().length == 1 ) {
 			JFrame fr = new SuaNhaCungCap(getTable());
 			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			fr.setSize(761, 500);
 			fr.setLocationRelativeTo(null);
 			fr.setVisible(true);
-		} else {			
+		}
+		else {
 			JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn 1 nhà cung cấp để sửa");
 		}
 	}
 	
 	@Override
 	protected void setDelEvent() {
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.supplier.get("delete"))) return; 
+		boolean flag = true;
 		int [] selectedRows = table.getSelectedRows();
 		if(selectedRows.length == 0) JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn ít nhất 1 nhà cung cấp");
 		else {
 			for(int i:selectedRows) {
 				int idSupplier = Integer.parseInt(table.getValueAt(i, 0).toString());
-				if(SupplierBLL.getInstance().deleteSupplier(idSupplier) == false)
+				if(SupplierBLL.getInstance().deleteSupplier(idSupplier) == false) {
 					JOptionPane.showMessageDialog(getRootPane(), "Xóa nhà cung cấp thất bại với mã nhà cung cấp: " + (i+1));
-				else {
-					JOptionPane.showMessageDialog(getRootPane(), "Xóa nhà cung cấp thành công");
-					reloadTable();
+					flag = false;
 				}
+			}
+			if (flag) {
+				JOptionPane.showMessageDialog(getRootPane(), "Xóa nhà cung cấp thành công");
+				reloadTable();
 			}
 		}
 	}
 	@Override
 	protected void setRecoveryEvent() {
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.supplier.get("delete"))) return; 
 		int [] selectedRows = table.getSelectedRows();
 		if(selectedRows.length == 0) JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn ít nhất 1 nhà cung cấp");
 		else {
@@ -181,13 +180,13 @@ public class SuppliersGUI extends NewJPanel {
 			}
 		}
 	}
+	
 	@Override
 	protected void setReloadEvent() { reloadTable(); }
-
 	
 	@Override
 	protected void setDetailEvent() {
-		if (!ConfigPRJ.shwMsg(ConfigPRJ.product.get("add"))) return; 
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.supplier.get("other"))) return; 
 		int Sid = (Integer) table.getValueAt(table.getSelectedRow(), 0);
 		SupplierDetails.selectedSupplier = SupplierBLL.getByID(Sid);
 		JFrame fr = new SupplierDetails();
@@ -217,11 +216,10 @@ public class SuppliersGUI extends NewJPanel {
 	}
 	
 	protected void reloadTableAfterSearch() {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		ArrayList<Supplier> datas = SupplierBLL.getInstance().readAllData();
 		for (Supplier data: datas) {
-			if(searchResult(data.getSupplierName().toLowerCase())) {
+			if(searchResult(data.getSupplierName().toLowerCase())){
 				Object[] rowData = {data.getSupplierId(), data.getSupplierName(), data.getEmail(), data.getSupplierStatus(), data.getPhoneNumber()};
 				model.addRow(rowData);
 			}

@@ -18,6 +18,10 @@ public class SupplierBLL {
 		return (SupplierDAO.getInstance().delete(idSupplier) == false) ? false : true;
 	}
 	
+	public static boolean recoverySupplier(int idSupplier) {
+		return (SupplierDAO.getInstance().recovery(idSupplier) == false) ? false : true;
+	}
+	
 	public ArrayList<Supplier> readAllData() {
 		return SupplierDAO.getInstance().readAllData();
 	}

@@ -384,7 +384,7 @@ public class ThemSPGUI extends javax.swing.JFrame {
         jLabel5.setText("Giá khuyên mãi");
    
 			txtDiscountPrice = new JSpinner();
-			txtDiscountPrice.setModel(new SpinnerNumberModel(0, 0, prd.getSellPrice()*9/10, 1000));
+			txtDiscountPrice.setModel(new SpinnerNumberModel(0, 0, 500000000, 100000));
 
         jPanel10.add(txtDiscountPrice);
         jPanel13.setLayout(new GridLayout(0, 1, 0, 0));

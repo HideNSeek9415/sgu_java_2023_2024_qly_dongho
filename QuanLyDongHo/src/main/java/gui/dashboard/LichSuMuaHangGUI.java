@@ -59,6 +59,7 @@ import dao.ProductDAO;
 import de.ExportPDF;
 import dto.ExportInvoice;
 import dto.Product;
+import system.ConfigPRJ;
 import system.JTableExporter;
 
 import java.awt.Cursor;
@@ -374,8 +375,9 @@ public class LichSuMuaHangGUI extends JPanel {
         CustomerDAO customerDAO = CustomerDAO.getInstance();
 
         for (ExportInvoice invoice : invoiceList) {
+        	int customerId = invoice.getCustomerId();
+        	if (customerId != ConfigPRJ.currentUser.getId()) continue; 
             int employeeId = invoice.getEmployeeId();
-            int customerId = invoice.getCustomerId();
 
             String fullNameCus = customerDAO.getFullNameByCustomerId(customerId);
             String fullName = employeeDAO.getFullNameByEmployeeId(employeeId);

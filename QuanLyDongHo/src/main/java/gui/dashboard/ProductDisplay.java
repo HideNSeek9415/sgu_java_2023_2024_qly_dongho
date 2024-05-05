@@ -106,7 +106,7 @@ public class ProductDisplay extends JPanel {
         pn2.add(pnPrice, BorderLayout.CENTER);
         pnPrice.setLayout(new GridLayout(2, 1, 0, 0));
 
-        double sellPrice = product.getSellPrice();
+        int sellPrice = product.isDiscount() ? product.getDiscountPrice() : product.getSellPrice();
         String formattedPrice = formatCurrency(sellPrice);
 
         lblPrice = new JLabel(formattedPrice);
@@ -126,12 +126,12 @@ public class ProductDisplay extends JPanel {
                 super.setText("<html><strike>" + text + "</strike></html>");
             }
         };
-        lblCross.setText(String.valueOf(product.getDiscountPrice()));
+        lblCross.setText((new DecimalFormat("#,##0")).format(product.getSellPrice()));
         lblCross.setForeground(Color.GRAY);
         lblCross.setFont(new Font("Times New Roman", Font.BOLD, 12));
         panel_1.add(lblCross);
 
-        lblSale = new JLabel("-25%");
+        lblSale = new JLabel("-" + (100 - 100 * product.getDiscountPrice()/product.getSellPrice()) + "%");
         lblSale.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblSale.setForeground(new Color(240, 92, 92));
         lblSale.setOpaque(true);
@@ -230,7 +230,7 @@ public class ProductDisplay extends JPanel {
     }
     
     
-    private String formatCurrency(double amount) {
+    private String formatCurrency(int amount) {
     	DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");
         return decimalFormat.format(amount);
     }

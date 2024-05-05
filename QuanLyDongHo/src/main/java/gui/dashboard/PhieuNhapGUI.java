@@ -22,10 +22,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignH;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignI;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignR;
@@ -41,12 +37,11 @@ import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
 
 import bll.ImportInvoiceBLL;
-import dao.EmployeeDAO;
 import dao.ImportInvoiceDAO;
 import de.ExportPDF;
 import dto.ImportInvoice;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import system.ConfigPRJ;
+
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.List;
@@ -375,6 +370,7 @@ public class PhieuNhapGUI extends JPanel {
 	}
 	private void addStuff() {
 		btnthem.addActionListener(e -> {
+			if (!ConfigPRJ.shwMsg(ConfigPRJ.receipt.get("add"))) return; 
 			JFrame fr = new ThemPhieuNhap();
 			fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			fr.setLocationRelativeTo(null);

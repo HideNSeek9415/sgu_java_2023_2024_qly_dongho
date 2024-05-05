@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import dao.ProductDAO;
 import dto.Product;
+import system.ConfigPRJ;
 import system.ExportManager;
 
 public class ProductManagerGUI extends NewJPanel {
@@ -105,6 +106,7 @@ public class ProductManagerGUI extends NewJPanel {
 
     @Override
     protected void setDetailEvent() {
+		if (!ConfigPRJ.shwMsg(ConfigPRJ.product.get("edit"))) return; 
     	int id = (Integer) table.getValueAt(table.getSelectedRow(), 0);
     	Product p = ProductDAO.getInstance().readByID(id);
         JFrame fr = new ThemSPGUI(p);

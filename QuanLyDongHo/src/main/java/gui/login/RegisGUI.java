@@ -38,6 +38,7 @@ import bll.CustomerBLL;
 import dao.CustomerDAO;
 import dto.Account;
 import dto.Customer;
+import gui.menu.UserMenu;
 import system.ConfigPRJ;
 
 import javax.swing.border.BevelBorder;
@@ -406,7 +407,7 @@ public class RegisGUI extends JFrame {
 				break;
 			case CustomerBLL.VALID:
 				CustomerBLL.addCustomer(ctm);
-				JOptionPane.showMessageDialog(null, ConfigPRJ.currentUser, "Info", JOptionPane.INFORMATION_MESSAGE);
+				dispose();
 				break;
 			}
 		});
