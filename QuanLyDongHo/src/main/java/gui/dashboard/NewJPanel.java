@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.AbstractButton;
+import javax.swing.JButton;
+
 import org.kordamp.ikonli.materialdesign2.*;
 import org.kordamp.ikonli.swing.FontIcon;
 import java.awt.Dimension;
@@ -190,7 +192,7 @@ public class NewJPanel extends javax.swing.JPanel {
 
         add(panel);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void addIcon() {
             btnAdd.setIcon(FontIcon.of(MaterialDesignP.PLUS_CIRCLE, 40, Color.decode("#2ecc71")));
             btnDel.setIcon(FontIcon.of(MaterialDesignT.TRASH_CAN, 40, Color.decode("#f2b70b")));
@@ -265,6 +267,29 @@ public class NewJPanel extends javax.swing.JPanel {
         makeHoverEff(btnImport);
         makeHoverEff(btnDetail);
         makeHoverEff(btnRecovery);
+    }
+    
+    protected void setFilterVisible(boolean status) {
+    	comboBox.setVisible(status);
+    	btnSearch.setVisible(status);
+    	txtSearch.setVisible(status);
+    }
+    
+    protected void setToolsVisible(boolean status) {
+        btnAdd.setVisible(status);
+        btnDel.setVisible(status);
+        btnEdit.setVisible(status);
+        btnImport.setVisible(status);
+        // btnExport.setVisible(status);
+        btnDetail.setVisible(status);
+        // btnFilter.setVisible(status);
+        makeHoverEff(btnAdd);
+        makeHoverEff(btnDel);
+        makeHoverEff(btnEdit);
+        makeHoverEff(btnImport);
+        // makeHoverEff();
+        makeHoverEff(btnDetail);
+        // makeHoverEff(btnFilter);
     }
 
     public NewJPanel(boolean add, boolean delete, boolean edit, boolean importExcel, boolean exportExcel, boolean detail, boolean filter) {

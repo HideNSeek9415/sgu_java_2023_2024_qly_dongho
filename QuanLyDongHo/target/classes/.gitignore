@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+/de/
+/dto/
+/gui/
+/system/
+/watchstore/
+/META-INF/
+/dao/
+/bll/
+=======
 /bll/
 /dao/
 /de/
@@ -6,3 +16,4 @@
 /system/
 /watchstore/
 /META-INF/
+>>>>>>> fb9914f1de6df6034ee045ca71a658ae1cdb4668
