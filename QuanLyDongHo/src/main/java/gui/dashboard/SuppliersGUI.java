@@ -1,6 +1,8 @@
 package gui.dashboard;
 import javax.swing.JFrame;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -12,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dto.Supplier;
 import system.ConfigPRJ;
+import system.ExportManager;
 import bll.SupplierBLL;
 
 import java.awt.Font;
@@ -95,6 +98,11 @@ public class SuppliersGUI extends NewJPanel {
         });
 		model = (DefaultTableModel) table.getModel();
 		reloadTable();
+		btnImport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExportManager.exportToExcel(table);
+            }
+        });
 	}
 	
 	private void reloadTable() {

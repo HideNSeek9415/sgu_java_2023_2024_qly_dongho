@@ -51,7 +51,7 @@ public class NewJPanel extends javax.swing.JPanel {
         btnAdd = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
-        btnExport = new javax.swing.JButton();
+        btnImport = new javax.swing.JButton();
         btnDetail = new javax.swing.JButton();
         btnRecovery = new javax.swing.JButton();
         pnSearch = new javax.swing.JPanel();
@@ -119,17 +119,17 @@ public class NewJPanel extends javax.swing.JPanel {
         btnEdit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         pnTools.add(btnEdit);
 
-        btnExport.setBackground(new java.awt.Color(255, 255, 255));
-        btnExport.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnExport.setForeground(new java.awt.Color(0, 0, 0));
-        btnExport.setText("Xuất file");
-        btnExport.setBorder(null);
-        btnExport.setBorderPainted(false);
-        btnExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExport.setFocusPainted(false);
-        btnExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        pnTools.add(btnExport);
+        btnImport.setBackground(new java.awt.Color(255, 255, 255));
+        btnImport.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnImport.setForeground(new java.awt.Color(0, 0, 0));
+        btnImport.setText("Xuất file");
+        btnImport.setBorder(null);
+        btnImport.setBorderPainted(false);
+        btnImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImport.setFocusPainted(false);
+        btnImport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnImport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        pnTools.add(btnImport);
 
         btnDetail.setBackground(new java.awt.Color(255, 255, 255));
         btnDetail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -195,7 +195,7 @@ public class NewJPanel extends javax.swing.JPanel {
             btnAdd.setIcon(FontIcon.of(MaterialDesignP.PLUS_CIRCLE, 40, Color.decode("#2ecc71")));
             btnDel.setIcon(FontIcon.of(MaterialDesignT.TRASH_CAN, 40, Color.decode("#f2b70b")));
             btnEdit.setIcon(FontIcon.of(MaterialDesignP.PEN, 40, Color.decode("#d75a4a")));
-            btnExport.setIcon(FontIcon.of(MaterialDesignE.EXPORT, 40, Color.decode("#147943")));
+            btnImport.setIcon(FontIcon.of(MaterialDesignE.EXPORT, 40, Color.decode("#147943")));
             btnDetail.setIcon(FontIcon.of(MaterialDesignI.INFORMATION_OUTLINE, 40, Color.decode("#2196f3")));
             btnRecovery.setIcon(FontIcon.of(MaterialDesignR.RESTORE, 40, Color.decode("#1c8351")));
             btnReload.setIcon(FontIcon.of(MaterialDesignR.RELOAD, 18, btnReload.getForeground()));
@@ -235,7 +235,7 @@ public class NewJPanel extends javax.swing.JPanel {
         btnAdd.addActionListener(e -> setAddEvent());
         btnDel.addActionListener(e -> setDelEvent());
         btnEdit.addActionListener(e -> setEditEvent());
-        btnExport.addActionListener(e -> setExportEvent());
+        btnImport.addActionListener(e -> setExportEvent());
         btnDetail.addActionListener(e -> setDetailEvent());
         btnRecovery.addActionListener(e -> setRecoveryEvent());
     }
@@ -256,13 +256,13 @@ public class NewJPanel extends javax.swing.JPanel {
         btnAdd.setEnabled(add);
         btnDel.setEnabled(delete);
         btnEdit.setEnabled(edit);
-        btnExport.setEnabled(exportExcel);
+        btnImport.setEnabled(exportExcel);
         btnDetail.setEnabled(detail);
         btnRecovery.setEnabled(recovery);
         makeHoverEff(btnAdd);
         makeHoverEff(btnDel);
         makeHoverEff(btnEdit);
-        makeHoverEff(btnExport);
+        makeHoverEff(btnImport);
         makeHoverEff(btnDetail);
         makeHoverEff(btnRecovery);
     }
@@ -282,9 +282,10 @@ public class NewJPanel extends javax.swing.JPanel {
     protected javax.swing.JButton btnDel;
     protected javax.swing.JButton btnDetail;
     protected javax.swing.JButton btnEdit;
-    protected javax.swing.JButton btnExport;
+    protected javax.swing.JButton btnImport;
     protected javax.swing.JButton btnRecovery;
     protected javax.swing.JButton btnReload;
+
     protected javax.swing.JButton btnSearch;
     private javax.swing.JPanel headPanel;
     private javax.swing.JPanel panel;

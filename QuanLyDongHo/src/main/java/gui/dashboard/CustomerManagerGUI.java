@@ -1,6 +1,8 @@
 package gui.dashboard;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ import javax.swing.table.TableModel;
 
 import dao.CustomerDAO;
 import dto.Customer;
+import system.ExportManager;
 
 public class CustomerManagerGUI extends NewJPanel {
 
@@ -37,6 +40,12 @@ public class CustomerManagerGUI extends NewJPanel {
 		));
 		scrollPane.setViewportView(table);
 		reloadTable();
+		
+		btnImport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExportManager.exportToExcel(table);
+            }
+        });
 	}
 
 	private void reloadTable() {

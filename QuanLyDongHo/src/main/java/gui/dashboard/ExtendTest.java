@@ -40,7 +40,6 @@ public class ExtendTest extends DashboardFrame {
 		addFunction(new FunctionBtn(FunctionBtn.CUSTOMERS));
 		addFunction(new FunctionBtn(FunctionBtn.SUPPLIERS));
 		addFunction(new FunctionBtn(FunctionBtn.EMPLOYEES));
-		addFunction(new FunctionBtn(FunctionBtn.ACCOUNTS));
 		addFunction(new FunctionBtn(FunctionBtn.STATISTICAL));
 		addFunction(new FunctionBtn(FunctionBtn.PERMISSION));
 		addFunction(new FunctionBtn(FunctionBtn.WARRANTY));

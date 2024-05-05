@@ -191,6 +191,7 @@ public class ConfirmPayment extends JFrame{
     			}
 			}
 		}
+		((TmpHomePanel) ConfigPRJ.menu.get("HOME")).reloadPanel();
 	}
 
 	private void discardBtnActionPerformed(){

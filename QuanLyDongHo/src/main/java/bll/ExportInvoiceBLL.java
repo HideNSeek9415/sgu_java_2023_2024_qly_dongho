@@ -13,7 +13,7 @@ import java.sql.Date;
 	
 	public class ExportInvoiceBLL {
 	    
-	    public static ExportInvoice getByID(int id) {
+		public static ExportInvoice getByID(int id) {
 			dto.ExportInvoice supplier = ExportInvoiceDAO.getInstance().readByID(id);
 			return supplier;
 		}
@@ -22,14 +22,22 @@ import java.sql.Date;
 		}
 	    
 	    
-	    public ArrayList<ExportInvoice> search(Date startDate, Date endDate, int status, String employeeName) {
-	        return ExportInvoiceDAO.getInstance().searchByDateAndStatusAndName(startDate, endDate, status, employeeName);
+	    public ArrayList<ExportInvoice> search(Date startDate, Date endDate, int status, String employeeName, int employeeID) {
+	        return ExportInvoiceDAO.getInstance().searchByDateAndStatusAndName(startDate, endDate, status, employeeName, employeeID);
 	    }
 
+	    public ArrayList<ExportInvoice> search2(Date startDate, Date endDate, int status, String customerName) {
+	        return ExportInvoiceDAO.getInstance().searchByDateAndStatusAndNameCus(startDate, endDate, status, customerName);
+	    }
 	    
 	    public static ExportInvoiceBLL getInstance() {
 			return new ExportInvoiceBLL();
 		}
+	    
+	    public boolean updateStatusForEmployee(int exportInvoiceId, int employeeId) {
+	        ExportInvoiceDAO exportInvoiceDAO = ExportInvoiceDAO.getInstance();
+	        return exportInvoiceDAO.updateStatusForEmployee(exportInvoiceId, employeeId);
+	    }
 	    
 	    
 	    public boolean createExportInvoice(ExportInvoice object) {

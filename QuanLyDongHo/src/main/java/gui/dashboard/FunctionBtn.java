@@ -98,12 +98,6 @@ public class FunctionBtn {
 			panel = new EmployeesGUI();
 			ConfigPRJ.menu.put("EMPLOYEES", panel);
 			break;
-		case ACCOUNTS:
-			icon = FontIcon.of(FontAwesomeSolid.KEY);
-			toggleButton.setText("Tài khoản");
-			panel = new TmpHomePanel();
-			ConfigPRJ.menu.put("ACCOUNTS", panel);
-			break;
 		case STATISTICAL:
 			icon = FontIcon.of(FontAwesomeSolid.CHART_LINE);
 			toggleButton.setText("Thống kê");
@@ -124,6 +118,7 @@ public class FunctionBtn {
 		case HISTORY:
 			icon = FontIcon.of(MaterialDesignC.CLIPBOARD_TEXT_SEARCH_OUTLINE);
 			toggleButton.setText("Lịch sử mua hàng");
+			panel = new LichSuMuaHangGUI();
 			ConfigPRJ.menu.put("HISTORY", panel);
 			break;
 		default:

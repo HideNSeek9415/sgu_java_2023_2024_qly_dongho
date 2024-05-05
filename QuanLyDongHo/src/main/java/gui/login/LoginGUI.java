@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import org.kordamp.ikonli.materialdesign.MaterialDesign;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignL;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import bll.AccountBLL;
@@ -205,7 +207,12 @@ public class LoginGUI extends JFrame {
 				JOptionPane.showMessageDialog(null, "Mật khẩu không chính xác", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				break;
 			case AccountBLL.VALID:
-				dispose();
+				if (ConfigPRJ.currentUser.getAccount().getAccountStatus().equals("inactive")) {
+					JOptionPane.showMessageDialog(null, "Tài khoản của bạn đã bị khóa", "Thông báo",
+					JOptionPane.INFORMATION_MESSAGE, FontIcon.of(MaterialDesignL.LOCK, 55, Color.decode("#cc6a6b")));
+				} else {					
+					dispose();
+				}
 				break;
 			}
 		});

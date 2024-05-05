@@ -1,7 +1,8 @@
-/META-INF/
-/gui/
-/dao/
 /bll/
-/system/
+/dao/
+/de/
 /dto/
+/gui/
+/system/
 /watchstore/
+/META-INF/

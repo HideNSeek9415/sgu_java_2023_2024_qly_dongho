@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
@@ -12,6 +13,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JComboBox;
@@ -30,15 +32,19 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
+import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
 
 import bll.ImportInvoiceBLL;
 import dao.ImportInvoiceDAO;
+import de.ExportPDF;
 import dto.ImportInvoice;
 import system.ConfigPRJ;
 
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PhieuNhapGUI extends JPanel {
 
@@ -135,6 +141,55 @@ public class PhieuNhapGUI extends JPanel {
 		btnxuat.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnxuat.setPreferredSize(new Dimension(90, 85));
 		panel_10.add(btnxuat);
+		
+		
+		//Thay thế với data của phiếu nhập
+		
+		
+		btnxuat.addActionListener(e -> {
+            try {
+                // Lấy chỉ mục hàng được chọn từ table
+                int selectedRow = table.getSelectedRow();
+
+                // Kiểm tra xem có hàng được chọn không
+                if (selectedRow != -1) {
+                    // Lấy số lượng dòng trong bảng ChiTietLichSuMuaHang.reloadTable()
+                    int rowCount = ChiTietLichSuMuaHang.reloadTable().getRowCount();
+
+                    // Tạo danh sách để lưu các hàng từ ChiTietLichSuMuaHang.reloadTable()
+                    List<List<Object>> allRows = new ArrayList<>();
+
+                    // Lặp qua tất cả các hàng trong ChiTietLichSuMuaHang.reloadTable()
+                    for (int row = 0; row < rowCount; row++) {
+                        // Lấy dữ liệu từ bảng cho mỗi dòng
+                        Integer detailsId = (Integer) ChiTietLichSuMuaHang.reloadTable().getValueAt(row, 0);
+                        String exportInvoiceId = ChiTietLichSuMuaHang.reloadTable().getValueAt(row, 1).toString();
+                        String productName = (String) ChiTietLichSuMuaHang.reloadTable().getValueAt(row, 2);
+                        String sellPrice = ChiTietLichSuMuaHang.reloadTable().getValueAt(row, 3).toString();
+                        int columnIndex = 1;
+                        String fullName = table.getValueAt(selectedRow, columnIndex).toString();
+                        
+                        // Thêm dòng hiện tại vào danh sách hàng
+                        List<Object> rowData = new ArrayList<>();
+                        rowData.add(detailsId.toString());
+                        rowData.add(exportInvoiceId);
+                        rowData.add(productName);
+                        rowData.add(sellPrice);
+                        rowData.add(fullName);
+                        allRows.add(rowData);
+                    }
+
+                    // Xuất tất cả các hàng vào PDF
+                    ExportPDF.exportRowsToPDF1(allRows);
+                    JOptionPane.showMessageDialog(this, "Xuất PDF thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để xuất PDF!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (IOException | DocumentException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xuất file PDF!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 		
 		panel_11 = new JPanel();
 		panel_11.setOpaque(false);

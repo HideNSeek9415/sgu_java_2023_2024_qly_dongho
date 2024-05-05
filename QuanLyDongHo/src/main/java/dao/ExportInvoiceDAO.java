@@ -91,21 +91,71 @@ public class ExportInvoiceDAO extends ObjectDAO implements ICrud<ExportInvoice> 
 
         return exportInvoices;
     }
+    
+    public ArrayList<ExportInvoice> readAllDataByCustomerId(int customerId) {
+        ArrayList<ExportInvoice> exportInvoices = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = DataConnection.connect();
+            String sql = "SELECT * FROM export_invoices WHERE customer_id = ?";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, customerId);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int exportInvoiceId = rs.getInt("export_invoice_id");
+                int employeeId = rs.getInt("employee_id");
+                int invoiceCustomerId = rs.getInt("customer_id");
+                Date invoiceDate = rs.getDate("invoice_date");
+                int exportInvoiceStatus = rs.getInt("export_invoice_status");
+
+                ExportInvoice exportInvoice = new ExportInvoice(exportInvoiceId, employeeId, invoiceCustomerId,
+                        (java.sql.Date) invoiceDate, exportInvoiceStatus);
+
+                exportInvoices.add(exportInvoice);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đảm bảo kết nối, preparedStatement và resultSet được đóng ngay sau khi sử dụng xong
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return exportInvoices;
+    }
 
 
-    public ArrayList<ExportInvoice> searchByDateAndStatusAndName(Date startDate, Date endDate, int status, String employeeName) {
+
+
+    public ArrayList<ExportInvoice> searchByDateAndStatusAndName(Date startDate, Date endDate, int status, String employeeName, int employeeID) {
         ArrayList<ExportInvoice> result = new ArrayList<>();
         try (Connection conn = DataConnection.connect();
              PreparedStatement preparedStatement = conn.prepareStatement(
                      "SELECT * FROM export_invoices " +
                      "INNER JOIN employees ON employees.id = export_invoices.employee_id " +
                      "WHERE invoice_date BETWEEN ? AND ? " +
-                     "AND export_invoice_status = ? AND employees.full_name LIKE ?")) {
+                     "AND export_invoice_status = ? AND employees.full_name LIKE ? AND customer_id = ?")) {
 
             preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
             preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
             preparedStatement.setInt(3, status);
             preparedStatement.setString(4, "%" + employeeName + "%"); 
+            preparedStatement.setInt(5, employeeID);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
                     ExportInvoice exportInvoice = new ExportInvoice(
@@ -124,9 +174,54 @@ public class ExportInvoiceDAO extends ObjectDAO implements ICrud<ExportInvoice> 
         return result;
     }
 
+    public ArrayList<ExportInvoice> searchByDateAndStatusAndNameCus(Date startDate, Date endDate, int status, String customerName) {
+        ArrayList<ExportInvoice> result = new ArrayList<>();
+        try (Connection conn = DataConnection.connect();
+             PreparedStatement preparedStatement = conn.prepareStatement(
+                     "SELECT * FROM export_invoices " +
+                     "INNER JOIN customers ON customers.id = export_invoices.customer_id " +
+                     "WHERE invoice_date BETWEEN ? AND ? " +
+                     "AND export_invoice_status = ? AND customers.full_name LIKE ?")) {
 
+            preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
+            preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
+            preparedStatement.setInt(3, status);
+            preparedStatement.setString(4, "%" + customerName + "%"); 
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    ExportInvoice exportInvoice = new ExportInvoice(
+                            rs.getInt("export_invoice_id"),
+                            rs.getInt("employee_id"),
+                            rs.getInt("customer_id"),
+                            rs.getDate("invoice_date"),
+                            rs.getInt("export_invoice_status")
+                    );
+                    result.add(exportInvoice);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    
 
+    public boolean updateStatusForEmployee(int exportInvoiceId, int employeeId) {
+        try (Connection conn = DataConnection.connect();
+             PreparedStatement preparedStatement = conn.prepareStatement(
+                     "UPDATE export_invoices SET export_invoice_status = 1, employee_id = ? WHERE export_invoice_id = ?")) {
 
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setInt(2, exportInvoiceId);
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public boolean update(int ID, ExportInvoice Obj) {

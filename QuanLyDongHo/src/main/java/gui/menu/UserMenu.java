@@ -13,7 +13,8 @@ import system.ConfigPRJ;
 public class UserMenu extends DashboardFrame {
 	public UserMenu() {
 		super();
-		if (ConfigPRJ.currentUser.getAccount().getRoleId().equals("CTM")) {
+		String role = ConfigPRJ.currentUser.getAccount().getRoleId();
+		if (role.equals("CTM")) {
 			addFunction(new FunctionBtn(FunctionBtn.HISTORY));
 		} else {
 			addFunction(new FunctionBtn(FunctionBtn.PRODUCTS));
@@ -23,8 +24,10 @@ public class UserMenu extends DashboardFrame {
 			addFunction(new FunctionBtn(FunctionBtn.SUPPLIERS));
 			addFunction(new FunctionBtn(FunctionBtn.EMPLOYEES));
 			addFunction(new FunctionBtn(FunctionBtn.STATISTICAL));
-			addFunction(new FunctionBtn(FunctionBtn.PERMISSION));
 			addFunction(new FunctionBtn(FunctionBtn.WARRANTY));
+			if (role.equals("ADM")) {
+				addFunction(new FunctionBtn(FunctionBtn.PERMISSION));
+			}
 		}
 		changeLabel(ConfigPRJ.currentUser.getFullName(), ConfigPRJ.currentUser.getAccount().getRoleName());
 	}
