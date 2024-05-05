@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.AbstractButton;
+import javax.swing.JButton;
+
 import org.kordamp.ikonli.materialdesign2.*;
 import org.kordamp.ikonli.swing.FontIcon;
 import java.awt.Dimension;
@@ -203,7 +205,7 @@ public class NewJPanel extends javax.swing.JPanel {
 
         add(panel);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void addIcon() {
             btnAdd.setIcon(FontIcon.of(MaterialDesignP.PLUS_CIRCLE, 40, Color.decode("#2ecc71")));
             btnDel.setIcon(FontIcon.of(MaterialDesignT.TRASH_CAN, 40, Color.decode("#f2b70b")));
@@ -253,6 +255,7 @@ public class NewJPanel extends javax.swing.JPanel {
         btnExport.addActionListener(e -> { setExportEvent(); });
         btnDetail.addActionListener(e -> { setDetailEvent(); });
         btnFilter.addActionListener(e -> { setFilterEvent(); });
+        btnReload.addActionListener(e -> { setReloadEvent(); });
     }
 
     //ĐỊNH NGHĨA CÁC SỰ KIỆN BẰNG CÁCH OVERRIDE NHỮNG HÀM NÀY
@@ -275,6 +278,29 @@ public class NewJPanel extends javax.swing.JPanel {
         btnExport.setEnabled(exportExcel);
         btnDetail.setEnabled(detail);
         btnFilter.setEnabled(filter);
+        makeHoverEff(btnAdd);
+        makeHoverEff(btnDel);
+        makeHoverEff(btnEdit);
+        makeHoverEff(btnImport);
+        makeHoverEff(btnExport);
+        makeHoverEff(btnDetail);
+        makeHoverEff(btnFilter);
+    }
+    
+    protected void setFilterVisible(boolean status) {
+    	comboBox.setVisible(status);
+    	btnSearch.setVisible(status);
+    	txtSearch.setVisible(status);
+    }
+    
+    protected void setToolsVisible(boolean status) {
+        btnAdd.setVisible(status);
+        btnDel.setVisible(status);
+        btnEdit.setVisible(status);
+        btnImport.setVisible(status);
+        btnExport.setVisible(status);
+        btnDetail.setVisible(status);
+        btnFilter.setVisible(status);
         makeHoverEff(btnAdd);
         makeHoverEff(btnDel);
         makeHoverEff(btnEdit);
