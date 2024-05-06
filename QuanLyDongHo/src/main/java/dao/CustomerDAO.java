@@ -37,9 +37,9 @@ public class CustomerDAO extends ObjectDAO implements ICrud<Customer> {
 		// TODO Auto-generated method stub
 		Customer ctm = null;
 		try {
-			String sql = String.format("select * from customers");
-			ResultSet rs = runQuery(sql);
-			while (rs.next()) {
+			String sql = String.format("select * from customers where id = ?");
+			ResultSet rs = runQuery2(sql, ID);
+			if (rs.next()) {
 				Customer customer = new Customer(
 					rs.getInt("id"),
 					rs.getString("full_name"),
