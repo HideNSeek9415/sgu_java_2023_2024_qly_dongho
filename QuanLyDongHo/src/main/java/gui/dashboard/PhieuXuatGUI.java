@@ -151,12 +151,7 @@ public class PhieuXuatGUI extends JPanel {
 		
 		btnxuat_1 = new JButton("Duyệt đơn ");
 		panel_11.add(btnxuat_1);
-		btnxuat_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!ConfigPRJ.shwMsg(ConfigPRJ.order.get("edit"))) return; 
-				refresh();
-			}
-		});
+
 		btnxuat_1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnxuat_1.setPreferredSize(new Dimension(90, 85));
 		btnxuat_1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -179,7 +174,6 @@ public class PhieuXuatGUI extends JPanel {
 		btnlammoi.setPreferredSize(new Dimension(100, 30));
 		panel_11.add(btnlammoi);
 		btnlammoi.addActionListener(e -> {
-            // Gọi phương thức làm mới
             refresh();
         });
 		
@@ -404,6 +398,12 @@ public class PhieuXuatGUI extends JPanel {
 
 
 	    btnxuat_1.addActionListener(e -> {
+//	    	System.out.println(ConfigPRJ.order.get("edit"));
+			if (!ConfigPRJ.shwMsg(ConfigPRJ.order.get("edit"))) {
+				System.out.println(ConfigPRJ.order.get("edit"));
+				return; 
+			}
+
 	        int row = table.getSelectedRow();
 	        if (row != -1) { 
 	            int exportInvoiceId = (Integer) table.getValueAt(row, 0); 
@@ -417,76 +417,78 @@ public class PhieuXuatGUI extends JPanel {
 	        } else {
 	            JOptionPane.showMessageDialog(null, "Vui lòng chọn đơn hàng cần duyệt");
 	        }
+			refresh();
+
 	    });
 	}
 
         
-        private void performSearch() {
-            String searchKeyword = txtTmKim.getText().trim().toLowerCase();
+    private void performSearch() {
+        String searchKeyword = txtTmKim.getText().trim().toLowerCase();
 
-            if (dateChooser.getDate() == null || dateChooser_1.getDate() == null) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn cả ngày bắt đầu và ngày kết thúc!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Get start date from dateChooser
-            Date startDateUtil = dateChooser.getDate();
-            java.sql.Date startDateSql = new java.sql.Date(startDateUtil.getTime());
-            Date endDateUtil = dateChooser_1.getDate();
-            java.sql.Date endDateSql = new java.sql.Date(endDateUtil.getTime());
-            int status = comboBoxStatus.getSelectedIndex();
-
-            // Call the search method from the BLL class and pass the converted dates, status, and search keyword
-            ArrayList<ExportInvoice> resultList = ExportInvoiceBLL.getInstance().search2(startDateSql, endDateSql, status, searchKeyword);
-
-            // Create a table model with column names
-            DefaultTableModel model = new DefaultTableModel(
-                    new Object[][]{},
-                    new String[]{"Mã hóa đơn", "Tên nhân viên", "Tên khách hàng", "Ngày mua hàng", "Trạng thái"}
-            );
-
-            // Initialize DAO objects
-            EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
-            CustomerDAO customerDAO = CustomerDAO.getInstance();
-
-            // Fill the table model with search results
-            for (ExportInvoice invoice : resultList) {
-                // Lấy employee_id từ ExportInvoice
-                int employeeId = invoice.getEmployeeId();
-                int customerId = invoice.getCustomerId();
-
-                String fullNameCus = customerDAO.getFullNameByCustomerId(customerId);
-                String fullName = employeeDAO.getFullNameByEmployeeId(employeeId);
-
-                String statusStr = "";
-                if (invoice.getExportInvoiceStatus() == 1) {
-                    statusStr = "Đã duyệt";
-                } else if (invoice.getExportInvoiceStatus() == 0) {
-                    statusStr = "Chưa duyệt";
-                }
-
-                Object[] rowData = {
-                    invoice.getExportInvoiceId(),
-                    fullName, 
-                    fullNameCus,
-                    invoice.getInvoiceDate(),
-                    statusStr 
-                };
-                model.addRow(rowData);
-            }
-
-            table.setModel(model);
+        if (dateChooser.getDate() == null || dateChooser_1.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn cả ngày bắt đầu và ngày kết thúc!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-        
-        private void refresh() {
-            // Lấy lại toàn bộ dữ liệu lịch sử mua hàng
-            ArrayList<ExportInvoice> historyList = ExportInvoiceDAO.getInstance().readAllData();      
-            reloadTable(historyList);
-            dateChooser.setDate(null);
-            dateChooser_1.setDate(null);
-            txtTmKim.setText("");
+        // Get start date from dateChooser
+        Date startDateUtil = dateChooser.getDate();
+        java.sql.Date startDateSql = new java.sql.Date(startDateUtil.getTime());
+        Date endDateUtil = dateChooser_1.getDate();
+        java.sql.Date endDateSql = new java.sql.Date(endDateUtil.getTime());
+        int status = comboBoxStatus.getSelectedIndex();
+
+        // Call the search method from the BLL class and pass the converted dates, status, and search keyword
+        ArrayList<ExportInvoice> resultList = ExportInvoiceBLL.getInstance().search2(startDateSql, endDateSql, status, searchKeyword);
+
+        // Create a table model with column names
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Mã hóa đơn", "Tên nhân viên", "Tên khách hàng", "Ngày mua hàng", "Trạng thái"}
+        );
+
+        // Initialize DAO objects
+        EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
+        CustomerDAO customerDAO = CustomerDAO.getInstance();
+
+        // Fill the table model with search results
+        for (ExportInvoice invoice : resultList) {
+            // Lấy employee_id từ ExportInvoice
+            int employeeId = invoice.getEmployeeId();
+            int customerId = invoice.getCustomerId();
+
+            String fullNameCus = customerDAO.getFullNameByCustomerId(customerId);
+            String fullName = employeeDAO.getFullNameByEmployeeId(employeeId);
+
+            String statusStr = "";
+            if (invoice.getExportInvoiceStatus() == 1) {
+                statusStr = "Đã duyệt";
+            } else if (invoice.getExportInvoiceStatus() == 0) {
+                statusStr = "Chưa duyệt";
+            }
+
+            Object[] rowData = {
+                invoice.getExportInvoiceId(),
+                fullName, 
+                fullNameCus,
+                invoice.getInvoiceDate(),
+                statusStr 
+            };
+            model.addRow(rowData);
         }
+
+        table.setModel(model);
+    }
+
+    
+    private void refresh() {
+        // Lấy lại toàn bộ dữ liệu lịch sử mua hàng
+        ArrayList<ExportInvoice> historyList = ExportInvoiceDAO.getInstance().readAllData();      
+        reloadTable(historyList);
+        dateChooser.setDate(null);
+        dateChooser_1.setDate(null);
+        txtTmKim.setText("");
+    }
             
 	private void addIcon() {
 		btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION,50,Color.decode("#2196f3")));

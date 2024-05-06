@@ -11,19 +11,12 @@ import javax.swing.JOptionPane;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,32 +28,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.kordamp.ikonli.materialdesign2.MaterialDesignA;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
+import org.kordamp.ikonli.materialdesign.MaterialDesign;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignH;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignI;
-import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignR;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignS;
 import org.kordamp.ikonli.swing.FontIcon;
 
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import com.toedter.calendar.JDateChooser;
 
 import bll.ExportInvoiceBLL;
 import dao.CustomerDAO;
 import dao.EmployeeDAO;
 import dao.ExportInvoiceDAO;
-import dao.ProductDAO;
-import de.ExportPDF;
 import dto.ExportInvoice;
-import dto.Product;
 import system.ConfigPRJ;
-import system.JTableExporter;
 
 import java.awt.Cursor;
 import javax.swing.JFrame;
@@ -128,7 +113,7 @@ public class LichSuMuaHangGUI extends JPanel {
         btnbaohanh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnbaohanh.setBackground(new Color(255, 255, 255));
         btnbaohanh.setFocusPainted(false);
-        btnbaohanh.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnbaohanh.setFont(new Font("Tahoma", Font.BOLD, 12));
         btnbaohanh.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnbaohanh.setHorizontalTextPosition(SwingConstants.CENTER);
         btnbaohanh.setPreferredSize(new Dimension(90, 85));
@@ -430,9 +415,9 @@ public class LichSuMuaHangGUI extends JPanel {
         return table.getSelectedRow();
     }
 
-    private void refresh() {
+    public void refresh() {
         // Lấy lại toàn bộ dữ liệu lịch sử mua hàng
-        ArrayList<ExportInvoice> historyList = ExportInvoiceDAO.getInstance().readAllDataByCustomerId(1);      
+        ArrayList<ExportInvoice> historyList = ExportInvoiceDAO.getInstance().readAllDataByCustomerId(ConfigPRJ.currentUser.getId());      
         displayHistory(historyList);
         dateChooser.setDate(null);
         dateChooser_1.setDate(null);
@@ -540,7 +525,7 @@ public class LichSuMuaHangGUI extends JPanel {
         btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION, 50, Color.decode("#2196f3")));
         btnxuat.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL, 50, Color.decode("#147943")));
         btnlammoi.setIcon(FontIcon.of(MaterialDesignR.RELOAD, 20, Color.white));
-
+        btnbaohanh.setIcon(FontIcon.of(MaterialDesignS.SHIELD_CHECK, 50, Color.decode("#1f9f4d")));
     }
 
     private void makeHoverEff(AbstractButton btn) {

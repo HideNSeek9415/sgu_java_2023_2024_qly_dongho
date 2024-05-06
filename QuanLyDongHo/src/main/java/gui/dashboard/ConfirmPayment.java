@@ -121,9 +121,11 @@ public class ConfirmPayment extends JFrame{
 	}
 	
 	private void confirmBtnActionPerformed() {
-		if (table.getSelectedRow() < 0)
-			JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn ít nhất 1 sản phẩm");
-		else {
+		if (!ConfigPRJ.currentUser.getAccount().getRoleId().equals("CTM")) {
+			JOptionPane.showMessageDialog(getRootPane(), "Yêu cầu đăng nhập với vai trò là khách hàng");			
+		} else if (table.getSelectedRow() < 0) {
+			JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn ít nhất 1 sản phẩm");			
+		} else {
 			int []selectedRows = table.getSelectedRows();
 			addStuff(selectedRows);
 			boolean errorEI = true, errorEID = true;
@@ -144,7 +146,7 @@ public class ConfirmPayment extends JFrame{
 
 				//Tạo phiếu xuất mới vào database				
 //				Mặc định để system.ConfigPRJ.currentUser.getId() là 1
-				ExportInvoice exportInvoice = new ExportInvoice(ExportInvoiceBLL.getInstance().getNextId() + 1, -1, 1, currentDate, 0);
+				ExportInvoice exportInvoice = new ExportInvoice(ExportInvoiceBLL.getInstance().getNextId() + 1, -1, ConfigPRJ.currentUser.getId(), currentDate, 0);
     			if (ExportInvoiceBLL.getInstance().createExportInvoice(exportInvoice) == false) {
     				JOptionPane.showMessageDialog(rootPane, "Lỗi khi thêm vào database phiếu xuất");
     				errorEI = false;
@@ -192,6 +194,7 @@ public class ConfirmPayment extends JFrame{
 			}
 		}
 		((TmpHomePanel) ConfigPRJ.menu.get("HOME")).reloadPanel();
+		((LichSuMuaHangGUI) ConfigPRJ.menu.get("HISTORY")).refresh();
 	}
 
 	private void discardBtnActionPerformed(){

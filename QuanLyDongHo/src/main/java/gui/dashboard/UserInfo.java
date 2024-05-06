@@ -449,8 +449,8 @@ public class UserInfo extends JFrame {
 				}
 			}
 		});
-		
-		}
+		btnHyThayi.addActionListener(e -> dispose());
+	}
 
 	private void setInfo() {
 		txtName.setText(user.getFullName());

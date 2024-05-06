@@ -96,7 +96,7 @@ public class ProductDetailsGUI extends JFrame {
                 try {
                     UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
                     
-                    ProductDetailsGUI frame = new ProductDetailsGUI(null);
+                    ProductDetailsGUI frame = new ProductDetailsGUI(ProductDAO.getInstance().readByID(2));
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -428,6 +428,7 @@ public class ProductDetailsGUI extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (btn.isEnabled()) {
+
                     btn.setBackground(Color.decode("#c6763e"));
                     btn.setForeground(Color.white);
                 } 

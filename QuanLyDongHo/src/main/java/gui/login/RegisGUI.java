@@ -407,6 +407,7 @@ public class RegisGUI extends JFrame {
 				break;
 			case CustomerBLL.VALID:
 				CustomerBLL.addCustomer(ctm);
+				
 				dispose();
 				break;
 			}

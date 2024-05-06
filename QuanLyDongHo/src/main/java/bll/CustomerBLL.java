@@ -41,7 +41,7 @@ public class CustomerBLL {
 		Account updateAc = AccountDAO.getInstance().getUserByUsername(acc.getUsername());
 		ctm.setAccount(updateAc);
 		CustomerDAO.getInstance().create(ctm);
-		ConfigPRJ.currentUser = CustomerDAO.getInstance().getCustomerByAccountId(updateAc.getId());
+		ConfigPRJ.loadUser(CustomerDAO.getInstance().getCustomerByAccountId(updateAc.getId()));
 	}
 	
 	public static Customer getCustomer(int id) {

@@ -205,15 +205,14 @@ public class DashboardFrame extends JFrame {
 		    		((FontIcon) toggleButton.getIcon()).setIconColor(Color.white);
 		    	}
 		    }
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		    	int c = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất?");
-		    	if (c == JOptionPane.OK_OPTION) {
-		    		dispose();
-		    		JFrame fr = new LoginGUI();
-		    		fr.setVisible(true);		    		
-		    	}
-		    }
+		});
+		toggleButton.addActionListener(e -> {
+	    	int c = JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất?");
+	    	if (c == JOptionPane.OK_OPTION) {
+	    		dispose();
+	    		JFrame fr = new LoginGUI();
+	    		fr.setVisible(true);		    		
+	    	}
 		});
 	}
 	
