@@ -38,12 +38,11 @@ public class UserMenu extends DashboardFrame {
 		Account acc = ConfigPRJ.currentUser.getAccount(); 
 		if (acc.getRoleId().equals("CTM")) {
 			Customer cus =  CustomerDAO.getInstance().getCustomerByAccountId(acc.getId());
-			ConfigPRJ.currentUser = cus;
+			ConfigPRJ.loadUser(cus);
 		} else {
 			Employee emp = EmployeeDAO.getInstance().getEmployeeByAccountId(acc.getId());
-			ConfigPRJ.currentUser = emp;
+			ConfigPRJ.loadUser(emp);
 		}
-		ConfigPRJ.loadPermission(ConfigPRJ.currentUser.getAccount().getRoleId());
 		changeLabel(ConfigPRJ.currentUser.getFullName(), ConfigPRJ.currentUser.getAccount().getRoleName());
 	}
 }

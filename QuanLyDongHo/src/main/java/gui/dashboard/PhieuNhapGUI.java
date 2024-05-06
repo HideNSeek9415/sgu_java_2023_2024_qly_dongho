@@ -8,11 +8,18 @@ import javax.swing.JOptionPane;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
@@ -37,13 +44,19 @@ import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
 
 import bll.ImportInvoiceBLL;
+import dao.EmployeeDAO;
 import dao.ImportInvoiceDAO;
+import dao.SupplierDAO;
 import de.ExportPDF;
+import dto.Employee;
 import dto.ImportInvoice;
+import dto.Supplier;
 import system.ConfigPRJ;
 
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PhieuNhapGUI extends JPanel {
@@ -55,20 +68,14 @@ public class PhieuNhapGUI extends JPanel {
 	private JPanel panel_3;
 	private JPanel panel_4;
 	private JLabel lblNewLabel;
-	private JComboBox comboBox;
+	private JComboBox supplierSelection;
 	private JPanel panel_5;
 	private JLabel lblNewLabel_1;
-	private JComboBox comboBox_1;
-	private JPanel panel_6;
-	private JLabel lblNewLabel_2;
-	private JSpinner comboBox_2;
+	private JComboBox staffSelection;
 	private JPanel panel_7;
 	private JLabel lblNewLabel_3;
 	private JPanel panel_8;
 	private JLabel lblNewLabel_4;
-	private JPanel panel_9;
-	private JLabel lblNewLabel_5;
-	private JSpinner comboBox_5;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JPanel panel_10;
@@ -79,8 +86,8 @@ public class PhieuNhapGUI extends JPanel {
 	private JComboBox comboBox_6;
 	private JTextField txtTmKim;
 	private JButton btnlammoi;
-	private JDateChooser dateChooser;
-	private JDateChooser dateChooser_1;
+	private JDateChooser dateBegin;
+	private JDateChooser dateEnd;
 	DefaultTableModel model;
 
 	/**
@@ -205,7 +212,6 @@ public class PhieuNhapGUI extends JPanel {
 		
 		txtTmKim = new JTextField();
 		txtTmKim.setForeground(new Color(0, 0, 0));
-		txtTmKim.setText("tìm kiếm ...");
 		txtTmKim.setSize(new Dimension(200, 0));
 		txtTmKim.setPreferredSize(new Dimension(250, 30));
 		panel_11.add(txtTmKim);
@@ -236,9 +242,9 @@ public class PhieuNhapGUI extends JPanel {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_4.add(lblNewLabel);
 		
-		comboBox = new JComboBox();
-		comboBox.setBackground(new Color(255, 255, 255));
-		panel_4.add(comboBox);
+		supplierSelection = new JComboBox();
+		supplierSelection.setBackground(new Color(255, 255, 255));
+		panel_4.add(supplierSelection);
 		
 		panel_5 = new JPanel();
 		panel_5.setOpaque(false);
@@ -250,9 +256,9 @@ public class PhieuNhapGUI extends JPanel {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_5.add(lblNewLabel_1);
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBackground(new Color(255, 255, 255));
-		panel_5.add(comboBox_1);
+		staffSelection = new JComboBox();
+		staffSelection.setBackground(new Color(255, 255, 255));
+		panel_5.add(staffSelection);
 		
 		panel_7 = new JPanel();
 		panel_7.setOpaque(false);
@@ -264,11 +270,11 @@ public class PhieuNhapGUI extends JPanel {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_7.add(lblNewLabel_3);
 		
-		dateChooser = new JDateChooser();
-		dateChooser.setOpaque(false);
-		dateChooser.setDateFormatString("dd/MM/yyyy");
-		dateChooser.setBackground(new Color(240, 247, 250));
-		panel_7.add(dateChooser);
+		dateBegin = new JDateChooser();
+		dateBegin.setOpaque(false);
+		dateBegin.setDateFormatString("dd/MM/yyyy");
+		dateBegin.setBackground(new Color(240, 247, 250));
+		panel_7.add(dateBegin);
 		
 		panel_8 = new JPanel();
 		panel_8.setOpaque(false);
@@ -280,39 +286,11 @@ public class PhieuNhapGUI extends JPanel {
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_8.add(lblNewLabel_4);
 		
-		dateChooser_1 = new JDateChooser();
-		dateChooser_1.setOpaque(false);
-		dateChooser_1.setDateFormatString("dd/MM/yyyy");
-		dateChooser_1.setBackground(new Color(240, 247, 250));
-		panel_8.add(dateChooser_1);
-		
-		panel_9 = new JPanel();
-		panel_9.setOpaque(false);
-		panel_9.setBorder(new EmptyBorder(5, 20, 5, 20));
-		panel_2.add(panel_9);
-		panel_9.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel_5 = new JLabel("Từ số tiền (VND)");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_9.add(lblNewLabel_5);
-		
-		comboBox_5 = new JSpinner();
-		comboBox_5.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100000)));
-		panel_9.add(comboBox_5);
-		
-		panel_6 = new JPanel();
-		panel_6.setOpaque(false);
-		panel_6.setBorder(new EmptyBorder(5, 20, 5, 20));
-		panel_2.add(panel_6);
-		panel_6.setLayout(new GridLayout(2, 0, 0, 0));
-		
-		lblNewLabel_2 = new JLabel("Đến số tiền (VND)");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_6.add(lblNewLabel_2);
-		
-		comboBox_2 = new JSpinner();
-		comboBox_2.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100000)));
-		panel_6.add(comboBox_2);
+		dateEnd = new JDateChooser();
+		dateEnd.setOpaque(false);
+		dateEnd.setDateFormatString("dd/MM/yyyy");
+		dateEnd.setBackground(new Color(240, 247, 250));
+		panel_8.add(dateEnd);
 		
 		panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 255, 255));
@@ -350,7 +328,66 @@ public class PhieuNhapGUI extends JPanel {
 		makeHoverEff(btnthem);
 		makeHoverEff(btnlammoi);
 		addStuff();
+		addComboBox(); 
         reloadTable();
+        addEvent();
+	}
+	
+	private void addEvent() {
+		// TODO Auto-generated method stub
+        supplierSelection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reloadTableAfterFiltered();
+            }
+        });
+        
+        staffSelection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	reloadTableAfterFiltered();
+            }
+        });
+   
+        
+        dateBegin.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+            	// Thuộc tính date của JDateChooser sẽ bị thay đổi khi set giá trị ngày mới
+                if ("date".equals(evt.getPropertyName())) {
+                    reloadTableAfterFiltered();
+                }
+            }
+        });
+        
+        dateEnd.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+            	// Thuộc tính date của JDateChooser sẽ bị thay đổi khi set giá trị ngày mới
+                if ("date".equals(evt.getPropertyName())) {
+                    reloadTableAfterFiltered();
+                }
+            }
+        });
+	}
+
+
+
+	private void addComboBox() {
+//		ArrayList<ImportInvoice> suppliersID = ImportInvoiceBLL.getAllSuppliers();
+//		ArrayList<ImportInvoice> staffsID = ImportInvoiceBLL.getAllStaffs();
+		
+		//Add họ và tên nhà cung cấp vào comboBox
+		supplierSelection.addItem(" ");
+		for(Supplier s : SupplierDAO.getInstance().readAllData()) {
+			supplierSelection.addItem(s.getSupplierName());
+		}
+		
+		//Add họ và tên nhân viên vào comboBox
+		staffSelection.addItem(" ");
+		for(Employee e : EmployeeDAO.getInstance().readAllData()) {
+			staffSelection.addItem(e.getFullName());
+		}
 	}
 
 	public void reloadTable() {
@@ -423,6 +460,77 @@ public class PhieuNhapGUI extends JPanel {
             }
         });
     }
+	
+	private void reloadTableAfterFiltered() {
+		Long minPrice = 0L;
+		Long maxPrice = 10000000000L;
+		String supplierName = supplierSelection.getSelectedItem().toString();
+		String staffName = staffSelection.getSelectedItem().toString();
+		
+		if(supplierSelection.getSelectedIndex() == 0 && staffSelection.getSelectedIndex() != 0
+		&& dateBegin == null && dateEnd == null
+		&& minPrice == 0 && maxPrice == 0) {
+			reloadTable();
+		}
+		
+		else{
+			// Tạo ngày 1/1/1
+			Calendar calBegin = Calendar.getInstance();
+	        calBegin.set(1, Calendar.JANUARY, 1);
+	        Date defDateBegin = calBegin.getTime();
+
+	        // Tạo ngày 5/8/2024
+	        Calendar calEnd = Calendar.getInstance();
+	        calEnd.set(2024, Calendar.AUGUST, 5); // Năm 2024, tháng 8 (lưu ý tháng bắt đầu từ 0)
+	        Date defDateEnd = calEnd.getTime();
+			
+			if (dateBegin.getDate() != null) {
+				defDateBegin = dateBegin.getDate();
+			}
+			
+			if (dateEnd.getDate() != null) {
+				defDateEnd = dateEnd.getDate();
+			}
+			
+				
+				// Kiểm tra điều kiện ngày bắt đầu <= ngày kết thúc
+				if (defDateBegin.compareTo(defDateEnd) > 0) {
+					JOptionPane.showMessageDialog(getRootPane(), "Vui lòng không nhập ngày bắt đầu lớn hơn ngày kết thúc");
+				}
+				
+				// Kiểm tra giá tối thiếu <= giá tối đa
+				if (minPrice > maxPrice ) {
+					JOptionPane.showMessageDialog(getRootPane(), "Vui lòng không nhập giá tối đa lớn hơn giá tối thiểu");
+				}
+				
+			    DefaultTableModel model = (DefaultTableModel) table.getModel();
+			    model.setRowCount(0);
+			    ArrayList<ImportInvoice> importInvoices = ImportInvoiceBLL.readAllData();
+			
+			    for (ImportInvoice importInvoice : importInvoices) {
+			        String ename = importInvoice.employee.getFullName(); // Cập nhật fullNameEmployee
+			        String sname = importInvoice.supplier.getSupplierName(); // Cập nhật fullNameEmployee
+			        java.sql.Date sqlDefDateBegin = new java.sql.Date(defDateBegin.getTime());
+			        java.sql.Date sqlDefDateEnd = new java.sql.Date(defDateEnd.getTime());
+			        
+			        if(ename.contains(staffName)
+			        && sname.contains(supplierName)
+			        && sqlDefDateBegin.compareTo(importInvoice.getInvoiceDate()) <= 0
+			        && importInvoice.getInvoiceDate().compareTo(sqlDefDateEnd) <= 0
+			        // Thêm so sánh giá tiền sau này 
+			        )
+			        {	
+				        Object[] data = {
+				            importInvoice.getImportInvoiceId(),
+				            ename,
+				            sname, // Sử dụng fullNameEmployee
+				            (new SimpleDateFormat("dd/MM/yyyy")).format(importInvoice.getInvoiceDate()),
+				        };
+				        model.addRow(data);
+			        }
+			    }
+		}
+	}
 
 
 }

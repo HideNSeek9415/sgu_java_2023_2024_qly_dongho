@@ -69,8 +69,6 @@ public class ConfigPRJ {
 		default:
 			System.err.println("INVALID ROLE");
 		}
-		System.out.println(currentUser.getAccount().getRoleId());
-		System.out.println(order.get("edit"));
 	}
 	
 	public static boolean shwMsg(boolean v) {
