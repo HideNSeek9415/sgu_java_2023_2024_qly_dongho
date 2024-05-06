@@ -41,7 +41,6 @@ public class RevenuePanel extends JPanel {
     private DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         try {
-            // Lấy dữ liệu từ BLL cho mỗi năm
             for (int year = 2020; year <= 2026; year++) {
                 int revenue = thongKeBLL.getTotalRevenue(year);
                 dataset.addValue(revenue, "Doanh thu", Integer.toString(year));

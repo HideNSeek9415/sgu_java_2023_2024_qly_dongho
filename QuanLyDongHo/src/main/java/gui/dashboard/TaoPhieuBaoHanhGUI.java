@@ -41,7 +41,7 @@ public class TaoPhieuBaoHanhGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String liDo = textArea.getText();
-                Warranty warranty = new Warranty(selectedExport.getExportInvoiceId(), liDo, "0");	        			
+                Warranty warranty = new Warranty(selectedExport.getExportInvoiceId(), liDo, "pending");	        			
 	        if(WarrantyBLL.getInstance().addWarranty(warranty) == false)
                     JOptionPane.showMessageDialog(rootPane, "Lỗi khi thêm vào database");
 	        else {

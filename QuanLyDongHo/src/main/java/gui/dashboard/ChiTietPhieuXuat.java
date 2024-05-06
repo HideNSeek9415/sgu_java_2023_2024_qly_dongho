@@ -164,6 +164,7 @@ public class ChiTietPhieuXuat extends javax.swing.JFrame {
         
         return jTable1; // Return the reloaded table
     }
+    
     public static void main(String args[]) {
 
         try {

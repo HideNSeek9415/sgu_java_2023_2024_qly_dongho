@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignI;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignR;
 import org.kordamp.ikonli.swing.FontIcon;
 
@@ -492,7 +493,7 @@ public class PhieuXuatGUI extends JPanel {
             
 	private void addIcon() {
 		btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION,50,Color.decode("#2196f3")));
-		btnxuat.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL,50,Color.decode("#147943")));
+		btnxuat.setIcon(FontIcon.of(MaterialDesignP.PDF_BOX, 50, Color.red));
 		btnlammoi.setIcon(FontIcon.of(MaterialDesignR.RELOAD,20,Color.white));
 		
 	}
@@ -506,7 +507,7 @@ public class PhieuXuatGUI extends JPanel {
                 return;
         }
         btn.removeActionListener(null);
-        btn.addMouseListener(new MouseAdapter() {
+        btn.addMouseListener(new MouseAdapter() {  
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (btn.isEnabled()) {

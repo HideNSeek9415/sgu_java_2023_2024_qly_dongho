@@ -202,31 +202,7 @@ public class TmpHomePanel extends JPanel {
 		return (ArrayList<Product>) products.stream().filter(condition).collect(Collectors.toList());
 	}
 	
-	private void searchEvent() {
-		ArrayList<Product> products = ProductBLL.getAllProduct();
-		
-		String searchText = textField.getText().trim().toLowerCase();
-		String selectedCategory = (String) cbbType.getSelectedItem();
-		String selectedBrand = (String) cbbBrand.getSelectedItem();
-		int minV = (int) cpMin.getValue();
-		int maxV = (int) cpMax.getValue();
-		boolean isdiscountselected = chkDiscount.isSelected();
 
-		products = filter(products, product -> product.getProductStatus() && product.getQuantity() > 0);
-		products = filter(products, product -> maxV == 0 || (product.isDiscount() ? product.getDiscountPrice() <= maxV : product.getSellPrice() <= maxV));		
-		products = filter(products, product -> minV == 0 || product.isDiscount() ? product.getDiscountPrice() >= minV : product.getSellPrice() >= minV);
-		products = filter(products, product -> searchText.isBlank() || product.getProductName().toLowerCase().contains(searchText));
-		products = filter(products, product -> selectedCategory.equals("Loại đồng hồ") || product.getCategory().equalsIgnoreCase(selectedCategory));
-		products = filter(products, product -> selectedBrand.equals("Thương hiệu") || product.getBrand().equalsIgnoreCase(selectedBrand));
-		products = filter(products, product -> !isdiscountselected || product.isDiscount());
-		
-		
-		if (products.size() == 0) {
-			JOptionPane.showMessageDialog(null, "Không tìm thấy sản phẩm đủ điều kiện", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-		} else {			
-			filterPrdInPanel(products);
-		}
-	}
 	
 	private void filterPrdInPanel(ArrayList<Product> products) {
 		int productPerPage = 10;
@@ -271,7 +247,33 @@ public class TmpHomePanel extends JPanel {
 	}
 	
 	
+	private void searchEvent() {
+		ArrayList<Product> products = ProductBLL.getAllProduct();
+		
+		String searchText = textField.getText().trim().toLowerCase();
+		String selectedCategory = (String) cbbType.getSelectedItem();
+		String selectedBrand = (String) cbbBrand.getSelectedItem();
+		int minV = (int) cpMin.getValue();
+		int maxV = (int) cpMax.getValue();
+		boolean isdiscountselected = chkDiscount.isSelected();
 
+		products = filter(products, product -> product.getProductStatus() && product.getQuantity() > 0);
+		products = filter(products, product -> maxV == 0 || (product.isDiscount() ? product.getDiscountPrice() <= maxV : product.getSellPrice() <= maxV));		
+		products = filter(products, product -> minV == 0 || product.isDiscount() ? product.getDiscountPrice() >= minV : product.getSellPrice() >= minV);
+		products = filter(products, product -> searchText.isBlank() || product.getProductName().toLowerCase().contains(searchText));
+		products = filter(products, product -> selectedCategory.equals("Loại đồng hồ") || product.getCategory().equalsIgnoreCase(selectedCategory));
+		products = filter(products, product -> selectedBrand.equals("Thương hiệu") || product.getBrand().equalsIgnoreCase(selectedBrand));
+		products = filter(products, product -> !isdiscountselected || product.isDiscount());
+		
+		
+		if (products.size() == 0) {
+			JOptionPane.showMessageDialog(null, "Không tìm thấy sản phẩm đủ điều kiện", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		} else {			
+			filterPrdInPanel(products);
+		}
+	}
+	
+	
 	public void reloadPanel() {
 		// TODO Auto-generated method stub
 		ArrayList<Product> products = ProductBLL.getAllProduct();

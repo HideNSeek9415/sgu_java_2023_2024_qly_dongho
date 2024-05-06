@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignF;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignI;
+import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignR;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignS;
 import org.kordamp.ikonli.swing.FontIcon;
@@ -129,7 +130,7 @@ public class LichSuMuaHangGUI extends JPanel {
         btnchitiet.setPreferredSize(new Dimension(90, 85));
         panel_10.add(btnchitiet);
 
-        btnxuat = new JButton("Excel");
+        btnxuat = new JButton("PDF");
         btnxuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnxuat.setBackground(new Color(255, 255, 255));
         btnxuat.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -523,7 +524,7 @@ public class LichSuMuaHangGUI extends JPanel {
 
     private void addIcon() {
         btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION, 50, Color.decode("#2196f3")));
-        btnxuat.setIcon(FontIcon.of(MaterialDesignF.FILE_EXCEL, 50, Color.decode("#147943")));
+        btnxuat.setIcon(FontIcon.of(MaterialDesignP.PDF_BOX, 50, Color.red));
         btnlammoi.setIcon(FontIcon.of(MaterialDesignR.RELOAD, 20, Color.white));
         btnbaohanh.setIcon(FontIcon.of(MaterialDesignS.SHIELD_CHECK, 50, Color.decode("#1f9f4d")));
     }

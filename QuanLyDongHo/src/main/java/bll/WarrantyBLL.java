@@ -4,6 +4,9 @@
  */
 package bll;
 
+import java.util.ArrayList;
+
+import dao.ExportInvoiceDAO;
 import dao.WarrantyDAO;
 import dto.Warranty;
 
@@ -20,6 +23,12 @@ public class WarrantyBLL {
 		return WarrantyDAO.getInstance().create(object);
 	}
     
+    public boolean updateStatus1(int id) {
+        return WarrantyDAO.getInstance().updateStatus(id);
+    }
     
+    public ArrayList<Warranty> getAllData(){
+    	return WarrantyDAO.getInstance().readAllData();
+    }
     // Add other methods for retrieving, updating, or processing warranty data
 }

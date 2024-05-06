@@ -113,6 +113,7 @@ public class FunctionBtn {
 		case WARRANTY:
 			icon = FontIcon.of(MaterialDesignS.SHIELD_CHECK);
 			toggleButton.setText("Bảo hành");
+			panel = new PhieuBaoHanhGUI();
 			ConfigPRJ.menu.put("WARRANTY", panel);
 			break;
 		case HISTORY:

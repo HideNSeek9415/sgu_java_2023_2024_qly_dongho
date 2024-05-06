@@ -6,7 +6,8 @@ public class Warranty {
     private String reason;
     private String status;
 
-    public Warranty(int detailId, String reason, String status) {
+    public Warranty(int warranty_id, int detailId, String reason, String status) {
+    	this.warrantyId=warranty_id;
         this.detailId = detailId;
         this.reason = reason;
         this.status = status;
