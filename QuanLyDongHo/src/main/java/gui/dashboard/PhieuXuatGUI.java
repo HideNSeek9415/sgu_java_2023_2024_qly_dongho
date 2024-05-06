@@ -400,7 +400,7 @@ public class PhieuXuatGUI extends JPanel {
 
 	    btnxuat_1.addActionListener(e -> {
 //	    	System.out.println(ConfigPRJ.order.get("edit"));
-			if (!ConfigPRJ.shwMsg(ConfigPRJ.order.get("edit"))) {
+			if (!ConfigPRJ.shwMsg(ConfigPRJ.order.get("add"))) {
 				System.out.println(ConfigPRJ.order.get("edit"));
 				return; 
 			}

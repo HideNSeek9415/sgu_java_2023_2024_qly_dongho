@@ -143,5 +143,55 @@ public class ImportInvoiceDAO extends ObjectDAO implements ICrud<ImportInvoice> 
 		}
 		return size;
 	}
+	
+	public ArrayList<ImportInvoice> getAllStaffs() {
+        ArrayList<ImportInvoice> importInvoices = new ArrayList<>();
+        try {
+        	String sql = "SELECT import_invoice_id, employee_id, supplier_id, invoice_date FROM import_invoices"
+        			+ " group by employee_id";
+            ResultSet rs = runQuery(sql);
+            
+            while (rs.next()) {
+                int importInvoiceId = rs.getInt("import_invoice_id");
+                int employeeId = rs.getInt("employee_id");
+                int supplierId = rs.getInt("supplier_id");
+                Date invoiceDate = rs.getDate("invoice_date");
+                
+                ImportInvoice importInvoice = new ImportInvoice(importInvoiceId, employeeId, supplierId, (java.sql.Date) invoiceDate);
+                importInvoices.add(importInvoice);
+            }
+            
+            closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return importInvoices;
+	}
+	
+	public ArrayList<ImportInvoice> getAllSuppliers(){
+		ArrayList<ImportInvoice> importInvoices = new ArrayList<>();
+        try {
+            String sql = "SELECT import_invoice_id, employee_id, supplier_id, invoice_date FROM import_invoices"
+            		+ " group by supplier_id";
+            ResultSet rs = runQuery(sql);
+            
+            while (rs.next()) {
+                int importInvoiceId = rs.getInt("import_invoice_id");
+                int employeeId = rs.getInt("employee_id");
+                int supplierId = rs.getInt("supplier_id");
+                Date invoiceDate = rs.getDate("invoice_date");
+                
+                ImportInvoice importInvoice = new ImportInvoice(importInvoiceId, employeeId, supplierId, (java.sql.Date) invoiceDate);
+                importInvoices.add(importInvoice);
+            }
+            
+            closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return importInvoices;
+	}
 
 }

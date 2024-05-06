@@ -524,7 +524,11 @@ public class LichSuMuaHangGUI extends JPanel {
 
     private void addIcon() {
         btnchitiet.setIcon(FontIcon.of(MaterialDesignI.INFORMATION, 50, Color.decode("#2196f3")));
+<<<<<<< HEAD
         btnxuat.setIcon(FontIcon.of(MaterialDesignP.PDF_BOX, 50, Color.red));
+=======
+        btnxuat.setIcon(FontIcon.of(MaterialDesignP.PDF_BOX, 50, Color.decode("#ab0f13")));
+>>>>>>> 6316325079f98b5a765d245d61ebd2d4ba4e8a16
         btnlammoi.setIcon(FontIcon.of(MaterialDesignR.RELOAD, 20, Color.white));
         btnbaohanh.setIcon(FontIcon.of(MaterialDesignS.SHIELD_CHECK, 50, Color.decode("#1f9f4d")));
     }
